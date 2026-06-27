@@ -1,11 +1,11 @@
-import { Button } from "@mui/material";
+import Navbar from "./components/layout/Navbar/Navbar";
+import Home from "./pages/Home/Home";
 
 export default function App() {
   return (
-    <div style={{ padding: 40 }}>
-      <Button variant="contained">
-        Hello Arts by Kash
-      </Button>
-    </div>
+    <>
+      <Navbar />
+      <Home />
+    </>
   );
 }
