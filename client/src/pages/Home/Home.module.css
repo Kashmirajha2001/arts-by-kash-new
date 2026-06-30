@@ -1,0 +1,23 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  /* gap: clamp(96px, 10vw, 160px); */
+  gap: clamp(60px, 6vw, 90px);
+  padding-bottom: clamp(96px, 10vw, 160px);
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .home {
+    /* gap: clamp(80px, 9vw, 112px); */
+    gap: clamp(60px, 6vw, 90px);
+    padding-bottom: clamp(80px, 9vw, 112px);
+  }
+}
+
+@media (max-width: 767px) {
+  .home {
+    /* gap: clamp(64px, 16vw, 96px); */
+    gap: clamp(30px, 3vw, 60px);
+    padding-bottom: clamp(64px, 16vw, 96px);
+  }
+}

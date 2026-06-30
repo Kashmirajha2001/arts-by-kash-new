@@ -1,0 +1,322 @@
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+
+.hero {
+    width: 90%;
+    margin: 0 auto;
+    /* padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 64px) 0; */
+    /* padding: 60px 0; */
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: clamp(20px, 3vw, 48px);
+    align-items: center;
+
+    position: relative;
+    overflow: hidden;
+
+    /* background-image:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, .98) 0%,
+      rgba(255, 255, 255, .94) 30%,
+      rgba(255, 255, 255, .68) 52%,
+      rgba(248, 246, 242, .22) 76%,
+      rgba(94, 67, 13, 0.237) 100%
+    ), */
+    background-image:
+        linear-gradient(90deg,
+
+            rgba(246, 231, 209, 0.94) 0%,
+            rgba(250, 248, 245, .88) 28%,
+            rgba(250, 248, 245, .55) 58%,
+            rgba(250, 248, 245, .18) 82%,
+            rgba(250, 248, 245, 0) 100%),
+        url("../../../assets/textures/hero-background.jpg");
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.splash {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    background-image: url("../../../assets/textures/splash.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: .65;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.botanical {
+
+    position: absolute;
+
+    width: 500px;
+
+    height: auto;
+
+    /* top: -30px; */
+
+    left: -300px;
+
+    opacity: .29;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+.title {
+    font-family: var(--heading-font);
+
+    font-size: 5rem;
+
+    line-height: 1;
+
+    font-weight: 600;
+}
+
+.script {
+    /* font-family: var(--heading-font); */
+    font-family: "Great Vibes", cursive;
+    font-style: italic;
+    font-size: 1.15em;
+    font-weight: 500;
+    color: var(--color-primary);
+    /* display:block; */
+    margin-top: -10px;
+    /* margin-left:90px; */
+}
+
+.left {
+    position: relative;
+    z-index: 2;
+    padding-left: 60px;
+}
+
+.left h1 {
+    font-family: var(--heading-font);
+
+    font-size: 5rem;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    letter-spacing: -2px;
+
+    margin: 25px 0;
+}
+
+.left p {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    color: #666;
+}
+
+.badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border-radius: 50px;
+
+    background: #f4ece3;
+
+    color: #8b6b52;
+
+    font-weight: 500;
+
+    font-size: 0.95rem;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.right {
+
+    position: relative;
+
+    height: clamp(600px, 44vw, 720px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-end;
+
+    isolation: isolate;
+}
+
+.desktopImage {
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center bottom;
+
+    /* border-radius: 28px; */
+
+    position: relative;
+    z-index: 3;
+
+    /* box-shadow:
+        0 20px 60px rgba(0, 0, 0, .12),
+        0 40px 100px rgba(0, 0, 0, .18); */
+
+    transition: .45s ease;
+}
+
+.desktopImage:hover {
+    transform: scale(1.02);
+}
+
+/* Tablet: preserve the desktop composition while scaling it down. */
+@media (min-width: 841px) and (max-width: 1024px) {
+    .hero {
+        width: 94%;
+        grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+        gap: clamp(16px, 2.5vw, 28px);
+    }
+
+    .left h1,
+    .title {
+        font-size: clamp(3rem, 5.5vw, 4.25rem);
+        letter-spacing: -1.5px;
+    }
+
+    .left {
+        padding-left: clamp(24px, 4vw, 44px);
+    }
+
+    .left p {
+        font-size: clamp(.95rem, 1.6vw, 1.05rem);
+        margin-bottom: clamp(24px, 3vw, 32px);
+    }
+
+    .buttons {
+        gap: 12px;
+    }
+
+    .buttons > button {
+        padding: 13px 18px;
+        font-size: .9rem;
+    }
+
+    .right {
+        height: clamp(480px, 58vw, 600px);
+    }
+}
+
+/* Narrow tablets: there is no useful room for two readable columns. */
+@media (min-width: 768px) and (max-width: 840px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding-top: 56px;
+    }
+
+    .left {
+        max-width: 620px;
+        padding-left: 48px;
+    }
+
+    .left h1,
+    .title {
+        font-size: clamp(3.75rem, 8vw, 4.5rem);
+    }
+
+    .right {
+        height: auto;
+    }
+
+    .desktopImage {
+        width: min(100%, 680px);
+        height: auto;
+        max-height: 650px;
+    }
+}
+
+/* Mobile: text first, image second, with fluid type and spacing. */
+@media (max-width: 767px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: clamp(28px, 8vw, 44px);
+        padding-top: clamp(36px, 10vw, 56px);
+    }
+
+    .left {
+        padding: 0 clamp(18px, 6vw, 36px);
+    }
+
+    .left h1,
+    .title {
+        font-size: clamp(2.75rem, 12vw, 4rem);
+        letter-spacing: clamp(-2px, -.3vw, -1px);
+        margin: clamp(20px, 5vw, 25px) 0;
+    }
+
+    .left p {
+        font-size: clamp(.95rem, 3.8vw, 1.05rem);
+        margin-bottom: clamp(28px, 8vw, 40px);
+    }
+
+    .right {
+        height: auto;
+    }
+
+    .desktopImage {
+        width: 100%;
+        height: auto;
+        max-height: min(650px, 115vw);
+    }
+
+    .splash {
+        width: min(600px, 115vw);
+        height: min(600px, 115vw);
+        right: 50%;
+        transform: translate(50%, -50%);
+    }
+}
+
+@media (max-width: 600px) {
+    .buttons {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .buttons > button {
+        width: 100%;
+    }
+}
+
+.desktopImage {
+  display: block;
+}
+
+.mobileImage {
+  display: none;
+}
+@media (max-width:767px) {
+  .desktopImage {
+    display: none;
+  }
+
+  .mobileImage {
+    display: block;
+  }
+}

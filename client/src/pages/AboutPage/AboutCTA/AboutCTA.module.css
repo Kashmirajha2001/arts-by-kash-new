@@ -1,0 +1,195 @@
+.wrapper {
+
+    position: relative;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    padding: 100px 60px;
+
+    border-radius: 42px;
+
+    background:
+        linear-gradient(135deg,
+            #faf7f2 0%,
+            #fffdfb 45%,
+            #f8f3ee 100%);
+}
+
+/* ========================= */
+
+.wrapper>* {
+
+    position: relative;
+    z-index: 2;
+}
+
+.description {
+
+    max-width: 720px;
+
+    margin: 26px auto 48px;
+
+    font-size: 1.08rem;
+
+    line-height: 1.9;
+
+    color: #666;
+}
+
+/* ========================= */
+
+.buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 65px;
+}
+
+/* ========================= */
+
+.quote {
+
+    max-width: 620px;
+
+    margin: 0 auto;
+
+    padding-top: 42px;
+
+    border-top: 1px solid rgba(170, 150, 130, .18);
+}
+
+.quote p {
+
+    font-family: var(--heading-font);
+
+    font-size: 2rem;
+
+    line-height: 1.6;
+
+    color: var(--color-text);
+
+    font-style: italic;
+}
+
+.quote span {
+
+    display: block;
+
+    margin-top: 22px;
+
+    font-family: "Great Vibes", cursive;
+
+    font-size: 2.5rem;
+
+    color: var(--color-primary);
+}
+
+/* ========================= */
+
+@media(max-width:1024px) {
+
+    .wrapper {
+
+        padding: 80px 40px;
+    }
+
+    .description {
+
+        font-size: 1rem;
+    }
+
+    .quote p {
+
+        font-size: 1.7rem;
+    }
+
+    .quote span {
+
+        font-size: 2.2rem;
+    }
+}
+
+/* ========================= */
+
+@media(max-width:767px) {
+
+    .wrapper {
+
+        padding: 65px 24px;
+
+        border-radius: 28px;
+    }
+
+    .description {
+
+        margin: 20px auto 38px;
+
+        line-height: 1.8;
+    }
+
+    .buttons {
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 14px;
+
+        margin-bottom: 45px;
+    }
+
+    .buttons button {
+
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .quote {
+
+        padding-top: 32px;
+    }
+
+    .quote p {
+
+        font-size: 1.45rem;
+    }
+
+    .quote span {
+
+        font-size: 2rem;
+    }
+
+}
+
+/* ========================= */
+
+@media(max-width:480px) {
+
+    .wrapper {
+
+        padding: 55px 18px;
+    }
+
+    .description {
+
+        font-size: .95rem;
+    }
+
+    .quote p {
+
+        font-size: 1.25rem;
+    }
+
+    .quote span {
+
+        font-size: 1.8rem;
+    }
+}

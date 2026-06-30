@@ -1,0 +1,101 @@
+/* ─── Heading ───────────────────────────────────────────────────────────────── */
+
+.heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: clamp(64px, 8vw, 100px) 0 clamp(16px, 2.5vw, 28px);
+}
+
+.description {
+    max-width: 700px;
+    margin: 18px auto 0;
+    font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+    line-height: 1.85;
+    color: #6d6d6d;
+    text-align: center;
+}
+
+/* ─── List ──────────────────────────────────────────────────────────────────── */
+
+.list {
+    max-width: min(900px, 100%);
+    margin: clamp(16px, 3vw, 36px) auto 0;
+    padding: 0 clamp(16px, 4vw, 0px);
+    /* side breathing room on small screens */
+}
+
+/* ─── Item ──────────────────────────────────────────────────────────────────── */
+
+.item {
+    border-bottom: 1px solid #e8ddd1;
+}
+
+/* ─── Question button ───────────────────────────────────────────────────────── */
+
+.question {
+    width: 100%;
+    min-height: 48px;
+    /* accessible touch target */
+    padding: clamp(18px, 3vw, 28px) 0;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.3s;
+}
+
+.question span {
+    font-family: var(--heading-font);
+    font-size: clamp(1.05rem, 2vw, 1.45rem);
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.4;
+    transition: color 0.3s;
+}
+
+.question svg {
+    font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+    color: var(--color-primary);
+    flex-shrink: 0;
+    transition: 0.3s;
+}
+
+.question:hover span {
+    color: var(--color-primary);
+}
+
+/* ─── Answer ────────────────────────────────────────────────────────────────── */
+
+.answer {
+    overflow: hidden;
+}
+
+.answer p {
+    padding: 0 0 clamp(18px, 3vw, 26px);
+    max-width: 720px;
+    font-size: clamp(0.93rem, 1.3vw, 1rem);
+    line-height: 1.9;
+    color: #666;
+}
+
+/* ─── Mobile  < 768px ───────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+
+    /* Icon stays top-right when question wraps to multiple lines */
+    .question {
+        align-items: flex-start;
+    }
+
+    .question svg {
+        margin-top: 3px;
+        /* optically align with first line of text */
+    }
+
+}

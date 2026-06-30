@@ -1,0 +1,31 @@
+import Navbar from "./components/layout/Navbar/Navbar";
+import Footer from "./components/layout/Footer/Footer";
+import Home from "./pages/Home/Home";
+import CoursesPage from "./pages/Courses/Courses";
+import AboutPage from "./pages/AboutPage/About";
+import ContactPage from "./pages/Contact/Contact";
+import ScrollToTop from "./constants/ScrollToTop";
+import Auth from "./pages/Auth/Auth";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutPage />} />
+        {/* <Route path="/gallery" element={<GalleryPage />} /> */}
+        <Route path="/courses" element={<CoursesPage />} />
+        {/* <Route path="/blog" element={<BlogPage />} /> */}
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/auth" element={<Auth />} />
+      </Routes>
+
+      <Footer />
+    </BrowserRouter>
+  );
+}

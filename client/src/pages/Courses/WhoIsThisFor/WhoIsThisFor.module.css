@@ -1,0 +1,132 @@
+.heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 100px 0 60px;
+}
+
+.description {
+    max-width: 760px;
+    margin: 18px auto 0;
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #6d6d6d;
+}
+
+.wrapper {
+    max-width: 1100px;
+    margin: 70px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    /* padding-bottom: 100px; */
+}
+
+.column {
+    background: linear-gradient(180deg, #fff, #fcfaf7);
+    border: 1px solid rgba(210, 190, 170, .35);
+    border-radius: 28px;
+    padding: 36px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .05);
+}
+
+.column h3 {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 26px;
+    color: var(--color-text);
+}
+
+.item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid #efe6dd;
+}
+
+.item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.icon {
+    font-size: 1.4rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.good {
+    color: #6b9b73;
+}
+
+.bad {
+    color: #c58d63;
+}
+
+.text {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: #555;
+}
+
+@media(max-width:1024px) {
+
+    .wrapper {
+        gap: 22px;
+    }
+
+    .column {
+        padding: 30px;
+    }
+
+    .column h3 {
+        font-size: 1.75rem;
+    }
+
+}
+
+@media(max-width:767px) {
+
+    .heading {
+        margin: 70px 0 40px;
+    }
+
+    .description {
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .wrapper {
+        grid-template-columns: 1fr;
+        margin-top: 45px;
+        gap: 20px;
+    }
+
+    .column {
+        padding: 26px;
+        border-radius: 22px;
+    }
+
+    .column h3 {
+        font-size: 1.55rem;
+        margin-bottom: 20px;
+    }
+
+    .item {
+        gap: 14px;
+        padding: 16px 0;
+    }
+
+    .icon {
+        font-size: 1.2rem;
+    }
+
+    .text {
+        font-size: .95rem;
+    }
+
+}

@@ -1,0 +1,412 @@
+/* ─── Heading ───────────────────────────────────────────────────────────────── */
+
+.heading {
+  max-width: 760px;
+  margin: 100px auto 70px;
+  text-align: center;
+}
+
+.description {
+  max-width: 700px;
+  margin: 20px auto 0;
+  font-size: clamp(0.97rem, 1.4vw, 1.05rem);
+  line-height: 1.9;
+  color: #666;
+}
+
+/* ─── Timeline wrapper ──────────────────────────────────────────────────────── */
+
+.timelineWrapper {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+/* Vertical center spine */
+.centerLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #e5d9cd;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+/* ─── Timeline grid ─────────────────────────────────────────────────────────── */
+
+.timeline {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+/* ─── Row (pair of cards) ───────────────────────────────────────────────────── */
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0; /* gap handled by connectors */
+  align-items: center;
+}
+
+/* ─── Item ──────────────────────────────────────────────────────────────────── */
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Left item: card sits left, connector stretches right to center */
+.itemLeft {
+  flex-direction: row;
+  padding-right: 50px; /* space for connector + dot */
+}
+
+/* Right item: connector on left, card on right */
+.itemRight {
+  flex-direction: row;
+  padding-left: 50px; /* space for connector + dot */
+}
+
+/* ─── Connectors ────────────────────────────────────────────────────────────── */
+
+/* Horizontal line from right edge of left card to center spine */
+.connectorRight {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 50px;
+  height: 2px;
+  background: #e5d9cd;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Horizontal line from center spine to left edge of right card */
+.connectorLeft {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 50px;
+  height: 2px;
+  background: #e5d9cd;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Dot on the center spine */
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--color-primary);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.dot::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+/* ─── Last row (centered single card) ──────────────────────────────────────── */
+
+.lastRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Vertical drop from center line to last card */
+.connectorDown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 2px;
+  height: 44px;
+  background: #e5d9cd;
+  position: relative;
+}
+
+.connectorDown .dot {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.lastItem {
+  width: 100%;
+  max-width: 480px;
+  margin-top: 8px;
+}
+
+/* ─── Card ──────────────────────────────────────────────────────────────────── */
+
+.card {
+  position: relative;
+  width: 100%;
+  padding: 34px;
+  background: #fff;
+  border-radius: 28px;
+  border: 1px solid rgba(210, 190, 170, 0.35);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 65px rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Card header: icon + title on same line ────────────────────────────────── */
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.cardHeader h3 {
+  font-family: var(--heading-font);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ─── Year ──────────────────────────────────────────────────────────────────── */
+
+.year {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ─── Icon ──────────────────────────────────────────────────────────────────── */
+
+.icon {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 18px;
+  background: #f8f2eb;
+  font-size: 1.8rem;
+}
+
+/* ─── Description ───────────────────────────────────────────────────────────── */
+
+.card > p {
+  line-height: 1.85;
+  color: #666;
+  font-size: clamp(0.93rem, 1.3vw, 1rem);
+}
+
+/* ─── Botanical ─────────────────────────────────────────────────────────────── */
+
+.botanical {
+  position: absolute;
+  right: -35px;
+  bottom: -30px;
+  width: 180px;
+  opacity: 0.2;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ─── Tablet  768px – 1024px ────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+
+  .timeline {
+    gap: 24px;
+  }
+
+  .card {
+    padding: 28px;
+  }
+
+  .cardHeader h3 {
+    font-size: 1.7rem;
+  }
+
+  .icon {
+    width: 52px;
+    height: 52px;
+    font-size: 1.55rem;
+  }
+
+  .botanical {
+    width: 150px;
+  }
+
+  .itemLeft {
+    padding-right: 40px;
+  }
+
+  .itemRight {
+    padding-left: 40px;
+  }
+
+  .connectorRight,
+  .connectorLeft {
+    width: 40px;
+  }
+}
+
+/* ─── Mobile  ≤ 767px ───────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+
+  .heading {
+    margin: 70px auto 45px;
+  }
+
+  /* Vertical spine moves to the left */
+  .centerLine {
+    left: 18px;
+    transform: none;
+  }
+
+  /* Stack all rows vertically */
+  .row {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  /* Both items: indent from left spine */
+  .item,
+  .itemLeft,
+  .itemRight {
+    flex-direction: row;
+    padding-left: 52px;
+    padding-right: 20px;
+  }
+
+  /* Replace horizontal connectors with vertical left-side connector */
+  .connectorRight,
+  .connectorLeft {
+    position: absolute;
+    left: 18px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #e5d9cd;
+    transform: none;
+  }
+
+  .connectorRight .dot,
+  .connectorLeft .dot {
+    position: absolute;
+    top: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Last row */
+  .lastRow {
+    align-items: flex-start;
+    padding-left: 52px;
+    position: relative;
+  }
+
+  .connectorDown {
+    position: absolute;
+    left: 18px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #e5d9cd;
+  }
+
+  .connectorDown .dot {
+    top: 34px;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .lastItem {
+    max-width: none;
+    width: 100%;
+    margin-top: 0;
+    padding-right: 20px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .cardHeader h3 {
+    font-size: 1.5rem;
+  }
+
+  .icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.45rem;
+  }
+}
+
+/* ─── Small mobile  ≤ 480px ─────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+
+  .card {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .cardHeader {
+    gap: 12px;
+  }
+
+  .cardHeader h3 {
+    font-size: 1.35rem;
+  }
+
+  .year {
+    font-size: 0.75rem;
+  }
+
+  .card > p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.3rem;
+    border-radius: 14px;
+  }
+
+  .botanical {
+    width: 130px;
+  }
+}

@@ -1,0 +1,33 @@
+.form{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:22px;
+}
+
+.switch{
+
+    margin-top:28px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:6px;
+
+    font-size:.95rem;
+}
+
+.switch button{
+
+    background:none;
+
+    border:none;
+
+    color:var(--color-primary);
+
+    font-weight:700;
+
+    cursor:pointer;
+}
