@@ -5,9 +5,12 @@ import "./styles/globals.css";
 import "./styles/typography.css";
 
 import App from "./App";
+import AuthProvider from "./context/AuthContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </StrictMode>,
 );

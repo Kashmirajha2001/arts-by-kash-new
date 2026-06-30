@@ -1,24 +1,43 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Navbar.module.css";
-// import navigation from "../../../constants/navigation.js";
 import navigation from "../../../constants/navigation";
 import PrimaryButton from "../../ui/PrimaryButton/PrimaryButton";
 import useScroll from "../../../hooks/useScroll";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import {
+  FiUser,
+  FiHeart,
+  FiBookOpen,
+  FiShoppingBag,
+  FiGrid,
+  FiLogOut,
+  FiChevronDown,
+} from "react-icons/fi";
 
 export default function Navbar() {
   const scrolled = useScroll();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef(null);
 
-  // Temporary until authentication is implemented
-  const isLoggedIn = false;
+  const { user, logout } = useAuth();
+  const firstName = user?.name?.split(" ")[0];
+  const navigate = useNavigate();
 
-  const user = {
-    name: "Kashmira",
-  };
+  const isLoggedIn = !!user;
 
-  //   const { user } = useAuth();
-  // const isLoggedIn = !!user;
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     // <header className={styles.navbar}>
@@ -46,24 +65,102 @@ export default function Navbar() {
         </nav>
 
         <div className={styles.actions}>
-          {isLoggedIn ? (
-            <div className={styles.userMenu}>
-              <button className={styles.userButton}>
-                <div className={styles.avatar}>{user.name.charAt(0)}</div>
+          <div className={styles.userMenu} ref={profileRef}>
+            {isLoggedIn ? (
+              <>
+                <button
+                  className={styles.userButton}
+                  onClick={() => setProfileOpen((prev) => !prev)}
+                >
+                  <div className={styles.avatar}>
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
 
-                <span>{user.name}</span>
-              </button>
-            </div>
-          ) : (
-            <>
-              <PrimaryButton variant="outline" to="/auth?mode=login">
-                Login
-              </PrimaryButton>
-              <PrimaryButton to="/auth?mode=register">Get Started</PrimaryButton>
+                  <span className={styles.userName}>{firstName}</span>
 
-              {/* <PrimaryButton to="/commissions">Book a Commission</PrimaryButton> */}
-            </>
-          )}
+                  <span
+                    className={`${styles.arrow} ${
+                      profileOpen ? styles.arrowOpen : ""
+                    }`}
+                  >
+                    ▾
+                  </span>
+                </button>
+
+                {profileOpen && (
+                  <div className={styles.dropdown}>
+                    <div className={styles.mobileUser}>
+                      <div className={styles.dropdownAvatar}>
+                        {user.name.charAt(0).toUpperCase()}
+                      </div>
+
+                      <span>{user.name}</span>
+                    </div>
+
+                    <button>
+                      <FiGrid />
+                      <span>Dashboard</span>
+                    </button>
+
+                    <button>
+                      <FiUser />
+                      <span>My Profile</span>
+                    </button>
+
+                    <button>
+                      <FiHeart />
+                      <span>Wishlist</span>
+                    </button>
+
+                    <button>
+                      <FiBookOpen />
+                      <span>My Courses</span>
+                    </button>
+
+                    <button>
+                      <FiShoppingBag />
+                      <span>My Orders</span>
+                    </button>
+
+                    <hr className={styles.divider} />
+
+                    <button
+                      className={styles.logout}
+                      onClick={async () => {
+                        await logout();
+                        setProfileOpen(false);
+                      }}
+                    >
+                      <FiLogOut />
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {/* Desktop Login Buttons */}
+                <div className={styles.desktopAuth}>
+                  <PrimaryButton variant="outline" to="/auth?mode=login">
+                    Login
+                  </PrimaryButton>
+
+                  <PrimaryButton to="/auth?mode=register">
+                    Get Started
+                  </PrimaryButton>
+                </div>
+
+                {/* Mobile Profile Icon */}
+                <button
+                  className={styles.mobileProfileButton}
+                  onClick={() => navigate("/auth?mode=login")}
+                  aria-label="Login"
+                >
+                  <FiUser />
+                </button>
+              </>
+            )}
+          </div>
 
           <button
             type="button"
@@ -100,12 +197,6 @@ export default function Navbar() {
               {item.name}
             </NavLink>
           ))}
-
-          {!isLoggedIn ? (
-            <PrimaryButton to="/auth">Login</PrimaryButton>
-          ) : (
-            <button className={styles.mobileProfile}>My Dashboard</button>
-          )}
         </nav>
       </div>
     </header>

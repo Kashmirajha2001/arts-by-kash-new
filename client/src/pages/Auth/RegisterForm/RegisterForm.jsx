@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import FormInput from "../../../components/ui/FormInput/FormInput";
+import useAuth from "../../../hooks/useAuth";
 
-import {
-  isValidEmail,
-  isStrongPassword,
-} from "../../../utils/validation";
+import { isValidEmail, isStrongPassword } from "../../../utils/validation";
 
 import styles from "./RegisterForm.module.css";
 
 export default function RegisterForm() {
   const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const { register, login } = useAuth();
 
   const [form, setForm] = useState({
     name: "",
@@ -56,16 +57,13 @@ export default function RegisterForm() {
     if (!form.password) {
       newErrors.password = "Password is required.";
     } else if (!isStrongPassword(form.password)) {
-      newErrors.password =
-        "Password must be at least 8 characters.";
+      newErrors.password = "Password must be at least 8 characters.";
     }
 
     if (!form.confirmPassword) {
-      newErrors.confirmPassword =
-        "Please confirm your password.";
+      newErrors.confirmPassword = "Please confirm your password.";
     } else if (form.confirmPassword !== form.password) {
-      newErrors.confirmPassword =
-        "Passwords do not match.";
+      newErrors.confirmPassword = "Passwords do not match.";
     }
 
     setErrors(newErrors);
@@ -74,12 +72,23 @@ export default function RegisterForm() {
 
     setLoading(true);
 
-    // Temporary until backend is connected
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      await register({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+      });
 
-    console.log(form);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
 
-    setLoading(false);
+      setErrors({
+        general: error.response?.data?.message || "Registration failed.",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -136,6 +145,18 @@ export default function RegisterForm() {
       <div className={styles.switch}>
         <span>Already have an account?</span>
 
+        {errors.general && (
+          <p
+            style={{
+              color: "#c62828",
+              marginBottom: "12px",
+              fontSize: "14px",
+            }}
+          >
+            {errors.general}
+          </p>
+        )}
+        
         <button
           type="button"
           onClick={() => setSearchParams({ mode: "login" })}

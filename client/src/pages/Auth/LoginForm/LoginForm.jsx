@@ -4,11 +4,15 @@ import { useSearchParams } from "react-router-dom";
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import FormInput from "../../../components/ui/FormInput/FormInput";
 import { isValidEmail } from "../../../utils/validation";
+import useAuth from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./LoginForm.module.css";
 
 export default function LoginForm() {
   const [, setSearchParams] = useSearchParams();
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
@@ -33,7 +37,7 @@ export default function LoginForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -56,12 +60,20 @@ export default function LoginForm() {
 
     setLoading(true);
 
-    // Later this will be the API call
+    try {
+      await login(form);
+      navigate("/");
 
-    setTimeout(() => {
-      console.log(form);
+      console.log("Login Successful");
+    } catch (error) {
+      console.error(error);
+
+      setErrors({
+        general: error.response?.data?.message || "Login failed.",
+      });
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -86,6 +98,18 @@ export default function LoginForm() {
           placeholder="Enter your password"
           error={errors.password}
         />
+
+        {errors.general && (
+          <p
+            style={{
+              color: "#c62828",
+              marginBottom: "12px",
+              fontSize: "14px",
+            }}
+          >
+            {errors.general}
+          </p>
+        )}
 
         <button
           type="button"
