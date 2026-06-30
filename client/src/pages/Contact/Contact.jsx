@@ -14,6 +14,10 @@ import Container from "../../components/ui/Container/Container";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import ContactFAQ from "./ContactFAQ/ContactFAQ";
+import {
+  showSuccess,
+  showError,
+} from "../../utils/toast";
 
 const contactInfo = [
   {
@@ -74,6 +78,7 @@ export default function ContactSection() {
       );
 
       setStatus("success");
+      showSuccess("Message Sent Successfully!");
 
       setForm({
         from_name: "",
@@ -183,9 +188,7 @@ export default function ContactSection() {
                 {status === "success" && (
                   <div className={styles.successBanner}>
                     <div className={styles.successIcon}>✓</div>
-
                     <div>
-                      <h4>Message Sent Successfully!</h4>
                       <p>
                         Thanks for reaching out. I'll get back to you as soon as
                         possible.

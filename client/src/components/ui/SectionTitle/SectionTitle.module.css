@@ -2,7 +2,8 @@
 
     font-family:var(--heading-font);
 
-    font-size:clamp(2.7rem,4vw,3.8rem);
+    /* font-size:clamp(2.7rem,4vw,3.8rem); */
+    font-size: clamp(2rem, 3vw, 2.8rem);
 
     line-height:1.15;
 

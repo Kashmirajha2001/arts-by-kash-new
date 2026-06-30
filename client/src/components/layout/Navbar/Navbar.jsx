@@ -14,6 +14,10 @@ import {
   FiLogOut,
   FiChevronDown,
 } from "react-icons/fi";
+import {
+  showSuccess,
+  showError,
+} from "../../../utils/toast";
 
 export default function Navbar() {
   const scrolled = useScroll();
@@ -40,11 +44,8 @@ export default function Navbar() {
   }, []);
 
   return (
-    // <header className={styles.navbar}>
     <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.container}>
-        {/* Logo */}
-        {/* <div className={styles.logo}>Arts by Kash</div> */}
         <NavLink to="/" className={styles.logo}>
           Arts by Kash
         </NavLink>
@@ -128,6 +129,7 @@ export default function Navbar() {
                       className={styles.logout}
                       onClick={async () => {
                         await logout();
+                        showSuccess("You have been successfully logged out!")
                         setProfileOpen(false);
                       }}
                     >

@@ -6,6 +6,10 @@ import FormInput from "../../../components/ui/FormInput/FormInput";
 import useAuth from "../../../hooks/useAuth";
 
 import { isValidEmail, isStrongPassword } from "../../../utils/validation";
+import {
+  showSuccess,
+  showError,
+} from "../../../utils/toast";
 
 import styles from "./RegisterForm.module.css";
 
@@ -79,6 +83,7 @@ export default function RegisterForm() {
         password: form.password,
       });
 
+      showSuccess("Registered Successfully! ✨")
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -145,7 +150,7 @@ export default function RegisterForm() {
       <div className={styles.switch}>
         <span>Already have an account?</span>
 
-        {errors.general && (
+        {/* {errors.general && (
           <p
             style={{
               color: "#c62828",
@@ -155,7 +160,7 @@ export default function RegisterForm() {
           >
             {errors.general}
           </p>
-        )}
+        )} */}
         
         <button
           type="button"

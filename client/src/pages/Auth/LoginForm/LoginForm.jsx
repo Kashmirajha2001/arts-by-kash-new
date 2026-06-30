@@ -6,6 +6,11 @@ import FormInput from "../../../components/ui/FormInput/FormInput";
 import { isValidEmail } from "../../../utils/validation";
 import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+// import toast from "react-hot-toast";
+import {
+  showSuccess,
+  showError,
+} from "../../../utils/toast";
 
 import styles from "./LoginForm.module.css";
 
@@ -42,14 +47,18 @@ export default function LoginForm() {
 
     const newErrors = {};
 
-    if (!form.email.trim()) {
-      newErrors.email = "Email is required.";
-    } else if (!isValidEmail(form.email)) {
-      newErrors.email = "Enter a valid email.";
-    }
-
-    if (!form.password.trim()) {
-      newErrors.password = "Password is required.";
+    if(!form.email.trim() && !form.password.trim()){
+      showError("Email & Password is required!");
+    }else{
+      if (!form.email.trim()) {
+        newErrors.email = "Enter a valid email.";
+      } else if (!isValidEmail(form.email)) {
+        newErrors.email = "Enter a valid email.";
+      }
+  
+      if (!form.password.trim()) {
+        newErrors.password = "Password is required.";
+      }
     }
 
     setErrors(newErrors);
@@ -62,12 +71,15 @@ export default function LoginForm() {
 
     try {
       await login(form);
-      navigate("/");
 
-      console.log("Login Successful");
+      const loggedInUser = await login(form);
+      showSuccess(`Welcome back, ${loggedInUser.name.split(" ")[0]}! ✨`);
+      navigate("/");
+      
     } catch (error) {
       console.error(error);
 
+      // showError("Login Failed!")
       setErrors({
         general: error.response?.data?.message || "Login failed.",
       });
@@ -99,7 +111,7 @@ export default function LoginForm() {
           error={errors.password}
         />
 
-        {errors.general && (
+        {/* {errors.general && (
           <p
             style={{
               color: "#c62828",
@@ -109,7 +121,7 @@ export default function LoginForm() {
           >
             {errors.general}
           </p>
-        )}
+        )} */}
 
         <button
           type="button"

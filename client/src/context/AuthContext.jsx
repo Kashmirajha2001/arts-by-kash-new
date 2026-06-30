@@ -38,7 +38,7 @@ export default function AuthProvider({ children }) {
     console.log("Current User:", await getCurrentUser());
     setUser(currentUser.user);
 
-    return data;
+    return currentUser.user;
   };
 
   const register = async (formData) => {

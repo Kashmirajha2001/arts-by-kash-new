@@ -64,7 +64,7 @@ export default function FeaturedCourse() {
               </div>
             </div>
 
-            <PrimaryButton to="/courses">Comming soon....</PrimaryButton>
+            <PrimaryButton to="/courses">Coming soon....</PrimaryButton>
           </motion.div>
 
           {/* RIGHT */}
