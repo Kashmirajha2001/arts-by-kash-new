@@ -216,10 +216,14 @@ export const googleLogin = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
+  console.log("1. Controller started");
   try {
     const { email } = req.body;
 
+    console.log("2. Email:", email);
     const user = await User.findOne({ email });
+
+    console.log("3. User found:", !!user);
 
     // Don't reveal whether the email exists
     if (!user) {
@@ -242,6 +246,8 @@ export const forgotPassword = async (req, res) => {
     // Generate token
     const resetToken = crypto.randomBytes(32).toString("hex");
 
+    console.log("4. Creating reset token");
+
     // Store hashed token
     user.passwordResetToken = crypto
       .createHash("sha256")
@@ -249,6 +255,8 @@ export const forgotPassword = async (req, res) => {
       .digest("hex");
 
     user.passwordResetExpires = Date.now() + 15 * 60 * 1000;
+
+    console.log("5. Saving user");
 
     await user.save();
 
