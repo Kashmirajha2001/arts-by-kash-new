@@ -216,6 +216,7 @@ export const googleLogin = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
+  
   try {
     const { email } = req.body;
 
@@ -268,6 +269,7 @@ export const forgotPassword = async (req, res) => {
         "If an account exists with this email, a reset link has been sent.",
     });
   } catch (error) {
+    onsole.error("Forgot Password Error:", error);
     res.status(500).json({
       success: false,
       message: error.message,

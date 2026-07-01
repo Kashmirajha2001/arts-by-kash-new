@@ -34,6 +34,8 @@ export default function ForgotPassword() {
       return;
     }
 
+    setError("");
+    setLoading(true);
     try {
       await forgotPassword(email);
 
