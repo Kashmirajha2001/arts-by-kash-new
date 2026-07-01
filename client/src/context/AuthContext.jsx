@@ -31,24 +31,23 @@ export default function AuthProvider({ children }) {
   }, []);
 
   const login = async (formData) => {
-    const data = await loginUser(formData);
+    await loginUser(formData);
 
     const currentUser = await getCurrentUser();
 
-    console.log("Current User:", await getCurrentUser());
     setUser(currentUser.user);
 
     return currentUser.user;
   };
 
   const register = async (formData) => {
-    const data = await registerUser(formData);
+    await registerUser(formData);
 
     const currentUser = await getCurrentUser();
 
     setUser(currentUser.user);
 
-    return data;
+    return currentUser.user;
   };
 
   const logout = async () => {

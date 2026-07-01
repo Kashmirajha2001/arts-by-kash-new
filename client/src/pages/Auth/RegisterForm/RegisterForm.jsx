@@ -1,21 +1,21 @@
 import { useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import FormInput from "../../../components/ui/FormInput/FormInput";
 import useAuth from "../../../hooks/useAuth";
 
 import { isValidEmail, isStrongPassword } from "../../../utils/validation";
-import {
-  showSuccess,
-  showError,
-} from "../../../utils/toast";
+import { showSuccess, showError } from "../../../utils/toast";
 
 import styles from "./RegisterForm.module.css";
 
 export default function RegisterForm() {
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from;
 
   const { register, login } = useAuth();
 
@@ -77,20 +77,27 @@ export default function RegisterForm() {
     setLoading(true);
 
     try {
-      await register({
+      const registeredUser = await register({
         name: form.name,
         email: form.email,
         password: form.password,
       });
 
-      showSuccess("Registered Successfully! ✨")
-      navigate("/");
-    } catch (error) {
-      console.error(error);
+      showSuccess(
+        `Welcome to Arts by Kash, ${registeredUser.name.split(" ")[0]}! 🎉`,
+      );
 
-      setErrors({
-        general: error.response?.data?.message || "Registration failed.",
-      });
+      if (from) {
+        navigate(from.pathname, {
+          replace: true,
+        });
+      } else {
+        navigate("/", {
+          replace: true,
+        });
+      }
+    } catch (error) {
+      showError(error.response?.data?.message || "Registration failed.");
     } finally {
       setLoading(false);
     }
@@ -161,7 +168,7 @@ export default function RegisterForm() {
             {errors.general}
           </p>
         )} */}
-        
+
         <button
           type="button"
           onClick={() => setSearchParams({ mode: "login" })}

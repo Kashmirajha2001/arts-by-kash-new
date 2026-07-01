@@ -6,6 +6,9 @@ import AboutPage from "./pages/AboutPage/About";
 import ContactPage from "./pages/Contact/Contact";
 import ScrollToTop from "./constants/ScrollToTop";
 import Auth from "./pages/Auth/Auth";
+import GuestRoute from "./components/auth/GuestRoute";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -22,7 +25,23 @@ export default function App() {
         <Route path="/courses" element={<CoursesPage />} />
         {/* <Route path="/blog" element={<BlogPage />} /> */}
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route
+          path="/auth"
+          element={
+            <GuestRoute>
+              <Auth />
+            </GuestRoute>
+          }
+        />
+        {/* Dashboard Wishlist Orders Courses Profile */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <Footer />

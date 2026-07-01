@@ -5,12 +5,8 @@ import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import FormInput from "../../../components/ui/FormInput/FormInput";
 import { isValidEmail } from "../../../utils/validation";
 import useAuth from "../../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-// import toast from "react-hot-toast";
-import {
-  showSuccess,
-  showError,
-} from "../../../utils/toast";
+import { useNavigate, useLocation } from "react-router-dom";
+import { showSuccess, showError } from "../../../utils/toast";
 
 import styles from "./LoginForm.module.css";
 
@@ -27,6 +23,9 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  const from = location.state?.from;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,15 +46,15 @@ export default function LoginForm() {
 
     const newErrors = {};
 
-    if(!form.email.trim() && !form.password.trim()){
+    if (!form.email.trim() && !form.password.trim()) {
       showError("Email & Password is required!");
-    }else{
+    } else {
       if (!form.email.trim()) {
-        newErrors.email = "Enter a valid email.";
+        newErrors.email = "Email Password is required.";
       } else if (!isValidEmail(form.email)) {
         newErrors.email = "Enter a valid email.";
       }
-  
+
       if (!form.password.trim()) {
         newErrors.password = "Password is required.";
       }
@@ -70,19 +69,21 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      await login(form);
-
       const loggedInUser = await login(form);
-      showSuccess(`Welcome back, ${loggedInUser.name.split(" ")[0]}! ✨`);
-      navigate("/");
-      
-    } catch (error) {
-      console.error(error);
 
-      // showError("Login Failed!")
-      setErrors({
-        general: error.response?.data?.message || "Login failed.",
-      });
+      showSuccess(`Welcome back, ${loggedInUser.name.split(" ")[0]}! ✨`);
+
+      if (from) {
+        navigate(from.pathname, {
+          replace: true,
+        });
+      } else {
+        navigate("/", {
+          replace: true,
+        });
+      }
+    } catch (error) {
+      showError(error.response?.data?.message || "Login failed.");
     } finally {
       setLoading(false);
     }
@@ -111,7 +112,7 @@ export default function LoginForm() {
           error={errors.password}
         />
 
-        {/* {errors.general && (
+        {errors.general && (
           <p
             style={{
               color: "#c62828",
@@ -121,7 +122,7 @@ export default function LoginForm() {
           >
             {errors.general}
           </p>
-        )} */}
+        )}
 
         <button
           type="button"
