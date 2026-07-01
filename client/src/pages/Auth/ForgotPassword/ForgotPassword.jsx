@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import FormInput from "../../../components/ui/FormInput/FormInput";
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import { forgotPassword } from "../../../services/authService";
+import { showError } from "../../../utils/toast";
 
 import { isValidEmail } from "../../../utils/validation";
 
