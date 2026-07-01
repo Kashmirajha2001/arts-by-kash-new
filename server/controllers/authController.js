@@ -216,7 +216,6 @@ export const googleLogin = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-  
   try {
     const { email } = req.body;
 
@@ -255,6 +254,9 @@ export const forgotPassword = async (req, res) => {
 
     // Build reset link
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+    console.log("CLIENT_URL:", process.env.CLIENT_URL);
+    console.log("Reset Link:", resetLink);
+    console.log("About to send email...");
 
     await sendEmail({
       to: user.email,
@@ -269,7 +271,7 @@ export const forgotPassword = async (req, res) => {
         "If an account exists with this email, a reset link has been sent.",
     });
   } catch (error) {
-    onsole.error("Forgot Password Error:", error);
+    console.error("Forgot Password Error:", error);
     res.status(500).json({
       success: false,
       message: error.message,
