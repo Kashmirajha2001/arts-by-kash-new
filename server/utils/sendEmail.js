@@ -1,31 +1,11 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+console.log(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async ({ to, subject, html }) => {
-  // const transporter = nodemailer.createTransport({
-  //   host: "smtp.gmail.com",
-  //   port: 465,
-  //   secure: true,
-  //   auth: {
-  //     user: process.env.EMAIL_USER,
-  //     pass: process.env.EMAIL_PASS,
-  //   },
-  // });
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    family: 4, // 👈 Force IPv4
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  await transporter.verify();
-  // console.log("SMTP Server is ready.");
-
-  await transporter.sendMail({
-    from: `"Arts by Kash" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: "Arts by Kash <onboarding@resend.dev>",
     to,
     subject,
     html,
