@@ -1,11 +1,21 @@
-import dns from "node:dns/promises";
+import dotenv from "dotenv";
+dotenv.config();
+
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 try {
-  const result = await dns.resolveSrv(
-    "_mongodb._tcp.arts-by-kash.y5fg6l2.mongodb.net"
-  );
-
-  console.log(result);
+  await transporter.verify();
+  console.log("SMTP OK");
 } catch (err) {
-  console.log(err);
+  console.error(err);
 }

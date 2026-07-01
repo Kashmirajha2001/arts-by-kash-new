@@ -2,6 +2,9 @@ import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 import { OAuth2Client } from "google-auth-library";
+import crypto from "crypto";
+import sendEmail from "../utils/sendEmail.js";
+import resetPasswordEmail from "../templates/resetPasswordEmail.js";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -172,9 +175,9 @@ export const googleLogin = async (req, res) => {
       if (!user.providers.includes("google")) {
         user.providers.push("google");
       }
-      
+
       user.isEmailVerified = true;
-      
+
       if (!user.avatar) {
         user.avatar = picture;
       }
@@ -208,6 +211,112 @@ export const googleLogin = async (req, res) => {
     res.status(401).json({
       success: false,
       message: "Google authentication failed.",
+    });
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    // Don't reveal whether the email exists
+    if (!user) {
+      return res.status(200).json({
+        success: true,
+        message:
+          "If an account exists with this email, a reset link has been sent.",
+      });
+    }
+
+    // Google-only accounts cannot reset via password
+    if (!user.providers.includes("local")) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "This account uses Google Sign-In. Please login with your google account!",
+      });
+    }
+
+    // Generate token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    // Store hashed token
+    user.passwordResetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    user.passwordResetExpires = Date.now() + 15 * 60 * 1000;
+
+    await user.save();
+
+    // Build reset link
+    const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+
+    await sendEmail({
+      to: user.email,
+      subject: "Reset your Arts by Kash password",
+      html: resetPasswordEmail(user.name, resetLink),
+    });
+    // await sendEmail();
+
+    res.status(200).json({
+      success: true,
+      message:
+        "If an account exists with this email, a reset link has been sent.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: {
+        $gt: Date.now(),
+      },
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Reset link is invalid or has expired.",
+      });
+    }
+
+    const { password } = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    user.password = hashedPassword;
+
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successfully.",
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong.",
     });
   }
 };

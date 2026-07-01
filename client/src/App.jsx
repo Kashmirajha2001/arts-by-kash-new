@@ -9,6 +9,7 @@ import Auth from "./pages/Auth/Auth";
 import GuestRoute from "./components/auth/GuestRoute";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import ResetPassword from "./pages/Auth/ResetPassword/ResetPassword";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -42,6 +43,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
 
       <Footer />

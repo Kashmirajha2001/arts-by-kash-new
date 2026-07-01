@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import FormInput from "../../../components/ui/FormInput/FormInput";
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
+import { forgotPassword } from "../../../services/authService";
 
 import { isValidEmail } from "../../../utils/validation";
 
@@ -32,15 +33,15 @@ export default function ForgotPassword() {
       return;
     }
 
-    setError("");
+    try {
+      await forgotPassword(email);
 
-    setLoading(true);
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setLoading(false);
-
-    setSuccess(true);
+      setSuccess(true);
+    } catch (error) {
+      showError(error.response?.data?.message || "Failed to send reset email.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,6 +66,7 @@ export default function ForgotPassword() {
               placeholder="you@example.com"
               error={error}
               autoComplete="email"
+              disabled={loading}
             />
 
             <PrimaryButton type="submit" disabled={loading}>
