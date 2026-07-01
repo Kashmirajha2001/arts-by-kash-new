@@ -1,6 +1,9 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const registerUser = async (req, res) => {
   try {
@@ -23,6 +26,7 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      providers: ["local"],
     });
 
     const token = generateToken(user._id);
@@ -62,6 +66,14 @@ export const loginUser = async (req, res) => {
 
     // Step 1
     const user = await User.findOne({ email });
+
+    if (!user.providers.includes("local")) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "This account uses Google Sign-In. Please continue with Google.",
+      });
+    }
 
     if (!user) {
       return res.status(401).json({
@@ -131,4 +143,71 @@ export const logoutUser = async (req, res) => {
       success: true,
       message: "Logged out successfully.",
     });
+};
+
+export const googleLogin = async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    const { email, name, picture } = payload;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        avatar: picture,
+        providers: ["google"],
+        isEmailVerified: true,
+      });
+    } else {
+      if (!user.providers.includes("google")) {
+        user.providers.push("google");
+      }
+      
+      user.isEmailVerified = true;
+      
+      if (!user.avatar) {
+        user.avatar = picture;
+      }
+
+      await user.save();
+    }
+
+    const token = generateToken(user._id);
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .status(200)
+      .json({
+        success: true,
+        message: "Google login successful.",
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+        },
+      });
+  } catch (error) {
+    console.error(error);
+
+    res.status(401).json({
+      success: false,
+      message: "Google authentication failed.",
+    });
+  }
 };

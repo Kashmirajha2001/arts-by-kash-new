@@ -155,23 +155,22 @@
 }
 
 .avatar {
-
   width: 42px;
   height: 42px;
-
   border-radius: 50%;
-
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-
   background: #f8f2eb;
-
   color: var(--color-primary);
-
   font-weight: 700;
+}
 
-  font-size: 1rem;
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .userButton span {

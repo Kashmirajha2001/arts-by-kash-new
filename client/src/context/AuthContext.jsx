@@ -5,6 +5,7 @@ import {
   loginUser,
   logoutUser,
   registerUser,
+  googleLoginUser,
 } from "../services/authService";
 
 export const AuthContext = createContext();
@@ -58,6 +59,16 @@ export default function AuthProvider({ children }) {
     return true;
   };
 
+  const googleLogin = async (credential) => {
+    await googleLoginUser(credential);
+
+    const currentUser = await getCurrentUser();
+
+    setUser(currentUser.user);
+
+    return currentUser.user;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -66,6 +77,7 @@ export default function AuthProvider({ children }) {
         login,
         register,
         logout,
+        googleLogin,
       }}
     >
       {children}

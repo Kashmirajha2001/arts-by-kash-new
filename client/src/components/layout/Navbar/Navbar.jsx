@@ -14,10 +14,7 @@ import {
   FiLogOut,
   FiChevronDown,
 } from "react-icons/fi";
-import {
-  showSuccess,
-  showError,
-} from "../../../utils/toast";
+import { showSuccess, showError } from "../../../utils/toast";
 
 export default function Navbar() {
   const scrolled = useScroll();
@@ -74,7 +71,15 @@ export default function Navbar() {
                   onClick={() => setProfileOpen((prev) => !prev)}
                 >
                   <div className={styles.avatar}>
-                    {user.name.charAt(0).toUpperCase()}
+                    {user.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt={user.name}
+                        className={styles.avatarImage}
+                      />
+                    ) : (
+                      user.name.charAt(0).toUpperCase()
+                    )}
                   </div>
 
                   <span className={styles.userName}>{firstName}</span>
@@ -129,7 +134,7 @@ export default function Navbar() {
                       className={styles.logout}
                       onClick={async () => {
                         await logout();
-                        showSuccess("You have been successfully logged out!")
+                        showSuccess("You have been successfully logged out!");
                         setProfileOpen(false);
                       }}
                     >

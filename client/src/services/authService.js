@@ -23,3 +23,11 @@ export const logoutUser = async () => {
 
   return response.data;
 };
+
+export const googleLoginUser = async (credential) => {
+  const response = await api.post("/auth/google", {
+    credential,
+  });
+
+  return response.data;
+};

@@ -18,7 +18,9 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true,
+      required: function () {
+        return this.providers.includes("local");
+      },
     },
 
     avatar: {
@@ -26,10 +28,14 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
 
-    provider: {
-      type: String,
-      enum: ["local", "google"],
-      default: "local",
+    providers: {
+      type: [String],
+      default: ["local"],
+    },
+
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
     },
 
     role: {
@@ -40,7 +46,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export default mongoose.model("User", userSchema);
