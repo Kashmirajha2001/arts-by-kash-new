@@ -10,8 +10,8 @@ export default function Commissions() {
   return (
     <>
       <PageHero
-        title="Courses"
-        breadcrumb="Learn. Create. Grow."
+        title="Commissions"
+        breadcrumb="Get your own Customized Portrait"
         image={HeroImage}
       />
       {/* <Gallery course={commissionImages[0]} /> */}

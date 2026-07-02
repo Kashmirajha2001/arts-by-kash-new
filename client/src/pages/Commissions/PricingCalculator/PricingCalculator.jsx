@@ -9,11 +9,13 @@ import Group from "@mui/icons-material/Group";
 import pricing from "../data/pricingData";
 import styles from "./PricingCalculator.module.css";
 import PointsTobeNoted from "./PointsTobeNoted/PointsTobeNoted";
+import CommissionModal from "./CommissionModal/CommissionModal";
 
 export default function PricingCalculator() {
   const [medium, setMedium] = useState("color");
   const [size, setSize] = useState("A4");
   const [people, setPeople] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const calculatePrice = () => {
     if (medium === "acrylic") return null;
@@ -74,6 +76,10 @@ export default function PricingCalculator() {
                 </div>
               </div>
             </div>
+
+            {/* <div className={styles.notesWrapper}>
+              <PointsTobeNoted />
+            </div> */}
           </div>
 
           {/* PRICE CARD — wrapper lets us center it on tablet */}
@@ -83,7 +89,7 @@ export default function PricingCalculator() {
               size={size}
               people={people}
               price={calculatePrice()}
-              onBook={() => {}}
+              onBook={() => setIsModalOpen(true)}
             />
           </div>
 
@@ -91,6 +97,16 @@ export default function PricingCalculator() {
           <div className={styles.notesWrapper}>
             <PointsTobeNoted />
           </div>
+
+          <CommissionModal
+            open={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            medium={medium}
+            size={size}
+            people={people}
+            price={calculatePrice()}
+          />
+
         </div>
       </Section>
     </section>

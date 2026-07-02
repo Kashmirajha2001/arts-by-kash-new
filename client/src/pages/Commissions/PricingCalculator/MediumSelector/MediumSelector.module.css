@@ -123,26 +123,14 @@
         margin-bottom: 14px;
     }
 
-    .mediumGrid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
     /* switch to row layout so icon + title share a line */
     .mediumCard {
-        flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
         text-align: left;
-        padding: 14px 16px;
+        padding: 14px;
         border-radius: 16px;
         gap: 0;
-    }
-
-    .icon {
-        font-size: 20px;
-        margin-right: 10px;
-        flex-shrink: 0;
     }
 
     /* title sits next to icon */
@@ -160,10 +148,27 @@
     }
 
     .checkIcon {
-        position: absolute;
-        top: 50%;
-        right: 12px;
-        transform: translateY(-50%);
-        font-size: 18px !important;
+        top: 10%;
+    }
+}
+
+@media (max-width: 600px) {
+    
+    .icon {
+        font-size: 20px;
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+
+    .mediumGrid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .mediumCard {
+        flex-direction: row;
+    }
+    .checkIcon {
+        top: 40%;
     }
 }

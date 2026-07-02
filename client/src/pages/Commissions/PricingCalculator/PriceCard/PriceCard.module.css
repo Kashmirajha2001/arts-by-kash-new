@@ -1,4 +1,5 @@
 .priceCard {
+    margin-top: 48px;
     position: sticky;
     top: 120px;
     background: #fff;
@@ -123,5 +124,6 @@
     /* remove sticky when not in side column */
     .priceCard {
         position: static;
+        margin-top: 20px;
     }
 }
