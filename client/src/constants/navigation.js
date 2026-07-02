@@ -23,6 +23,10 @@ const navigation = [
     name: "Contact",
     path: "/contact",
   },
+  {
+    name: "Commissions",
+    path: "/commissions",
+  },
 ];
 
 export default navigation;

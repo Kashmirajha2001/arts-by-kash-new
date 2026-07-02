@@ -10,6 +10,7 @@ import GuestRoute from "./components/auth/GuestRoute";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ResetPassword from "./pages/Auth/ResetPassword/ResetPassword";
+import Commissions from "./pages/Commissions/Commissions";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/courses" element={<CoursesPage />} />
         {/* <Route path="/blog" element={<BlogPage />} /> */}
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/commissions" element={<Commissions />} />
         <Route
           path="/auth"
           element={

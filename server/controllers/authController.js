@@ -216,14 +216,11 @@ export const googleLogin = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-  console.log("1. Controller started");
+  
   try {
     const { email } = req.body;
 
-    console.log("2. Email:", email);
     const user = await User.findOne({ email });
-
-    console.log("3. User found:", !!user);
 
     // Don't reveal whether the email exists
     if (!user) {
@@ -246,8 +243,6 @@ export const forgotPassword = async (req, res) => {
     // Generate token
     const resetToken = crypto.randomBytes(32).toString("hex");
 
-    console.log("4. Creating reset token");
-
     // Store hashed token
     user.passwordResetToken = crypto
       .createHash("sha256")
@@ -256,15 +251,10 @@ export const forgotPassword = async (req, res) => {
 
     user.passwordResetExpires = Date.now() + 15 * 60 * 1000;
 
-    console.log("5. Saving user");
-
     await user.save();
 
     // Build reset link
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
-    console.log("CLIENT_URL:", process.env.CLIENT_URL);
-    console.log("Reset Link:", resetLink);
-    console.log("About to send email...");
 
     await sendEmail({
       to: user.email,
@@ -279,7 +269,6 @@ export const forgotPassword = async (req, res) => {
         "If an account exists with this email, a reset link has been sent.",
     });
   } catch (error) {
-    console.error("Forgot Password Error:", error);
     res.status(500).json({
       success: false,
       message: error.message,

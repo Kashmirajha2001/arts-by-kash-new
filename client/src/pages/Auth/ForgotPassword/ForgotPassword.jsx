@@ -36,10 +36,13 @@ export default function ForgotPassword() {
 
     setError("");
     setLoading(true);
-    try {
-      await forgotPassword(email);
 
-      setSuccess(true);
+    try {
+      const data = await forgotPassword(email);
+
+      if (data.success) {
+        setSuccess(true);
+      }
     } catch (error) {
       showError(error.response?.data?.message || "Failed to send reset email.");
     } finally {

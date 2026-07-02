@@ -1,0 +1,169 @@
+.heading {
+    margin-bottom: 24px;
+    font-family: var(--heading-font);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.mediumGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.mediumCard {
+    position: relative;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 24px;
+    padding: 20px;
+    cursor: pointer;
+    transition: .35s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+}
+
+.mediumCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .12);
+}
+
+.active {
+    border-color: var(--color-primary);
+    box-shadow: 0 20px 50px rgba(123, 92, 63, .15);
+}
+
+.checkIcon {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    color: var(--color-primary);
+    background: white;
+    border-radius: 50%;
+    font-size: 22px !important;
+}
+
+.icon {
+    font-size: 26px;
+}
+
+.mediumCard h4 {
+    font-size: 1rem;
+    color: #222;
+    margin: 0;
+}
+
+.mediumCard p {
+    color: #666;
+    font-size: .85rem;
+    margin: 0;
+}
+
+.mediumCard small {
+    color: #777;
+    font-size: .8rem;
+}
+
+.mediumCard strong {
+    color: var(--color-primary);
+}
+
+/* ========================= */
+/* TABLET: 768px – 1200px    */
+/* Stays 3-col, shrinks      */
+/* ========================= */
+
+@media (max-width: 1200px) {
+    .mediumGrid {
+        gap: 14px;
+    }
+
+    .mediumCard {
+        padding: 14px 10px;
+        border-radius: 18px;
+        gap: 4px;
+    }
+
+    .icon {
+        font-size: 20px;
+    }
+
+    .mediumCard h4 {
+        font-size: .85rem;
+    }
+
+    .mediumCard p {
+        font-size: .76rem;
+    }
+
+    .mediumCard small {
+        font-size: .72rem;
+    }
+
+    .checkIcon {
+        top: 10px;
+        right: 10px;
+        font-size: 18px !important;
+    }
+}
+
+/* ========================= */
+/* MOBILE: < 768px           */
+/* Single col, icon inline   */
+/* ========================= */
+
+@media (max-width: 767px) {
+    .heading {
+        font-size: 1.15rem;
+        margin-bottom: 14px;
+    }
+
+    .mediumGrid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    /* switch to row layout so icon + title share a line */
+    .mediumCard {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        text-align: left;
+        padding: 14px 16px;
+        border-radius: 16px;
+        gap: 0;
+    }
+
+    .icon {
+        font-size: 20px;
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+
+    /* title sits next to icon */
+    .mediumCard h4 {
+        flex: 1;
+        font-size: .95rem;
+    }
+
+    /* subtitle and price drop to next line, indented past icon */
+    .mediumCard p,
+    .mediumCard small {
+        width: 100%;
+        padding-left: 30px;
+        font-size: .8rem;
+    }
+
+    .checkIcon {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-50%);
+        font-size: 18px !important;
+    }
+}
