@@ -7,11 +7,13 @@ import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 
 import FormInput from "../../../../components/ui/FormInput/FormInput";
 import PrimaryButton from "../../../../components/ui/PrimaryButton/PrimaryButton";
+import { isValidPhone, isValidEmail } from "../../../../utils/validation";
 
 import pricing from "../../data/pricingData";
 
 import styles from "./CommissionModal.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getCurrentUser } from "../../../../services/authService";
 
 export default function CommissionModal({
   open,
@@ -21,18 +23,58 @@ export default function CommissionModal({
   people,
   price,
 }) {
+
   if (!open) return null;
   const [images, setImages] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingUser, setLoadingUser] = useState(false);
+
+  const initialFormData = {
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  };
+
+  const initialErrors = {
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  };
+  const [formData, setFormData] = useState(initialFormData);
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  // setFormData(initialFormData);
+  // setErrors(initialErrors);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // later we'll call the API here
+    if (!validateForm()) return;
 
     setTimeout(() => {
       setSubmitted(true);
     }, 800);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   };
 
   const handleImageChange = (e) => {
@@ -63,19 +105,97 @@ export default function CommissionModal({
     });
   };
 
+  const handleClose = () => {
+    setSubmitted(false);
+
+    setImages([]);
+
+    setFormData(initialFormData);
+    setErrors(initialErrors);
+    onClose();
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    };
+
+    let isValid = true;
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required.";
+      isValid = false;
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+      isValid = false;
+    } else if (!isValidEmail(formData.email)) {
+      newErrors.email = "Enter a valid email.";
+      isValid = false;
+    }
+
+    if (!isValidPhone(formData.phone)) {
+      newErrors.phone = "Enter a valid phone number.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    return isValid;
+  };
+
+  useEffect(() => {
+    if (!open) return;
+
+    console.log("Modal opened");
+
+    const fetchUser = async () => {
+      try {
+        setLoadingUser(true);
+
+        const user = await getCurrentUser();
+
+        console.log("Fetched User:", user);
+
+        setFormData((prev) => ({
+          ...prev,
+          name: user.name || "",
+          email: user.email || "",
+        }));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoadingUser(false);
+      }
+    };
+
+    fetchUser();
+  }, [open]);
+
+  useEffect(() => {
+    console.log("formData changed:", formData);
+  }, [formData]);
+
   return (
     <>
-      <div className={styles.backdrop} onClick={onClose}></div>
+      <div className={styles.backdrop} onClick={handleClose}></div>
 
       <div className={styles.modal}>
-        <button className={styles.closeBtn} onClick={onClose}>
+        <button className={styles.closeBtn} onClick={handleClose}>
           <CloseIcon />
         </button>
 
         <h2>Request a Commission</h2>
-
         <p className={styles.subtitle}>
-          Fill in a few details and we'll get back to you shortly.
+          {loadingUser
+            ? "Preparing your commission form..."
+            : formData.name
+              ? `Welcome back, ${formData.name.split(" ")[0]} 👋 We've already filled in your details.`
+              : "Fill in a few details and we'll get back to you shortly."}
         </p>
 
         {submitted ? (
@@ -94,18 +214,32 @@ export default function CommissionModal({
               <strong> 24–48 hours.</strong>
             </p>
 
-            <PrimaryButton onClick={onClose}>Continue Browsing</PrimaryButton>
+            <PrimaryButton onClick={handleClose}>
+              Continue Browsing
+            </PrimaryButton>
           </div>
         ) : (
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputGrid}>
-              <FormInput label="Full Name" name="name" placeholder="John Doe" />
+              <FormInput
+                label="Full Name"
+                name="name"
+                placeholder="John Doe"
+                value={formData.name}
+                onChange={handleChange}
+                error={errors.name}
+                disabled={loadingUser}
+              />
 
               <FormInput
                 label="Email Address"
                 name="email"
                 type="email"
                 placeholder="john@example.com"
+                value={formData.email}
+                onChange={handleChange}
+                error={errors.email}
+                disabled={loadingUser}
               />
 
               <div className={styles.fullWidth}>
@@ -113,6 +247,10 @@ export default function CommissionModal({
                   label="Phone Number (Optional)"
                   name="phone"
                   placeholder="+91 XXXXX XXXXX"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  error={errors.phone}
+                  disabled={loadingUser}
                 />
               </div>
             </div>
@@ -160,6 +298,9 @@ export default function CommissionModal({
 
               <textarea
                 rows="5"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 placeholder="Tell us anything you'd like us to know about your artwork..."
                 className={styles.textarea}
               />
@@ -197,21 +338,10 @@ export default function CommissionModal({
                 onChange={handleImageChange}
               />
             </div>
-            {/* {images.length > 0 && (
-            <div className={styles.previewGrid}>
-              {images.map((image) => (
-                <div key={image.id} className={styles.previewCard}>
-                  <img src={image.preview} alt="" />
 
-                  <button type="button" onClick={() => removeImage(image.id)}>
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          )} */}
-
-            <PrimaryButton type="submit">Request Commission</PrimaryButton>
+            <PrimaryButton type="submit" disabled={loading}>
+              {loading ? "Sending..." : "Request Commission"}
+            </PrimaryButton>
           </form>
         )}
       </div>

@@ -91,18 +91,14 @@
 }
 
 .summaryGrid {
-    /* display: grid;
-    grid-template-columns: 2fr 2fr; */
     display: flex;
-    /* align-items: center; */
     align-content: space-between;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 18px;
 }
 
 .summaryGrid div {
-    display: flex;
-    align-items: center;
     gap: 10px;
     font-weight: 500;
 }
@@ -177,59 +173,59 @@
     /* width: 100%; */
 }
 
-.successState{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:40px 10px 20px;
+.successState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 10px 20px;
 }
 
-.successCircle{
-    width:50px;
-    height:50px;
-    border-radius:50%;
-    background:#eef9f1;
-    color:#22a447;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:52px;
-    font-weight:700;
-    margin-bottom:30px;
-    animation:pop .45s ease;
+.successCircle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #eef9f1;
+    color: #22a447;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 52px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    animation: pop .45s ease;
 }
 
-.successState h2{
+.successState h2 {
     /* margin-bottom:18px; */
-    color:#222;
+    color: #222;
 }
 
-.successState p{
-    max-width:500px;
+.successState p {
+    max-width: 500px;
     /* line-height:1.8; */
-    color:#666;
-    /* margin-bottom:36px; */
+    color: #666;
+    margin-bottom: 36px;
 }
 
-.successState button{
-    width:260px;
+.successState button {
+    width: 260px;
 }
 
-@keyframes pop{
-    0%{
-        transform:scale(.3);
-        opacity:0;
+@keyframes pop {
+    0% {
+        transform: scale(.3);
+        opacity: 0;
     }
 
-    70%{
-        transform:scale(1.08);
+    70% {
+        transform: scale(1.08);
     }
 
-    100%{
-        transform:scale(1);
-        opacity:1;
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
 
@@ -295,8 +291,12 @@
     .inputGrid {
         grid-template-columns: 1fr;
     }
+}
 
+@media(max-width:520px) {
     .summaryGrid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
     }
 }
