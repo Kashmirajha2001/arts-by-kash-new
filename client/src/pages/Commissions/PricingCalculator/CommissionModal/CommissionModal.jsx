@@ -76,15 +76,7 @@ export default function CommissionModal({
         data.append("images", image.file);
       });
 
-      await submitCommission(data);
-
-      // await submitCommission({
-      //   ...formData,
-      //   medium,
-      //   size,
-      //   people,
-      //   price,
-      // });
+      const response = await submitCommission(data);
 
       setSubmitted(true);
     } catch (error) {
