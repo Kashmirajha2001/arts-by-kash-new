@@ -8,6 +8,7 @@ import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import FormInput from "../../../../components/ui/FormInput/FormInput";
 import PrimaryButton from "../../../../components/ui/PrimaryButton/PrimaryButton";
 import { isValidPhone, isValidEmail } from "../../../../utils/validation";
+import { submitCommission } from "../../../../services/commissionService";
 
 import pricing from "../../data/pricingData";
 
@@ -23,8 +24,7 @@ export default function CommissionModal({
   people,
   price,
 }) {
-
-  if (!open) return null;
+  // if (!open) return null;
   const [images, setImages] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,17 +50,48 @@ export default function CommissionModal({
     phone: "",
     message: "",
   });
-  // setFormData(initialFormData);
-  // setErrors(initialErrors);
 
-  const handleSubmit = (e) => {
+  // if (!open) return null;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
-    setTimeout(() => {
+    try {
+      setLoading(true);
+      const data = new FormData();
+
+      data.append("name", formData.name);
+      data.append("email", formData.email);
+      data.append("phone", formData.phone);
+      data.append("message", formData.message);
+
+      data.append("medium", medium);
+      data.append("size", size);
+      data.append("people", people);
+      data.append("price", price);
+
+      images.forEach((image) => {
+        data.append("images", image.file);
+      });
+
+      await submitCommission(data);
+
+      // await submitCommission({
+      //   ...formData,
+      //   medium,
+      //   size,
+      //   people,
+      //   price,
+      // });
+
       setSubmitted(true);
-    }, 800);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -157,15 +188,16 @@ export default function CommissionModal({
       try {
         setLoadingUser(true);
 
-        const user = await getCurrentUser();
+        const response = await getCurrentUser();
 
-        console.log("Fetched User:", user);
+        const updatedForm = {
+          name: response.user.name || "",
+          email: response.user.email || "",
+          phone: "",
+          message: "",
+        };
 
-        setFormData((prev) => ({
-          ...prev,
-          name: user.name || "",
-          email: user.email || "",
-        }));
+        setFormData(updatedForm);
       } catch (error) {
         console.log(error);
       } finally {
@@ -179,6 +211,8 @@ export default function CommissionModal({
   useEffect(() => {
     console.log("formData changed:", formData);
   }, [formData]);
+
+  if (!open) return null;
 
   return (
     <>

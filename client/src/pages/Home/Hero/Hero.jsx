@@ -56,7 +56,7 @@ export default function Hero() {
             custom={0.45}
           >
             <PrimaryButton to="/courses">Explore Courses</PrimaryButton>
-            <PrimaryButton to="/contact" variant="outline">Book Commission</PrimaryButton>
+            <PrimaryButton to="/commissions" variant="outline">Book Commission</PrimaryButton>
           </motion.div>
         </div>
 

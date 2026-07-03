@@ -28,7 +28,7 @@ export default function Footer() {
           <h3>Turn Your Memories Into Timeless Artworks.</h3>
         </div>
 
-        <PrimaryButton to="/contact">Book Your Commission</PrimaryButton>
+        <PrimaryButton to="/commissions">Book Your Commission</PrimaryButton>
       </motion.div>
 
       {/* Main Footer */}

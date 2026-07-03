@@ -36,7 +36,7 @@ export default function WhatIOffer() {
             title="Portrait Commissions"
             description="Handmade portraits crafted with love and fine details."
             button="Book now"
-            link="/contact"
+            link="/commissions"
           />
 
           <OfferCard
