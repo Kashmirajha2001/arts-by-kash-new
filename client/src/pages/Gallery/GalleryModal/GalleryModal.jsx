@@ -21,22 +21,35 @@ export default function GalleryModal({ artwork, artworks, onClose, onBook }) {
   useEffect(() => {
     if (!artwork) return;
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") previous();
+      if (e.key === "Escape") {
+        onClose();
+      }
+      if (e.key === "ArrowRight") {
+        next();
+      }
+      if (e.key === "ArrowLeft") {
+        previous();
+      }
     };
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [artwork, artworks, onClose]);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [artwork, currentIndex]);
 
   // body scroll lock — cleanup always runs on unmount
   useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (artwork) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = "";
     };
-  }, []);
+  }, [artwork]);
 
   if (!artwork) return null;
 
@@ -127,7 +140,7 @@ export default function GalleryModal({ artwork, artworks, onClose, onBook }) {
           {currentArtwork.description && (
             <p className={styles.description}>{currentArtwork.description}</p>
           )}
-          <PrimaryButton onClick={onBook}>
+          <PrimaryButton to="/commissions">
             Commission Similar Artwork
           </PrimaryButton>
         </div>
