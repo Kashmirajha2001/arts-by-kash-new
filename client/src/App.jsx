@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ResetPassword from "./pages/Auth/ResetPassword/ResetPassword";
 import Commissions from "./pages/Commissions/Commissions";
+import GalleryPage from "./pages/Gallery/Gallery";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -23,7 +24,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />
-        {/* <Route path="/gallery" element={<GalleryPage />} /> */}
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/courses" element={<CoursesPage />} />
         {/* <Route path="/blog" element={<BlogPage />} /> */}
         <Route path="/contact" element={<ContactPage />} />
