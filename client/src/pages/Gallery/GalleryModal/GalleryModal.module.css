@@ -1,0 +1,266 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 15, 15, .65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2rem;
+    z-index: 9999;
+
+    animation: backdropFade .25s ease;
+}
+
+@keyframes backdropFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    position: relative;
+    width: min(1050px, 92vw);
+    max-height: 90vh;
+    background: #fff;
+    border-radius: 24px;
+    display: grid;
+    grid-template-columns: 1.7fr .9fr;
+    gap: 2rem;
+    padding: 1.5rem;
+    overflow: hidden;
+    animation: modalEnter .3s ease;
+}
+
+@keyframes modalEnter {
+
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+.imageSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.imageSection img {
+    width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 18px;
+    animation: imageFade .35s ease;
+}
+
+@keyframes imageFade {
+
+    from {
+        opacity: 0;
+        transform: scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+@keyframes fadeImage {
+
+    from {
+        opacity: 0;
+        transform: scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+.infoSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.medium {
+    color: var(--color-primary);
+    font-weight: 600;
+    letter-spacing: .4px;
+}
+
+.infoSection h2 {
+    margin: .8rem 0;
+    font-size: clamp(2rem,3vw,2.6rem);
+    line-height: 1.15;
+}
+
+.meta {
+    color: #777;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.description {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .25s;
+    z-index: 5;
+}
+
+.closeBtn:hover {
+    transform: rotate(90deg);
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,.96);
+    box-shadow: 0 10px 24px rgba(0,0,0,.15);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .25s;
+    z-index: 10;
+}
+
+.arrow:hover {
+    transform: translateY(-50%) scale(1.08);
+}
+
+.left {
+    left: 20px;
+}
+
+.right {
+    right: 20px;
+}
+
+.arrow svg {
+    font-size: 1rem !important;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scale {
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width:1200px) {
+
+    .modal {
+        width: min(900px, 95vw);
+        grid-template-columns: 1.4fr .8fr;
+    }
+
+}
+
+@media (max-width:900px) {
+    .modal {
+        width: 95vw;
+        grid-template-columns: 1fr;
+        max-height: 92vh;
+        padding:1.2rem;
+    }
+
+    .infoSection {
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (max-width:600px) {
+    .backdrop{
+        padding:.75rem;
+    }
+
+    .modal {
+        padding: 1rem;
+        border-radius: 20px;
+    }
+
+    .infoSection h2 {
+        margin: .5rem 0;
+        font-size: 1.5rem;
+    }
+
+    .meta {
+        margin-bottom: 1rem;
+        /* font-size: 0.6rem; */
+    }
+
+    .description {
+        line-height: 1;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+
+    .closeBtn{
+        width:42px;
+        height:42px;
+    }
+
+    .arrow{
+        width:42px;
+        height:42px;
+    }
+}

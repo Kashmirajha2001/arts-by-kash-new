@@ -26,6 +26,7 @@ const galleryData = [
     size: "A4",
     people: "Couple",
     featured: true,
+    description:"Beautiful Portrait jhsjahjahd hdjadjaghj nhhsfdga uwue6uwwwqjs asshagdfdsgdha"
   },
   {
     id: 7,
