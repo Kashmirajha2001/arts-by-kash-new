@@ -1,38 +1,34 @@
 import { useEffect, useState } from "react";
-import PrimaryButton from "../../../../components/ui/PrimaryButton/PrimaryButton";
-import more from "../data/more";
-import styles from "./More.module.css";
 
-export default function More({ medium, size, people, price, onBook }) {
+import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
+
+import more from "../data/more";
+
+import styles from "./More.module.css";
+import SectionTitle from "../../../components/ui/SectionTitle/SectionTitle";
+import SectionSubTitle from "../../../components/ui/SectionSubTitle/SectionSubTitle";
+
+function MoreCard({ item, onBook }) {
   const [currentImage, setCurrentImage] = useState(0);
 
-  const images = pricing[medium].previewImages;
-
   useEffect(() => {
-    setCurrentImage(0);
-  }, [medium]);
-
-  useEffect(() => {
-    if (!images?.length) return;
-
     const timer = setInterval(() => {
-      setCurrentImage((prev) => {
-        if (prev === images.length - 1) return 0;
-        return prev + 1;
-      });
-    }, 4000);
+      setCurrentImage((prev) =>
+        prev === item.previewImages.length - 1 ? 0 : prev + 1,
+      );
+    }, 3500);
 
     return () => clearInterval(timer);
-  }, [medium]);
+  }, [item.previewImages.length]);
 
   return (
-    <div className={styles.priceCard}>
+    <article className={styles.card}>
       <div className={styles.imageContainer}>
-        {images.map((src, index) => (
+        {item.previewImages.map((src, index) => (
           <img
             key={index}
             src={src}
-            alt={more[medium].title}
+            alt={item.title}
             className={`${styles.previewImage} ${
               currentImage === index ? styles.activeImage : ""
             }`}
@@ -40,7 +36,7 @@ export default function More({ medium, size, people, price, onBook }) {
         ))}
 
         <div className={styles.dots}>
-          {images.map((_, index) => (
+          {item.previewImages.map((_, index) => (
             <button
               key={index}
               type="button"
@@ -48,22 +44,38 @@ export default function More({ medium, size, people, price, onBook }) {
               className={`${styles.dot} ${
                 currentImage === index ? styles.activeDot : ""
               }`}
-              aria-label={`Preview ${index + 1}`}
             />
           ))}
         </div>
       </div>
 
-      <div className={styles.selectionInfo}>
-        <div>
-          🎨 <span>{more[medium].title}</span>
-        </div>
-      </div>
-      <div className={styles.divider}></div>
+      <div className={styles.content}>
+        <h3>{item.title}</h3>
 
-      <div className={styles.bookButton}>
-        <PrimaryButton onClick={onBook}>Book This Commission</PrimaryButton>
+        <p>{item.description}</p>
+
+        <PrimaryButton onClick={onBook}>Enquire Now</PrimaryButton>
       </div>
-    </div>
+    </article>
+  );
+}
+
+export default function More({ onBook }) {
+  return (
+    <section className={styles.section}>
+      <SectionTitle>Beyond Portraits</SectionTitle>
+      <div className={styles.subheading}>
+        <SectionSubTitle>
+          Discover custom jacket paintings and heartfelt pet portraits, each
+          handcrafted with the same care, creativity, and attention to detail as
+          every portrait commission.
+        </SectionSubTitle>
+      </div>
+      <div className={styles.grid}>
+        {more.map((item) => (
+          <MoreCard key={item.id} item={item} onBook={onBook} />
+        ))}
+      </div>
+    </section>
   );
 }

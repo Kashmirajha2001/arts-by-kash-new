@@ -23,6 +23,7 @@ export default function CommissionModal({
   size,
   people,
   price,
+  showSelection = true,
 }) {
   // if (!open) return null;
   const [images, setImages] = useState([]);
@@ -281,6 +282,7 @@ export default function CommissionModal({
               </div>
             </div>
 
+          {showSelection && (
             <div className={styles.summaryCard}>
               <h4>Selected Artwork</h4>
 
@@ -318,6 +320,7 @@ export default function CommissionModal({
                 </div>
               </div>
             </div>
+          )}
 
             <div className={styles.fullWidth}>
               <label className={styles.textareaLabel}>Additional Details</label>

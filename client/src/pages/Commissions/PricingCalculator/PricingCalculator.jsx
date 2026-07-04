@@ -105,6 +105,7 @@ export default function PricingCalculator() {
             size={size}
             people={people}
             price={calculatePrice()}
+            showSelection={true}
           />
 
         </div>
