@@ -220,6 +220,7 @@
         grid-template-columns: 1fr;
         max-height: 92vh;
         padding:1.2rem;
+        overflow-y: auto;
     }
 
     .infoSection {

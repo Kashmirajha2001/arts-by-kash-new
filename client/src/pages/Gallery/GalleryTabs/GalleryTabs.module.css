@@ -65,5 +65,6 @@
 @media (max-width:500px){
     .tabs {
         justify-content: flex-start;
+        padding: 0 1rem;
     }
 }

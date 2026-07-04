@@ -21,7 +21,7 @@ export default function Gallery() {
     <>
       <PageHero
         title="Gallery"
-        breadcrumb="Get your own Customized Portrait"
+        breadcrumb="Explore Handcrafted Works of Art"
         image={HeroImage}
       />
 
