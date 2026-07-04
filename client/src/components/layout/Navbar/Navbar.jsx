@@ -108,7 +108,12 @@ export default function Navbar() {
                       <span>Dashboard</span>
                     </button>
 
-                    <button>
+                    <button
+                      onClick={() => {
+                        // setIsDropdownOpen(false); // close dropdown if you have one
+                        navigate("/my-account");
+                      }}
+                    >
                       <FiUser />
                       <span>My Profile</span>
                     </button>

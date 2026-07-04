@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import ResetPassword from "./pages/Auth/ResetPassword/ResetPassword";
 import Commissions from "./pages/Commissions/Commissions";
 import GalleryPage from "./pages/Gallery/Gallery";
+import MyAccount from "./pages/MyAccount/MyAccount";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -47,6 +48,7 @@ export default function App() {
           }
         />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/my-account" element={<MyAccount />} />
       </Routes>
 
       <Footer />
