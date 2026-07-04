@@ -8,6 +8,7 @@ import FeatureCards from "./FeatureCards/FeatureCards";
 import { useState } from "react";
 import More from "./More/More";
 import CommissionModal from "./PricingCalculator/CommissionModal/CommissionModal";
+import CTA from "./CTA/CTA";
 
 // import FAQ from "./FAQ/FAQ";
 
@@ -30,6 +31,7 @@ export default function Commissions() {
         showSelection={false}
       />
       <FeatureCards />
+      <CTA/>
     </>
   );
 }

@@ -5,7 +5,7 @@
     padding: 0 2rem;
 }
 
-.subheading{
+.subheading {
     margin: 2rem 2rem 0;
 }
 
@@ -120,6 +120,10 @@
 @media (max-width: 768px) {
     .section {
         padding: 0 1.2rem;
+    }
+
+    .subheading {
+        margin: 2rem 1rem 0;
     }
 
     .grid {

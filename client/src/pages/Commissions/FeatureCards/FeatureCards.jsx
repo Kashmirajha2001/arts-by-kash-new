@@ -6,10 +6,12 @@ import styles from "./FeatureCards.module.css";
 export default function FeatureCards() {
   return (
     <section className={styles.section}>
-      <SectionSubTitle>
-        Every artwork is handcrafted with attention to detail using premium
-        materials and delivered safely to your doorstep.
-      </SectionSubTitle>
+      <div className={styles.subheading}>
+        <SectionSubTitle>
+          Every artwork is handcrafted with attention to detail using premium
+          materials and delivered safely to your doorstep.
+        </SectionSubTitle>
+      </div>
 
       <div className={styles.grid}>
         {featureData.map((item) => {

@@ -2,6 +2,10 @@
     margin-top: 1rem;
 }
 
+.subheading {
+    margin: 0 2rem;
+}
+
 .grid {
     margin: 2rem;
     display: grid;
@@ -62,6 +66,10 @@
 }
 
 @media (max-width: 992px) {
+    .subheading {
+        margin: 0 1rem;
+    }
+
     .grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.3rem;
@@ -73,6 +81,10 @@
 }
 
 @media (max-width: 576px) {
+    .subheading {
+        margin: 2rem 2rem 0;
+    }
+
     .grid {
         grid-template-columns: 1fr;
     }
