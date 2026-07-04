@@ -5,7 +5,7 @@ const resetPasswordEmail = (name, resetLink) => {
         <img
         src="https://artsbykash.com/logo.png"
         alt="Arts by Kash"
-        width="200"
+        width="150"
         />
           <h2 style="color:#7b5c3f;">
                Arts by Kash

@@ -25,7 +25,7 @@ const commissionEmail = ({
 
           <div style="padding:30px;text-align:center;border-bottom:1px solid #eee;">
             <img
-              src="https://artsbykash.com/logo-email.png"
+              src="https://artsbykash.com/logo.png"
               width="170"
               alt="Arts by Kash"
             />
