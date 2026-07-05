@@ -15,6 +15,7 @@ import GalleryPage from "./pages/Gallery/Gallery";
 import MyAccount from "./pages/MyAccount/MyAccount";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Shop from "./pages/Shop/Shop";
 
 export default function App() {
   return (
@@ -49,6 +50,7 @@ export default function App() {
         />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/my-account" element={<MyAccount />} />
+        <Route path="/shop" element={<Shop />} />
       </Routes>
 
       <Footer />

@@ -1,0 +1,37 @@
+.header {
+    padding: 4rem 0 2rem;
+}
+
+.container {
+    width: min(1200px, 92%);
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2rem;
+}
+
+.container h2 {
+    margin-bottom: .75rem;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-family: var(--heading-font);
+}
+
+.container p {
+    max-width: 620px;
+    line-height: 1.8;
+    color: var(--text-light);
+}
+
+@media(max-width:768px) {
+
+    .container {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+}

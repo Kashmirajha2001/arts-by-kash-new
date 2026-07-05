@@ -1,0 +1,41 @@
+.wrapper {
+    width: min(1200px, 92%);
+    margin: 0 auto 2rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab {
+    padding: .8rem 1.4rem;
+    border-radius: 999px;
+    border: 1px solid #e5ddd6;
+    background: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: .25s;
+    font-weight: 500;
+}
+
+.tab:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.active {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+.active:hover{
+    color: #fff;
+}

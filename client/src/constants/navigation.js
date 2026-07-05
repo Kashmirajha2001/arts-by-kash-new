@@ -4,6 +4,10 @@ const navigation = [
     path: "/",
   },
   {
+    name: "About",
+    path: "/about",
+  },
+  {
     name: "Gallery",
     path: "/gallery",
   },
@@ -12,20 +16,16 @@ const navigation = [
     path: "/courses",
   },
   {
-    name: "About",
-    path: "/about",
+    name: "Commissions",
+    path: "/commissions",
   },
   {
-    name: "Blog",
-    path: "/blog",
+    name: "Shop",
+    path: "/shop",
   },
   {
     name: "Contact",
     path: "/contact",
-  },
-  {
-    name: "Commissions",
-    path: "/commissions",
   },
 ];
 
