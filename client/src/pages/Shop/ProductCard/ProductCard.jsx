@@ -5,6 +5,8 @@ import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import styles from "./ProductCard.module.css";
 
 export default function ProductCard({ product }) {
+  const buttonText = product.type === "course" ? "Enroll Now" : "Add to Cart";
+
   return (
     <article className={styles.card}>
       <div className={styles.imageWrapper}>
@@ -33,7 +35,7 @@ export default function ProductCard({ product }) {
             ₹{product.price.toLocaleString()}
           </span>
 
-          <PrimaryButton>View Details</PrimaryButton>
+          <PrimaryButton>{buttonText}</PrimaryButton>
         </div>
       </div>
     </article>

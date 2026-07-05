@@ -1,0 +1,99 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .4);
+    z-index: 1000;
+}
+
+.sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: white;
+
+    border-radius: 24px 24px 0 0;
+
+    padding: 1.5rem;
+
+    z-index: 1001;
+
+    animation: slideUp .25s ease;
+}
+
+@keyframes slideUp {
+
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+
+}
+
+.header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 1.5rem;
+
+}
+
+.header h3 {
+
+    font-size: 1.3rem;
+
+}
+
+.header button {
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+}
+
+.content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .75rem;
+
+}
+
+.content button {
+
+    padding: 1rem;
+
+    border-radius: 12px;
+
+    border: 1px solid #ebe5df;
+
+    background: white;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+}
+
+.content button:hover {
+
+    border-color: var(--color-primary);
+
+    color: var(--color-primary);
+
+}

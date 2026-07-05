@@ -36,6 +36,12 @@
     border-color: var(--color-primary);
 }
 
-.active:hover{
+.active:hover {
     color: #fff;
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        display: none;
+    }
 }
