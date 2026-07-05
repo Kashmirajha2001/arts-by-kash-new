@@ -196,26 +196,26 @@ export default function Navbar() {
               <span />
               <span />
             </button>
-          </div>
 
-          <nav
-            id="mobile-navigation"
-            className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}
-            aria-hidden={!menuOpen}
-          >
-            {navigation.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.path}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ""}`
-                }
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.name}
-              </NavLink>
-            ))}
-          </nav>
+            <nav
+              id="mobile-navigation"
+              className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}
+              aria-hidden={!menuOpen}
+            >
+              {navigation.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `${styles.navLink} ${isActive ? styles.active : ""}`
+                  }
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.name}
+                </NavLink>
+              ))}
+            </nav>
+          </div>
         </div>
       </div>
     </header>
