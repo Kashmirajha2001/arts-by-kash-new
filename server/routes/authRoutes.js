@@ -8,6 +8,7 @@ import {
   googleLogin,
   forgotPassword,
   resetPassword,
+  updateProfile,
 } from "../controllers/authController.js";
 import {
   validateRegister,
@@ -24,5 +25,6 @@ router.post("/logout", logoutUser);
 router.post("/google", googleLogin);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);
+router.patch("/profile", protect, updateProfile);
 
 export default router;

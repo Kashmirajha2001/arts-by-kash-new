@@ -47,3 +47,9 @@ export const resetPassword = async (token, password) => {
 
   return response.data;
 };
+
+export const updateProfile = async (data) => {
+  const response = await api.patch("/auth/profile", data);
+
+  return response.data;
+};

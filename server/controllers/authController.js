@@ -216,7 +216,6 @@ export const googleLogin = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-  
   try {
     const { email } = req.body;
 
@@ -314,6 +313,50 @@ export const resetPassword = async (req, res) => {
     });
   } catch (error) {
     // console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong.",
+    });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { name, phone, street, city, state, pincode, country } = req.body;
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    user.name = name;
+    user.phone = phone;
+
+    user.addresses = [
+      {
+        street,
+        city,
+        state,
+        pincode,
+        country,
+        isDefault: true,
+      },
+    ];
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully.",
+      user,
+    });
+  } catch (error) {
+    console.error(error);
 
     res.status(500).json({
       success: false,

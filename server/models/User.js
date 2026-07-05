@@ -28,6 +28,45 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
 
+    phone: {
+      type: String,
+      default: "",
+    },
+
+    addresses: [
+      {
+        street: {
+          type: String,
+          default: "",
+        },
+
+        city: {
+          type: String,
+          default: "",
+        },
+
+        state: {
+          type: String,
+          default: "",
+        },
+
+        pincode: {
+          type: String,
+          default: "",
+        },
+
+        country: {
+          type: String,
+          default: "India",
+        },
+
+        isDefault: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
+
     providers: {
       type: [String],
       default: ["local"],
