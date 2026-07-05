@@ -4,10 +4,6 @@ import ProductCard from "../ProductCard/ProductCard";
 import styles from "./ProductGrid.module.css";
 
 export default function ProductGrid({ activeCategory, search, sort }) {
-  // const filteredProducts =
-  //   activeCategory === "all"
-  //     ? shopData
-  //     : shopData.filter((product) => product.type === activeCategory);
 
   let filteredProducts =
     activeCategory === "all"

@@ -1,0 +1,19 @@
+.product {
+    padding: 4rem 0 5rem;
+}
+
+.container {
+    width: min(1200px, 92%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+@media(max-width:900px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}

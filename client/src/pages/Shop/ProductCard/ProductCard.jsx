@@ -3,12 +3,22 @@ import { FiHeart } from "react-icons/fi";
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 
 import styles from "./ProductCard.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({ product }) {
   const buttonText = product.type === "course" ? "Enroll Now" : "Add to Cart";
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    if (product.type === "course") {
+      navigate("/courses");
+      return;
+    }
+    navigate(`/shop/${product.id}`);
+  };
 
   return (
-    <article className={styles.card}>
+    <article className={styles.card} onClick={handleCardClick}>
       <div className={styles.imageWrapper}>
         {product.badge && <span className={styles.badge}>{product.badge}</span>}
 
@@ -16,7 +26,7 @@ export default function ProductCard({ product }) {
           <FiHeart />
         </button>
 
-        <img src={product.image} alt={product.title} className={styles.image} />
+        <img src={product.image[0]} alt={product.title} className={styles.image} />
       </div>
 
       <div className={styles.content}>
@@ -35,7 +45,14 @@ export default function ProductCard({ product }) {
             ₹{product.price.toLocaleString()}
           </span>
 
-          <PrimaryButton>{buttonText}</PrimaryButton>
+          {/* <PrimaryButton>{buttonText}</PrimaryButton> */}
+          <PrimaryButton
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            {buttonText}
+          </PrimaryButton>
         </div>
       </div>
     </article>
