@@ -14,6 +14,7 @@ import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import { getCurrentUser, updateProfile } from "../../../services/authService";
 import useAuth from "../../../hooks/useAuth";
 import { showSuccess, showError } from "../../../utils/toast";
+import { isValidPhone } from "../../../utils/validation";
 
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +24,12 @@ export default function ProfileCard() {
   const [user, setUser] = useState(null);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({
+    name: "",
+    phone: "",
+  });
+
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -77,31 +84,48 @@ export default function ProfileCard() {
       ...prev,
       [name]: value,
     }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   };
 
   const handleCancel = () => {
+    const address = user.addresses?.find((address) => address.isDefault) || {};
+
     setEditData({
       name: user.name || "",
       phone: user.phone || "",
-      street: user.address?.street || "",
-      city: user.address?.city || "",
-      state: user.address?.state || "",
-      pincode: user.address?.pincode || "",
-      country: user.address?.country || "India",
+      street: address.street || "",
+      city: address.city || "",
+      state: address.state || "",
+      pincode: address.pincode || "",
+      country: address.country || "India",
+    });
+
+    setErrors({
+      name: "",
+      phone: "",
     });
 
     setIsEditing(false);
   };
 
   const handleSave = async () => {
+    if (!validateForm()) return;
+
     try {
+      setLoading(true);
       const response = await updateProfile(editData);
-
       setUser(response.user);
-
       setIsEditing(false);
+      showSuccess("Profile updated successfully!");
     } catch (error) {
       console.log(error);
+      showError("Unable to update profile.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -115,12 +139,38 @@ export default function ProfileCard() {
     } catch (error) {
       console.log(error);
 
-      showError("Failed to logout.");
+      showError("Unable to logout.");
     }
   };
 
   const defaultAddress =
     user.addresses?.find((address) => address.isDefault) || {};
+
+  const validateForm = () => {
+    const newErrors = {
+      name: "",
+      phone: "",
+    };
+
+    let isValid = true;
+
+    if (!editData.name.trim()) {
+      newErrors.name = "Name is required.";
+      isValid = false;
+    } else if (editData.name.trim().length < 2) {
+      newErrors.name = "Name is too short.";
+      isValid = false;
+    }
+
+    if (!isValidPhone(editData.phone)) {
+      newErrors.phone = "Enter a valid phone number.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    return isValid;
+  };
 
   return (
     <div className={styles.card}>
@@ -134,9 +184,11 @@ export default function ProfileCard() {
 
           {isEditing ? (
             <FormInput
+              label="Full Name"
               name="name"
               value={editData.name}
               onChange={handleChange}
+              error={errors.name}
             />
           ) : (
             <h2>{user.name}</h2>
@@ -153,6 +205,7 @@ export default function ProfileCard() {
             name="phone"
             value={editData.phone}
             onChange={handleChange}
+            error={errors.phone}
             placeholder="+91 XXXXX XXXXX"
           />
 
@@ -222,7 +275,9 @@ export default function ProfileCard() {
             Cancel
           </button>
 
-          <PrimaryButton onClick={handleSave}>Save Changes</PrimaryButton>
+          <PrimaryButton onClick={handleSave} disabled={loading}>
+            {loading ? "Saving..." : "Save Changes"}
+          </PrimaryButton>
         </div>
       ) : (
         <div className={styles.actions}>

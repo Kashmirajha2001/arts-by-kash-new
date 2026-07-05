@@ -25,6 +25,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const firstName = user?.name?.split(" ")[0];
   const navigate = useNavigate();
+  const mobileMenuRef = useRef(null);
 
   const isLoggedIn = !!user;
 
@@ -32,6 +33,10 @@ export default function Navbar() {
     const handleClickOutside = (e) => {
       if (profileRef.current && !profileRef.current.contains(e.target)) {
         setProfileOpen(false);
+      }
+
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) {
+        setMenuOpen(false);
       }
     };
 
@@ -110,7 +115,7 @@ export default function Navbar() {
 
                     <button
                       onClick={() => {
-                        // setIsDropdownOpen(false); // close dropdown if you have one
+                        setProfileOpen(false);
                         navigate("/my-account");
                       }}
                     >
@@ -174,42 +179,44 @@ export default function Navbar() {
             )}
           </div>
 
-          <button
-            type="button"
-            className={`${styles.menuButton} ${
-              menuOpen ? styles.menuButtonOpen : ""
-            }`}
-            aria-label={
-              menuOpen ? "Close navigation menu" : "Open navigation menu"
-            }
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </div>
-
-        <nav
-          id="mobile-navigation"
-          className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}
-          aria-hidden={!menuOpen}
-        >
-          {navigation.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              className={({ isActive }) =>
-                `${styles.navLink} ${isActive ? styles.active : ""}`
+          <div ref={mobileMenuRef}>
+            <button
+              type="button"
+              className={`${styles.menuButton} ${
+                menuOpen ? styles.menuButtonOpen : ""
+              }`}
+              aria-label={
+                menuOpen ? "Close navigation menu" : "Open navigation menu"
               }
-              onClick={() => setMenuOpen(false)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
+              onClick={() => setMenuOpen((open) => !open)}
             >
-              {item.name}
-            </NavLink>
-          ))}
-        </nav>
+              <span />
+              <span />
+              <span />
+            </button>
+          </div>
+
+          <nav
+            id="mobile-navigation"
+            className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}
+            aria-hidden={!menuOpen}
+          >
+            {navigation.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.name}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   );
