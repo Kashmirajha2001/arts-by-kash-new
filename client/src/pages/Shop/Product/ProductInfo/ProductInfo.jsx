@@ -35,6 +35,23 @@ export default function ProductInfo({ product }) {
 
       <PrimaryButton>Buy Now</PrimaryButton>
 
+      <div className={styles.trust}>
+        <div>
+          🛡
+          <span>Secure Packaging</span>
+        </div>
+
+        <div>
+          🎨
+          <span>Handmade Original</span>
+        </div>
+
+        <div>
+          🚚
+          <span>Fast Shipping</span>
+        </div>
+      </div>
+
       <div className={styles.details}>
         <h3>Artwork Details</h3>
 

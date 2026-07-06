@@ -6,6 +6,8 @@ import HeroImage from "../../../assets/images/hero/courses-hero.jpg";
 
 import ProductGallery from "./ProductGallery/ProductGallery";
 import ProductInfo from "./ProductInfo/ProductInfo";
+import ProductBreadcrumb from "./ProductBreadcrumb/ProductBreadcrumb";
+import RelatedProducts from "./RelatedProducts/RelatedProducts";
 
 import styles from "./Product.module.css";
 
@@ -26,11 +28,13 @@ export default function Product() {
         image={HeroImage}
       />
       <section className={styles.product}>
+        <ProductBreadcrumb product={product} />
         <div className={styles.container}>
           <ProductGallery product={product} />
 
           <ProductInfo product={product} />
         </div>
+        <RelatedProducts currentId={product.id} />
       </section>
     </>
   );

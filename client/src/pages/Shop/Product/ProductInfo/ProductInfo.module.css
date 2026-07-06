@@ -84,6 +84,25 @@
     font-size: .9rem;
 }
 
+.trust{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1rem;
+    /* margin:2rem 0; */
+}
+
+.trust div{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    /* gap:.5rem; */
+    padding:0.8rem;
+    border-radius:18px;
+    background:#faf8f5;
+    text-align:center;
+    font-size:.9rem;
+}
+
 @media(max-width:768px) {
     .info h1 {
         font-size: 1.45rem;
@@ -91,5 +110,11 @@
 
     .info h2 {
         font-size: 1.2rem;
+    }
+}
+
+@media(max-width:480px){
+    .trust div{
+        font-size:.7rem;
     }
 }
