@@ -46,9 +46,29 @@
 
 .buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto;
+    /* cart takes all space, wishlist just wraps its icon */
     gap: .8rem;
     margin-bottom: .8rem;
+    align-items: center;
+}
+
+.wishlist {
+    width: 44px !important;
+    height: 44px !important;
+    border: 1px solid #e5ddd5 !important;
+    border-radius: 50% !important;
+    flex-shrink: 0;
+}
+
+.wishlist svg {
+    font-size: 1.2rem;
+    color: #aaa;
+    transition: color .25s;
+}
+
+.wishlist.wishlisted svg {
+    color: var(--color-primary);
 }
 
 .buttons button {
@@ -84,23 +104,23 @@
     font-size: .9rem;
 }
 
-.trust{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:1rem;
+.trust {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
     /* margin:2rem 0; */
 }
 
-.trust div{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+.trust div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     /* gap:.5rem; */
-    padding:0.8rem;
-    border-radius:18px;
-    background:#faf8f5;
-    text-align:center;
-    font-size:.9rem;
+    padding: 0.8rem;
+    border-radius: 18px;
+    background: #faf8f5;
+    text-align: center;
+    font-size: .9rem;
 }
 
 @media(max-width:768px) {
@@ -113,8 +133,8 @@
     }
 }
 
-@media(max-width:480px){
-    .trust div{
-        font-size:.7rem;
+@media(max-width:480px) {
+    .trust div {
+        font-size: .7rem;
     }
 }

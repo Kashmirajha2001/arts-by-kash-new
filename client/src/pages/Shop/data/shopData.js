@@ -14,6 +14,7 @@ const shopData = [
     size: "8 x 10 Inches",
     frame: "Canvas Board",
     availability: "Ready to Ship",
+    badge: "Featured",
     description: [
       "Hand-painted using premium acrylic paints.",
       "Finished with archival protective varnish.",

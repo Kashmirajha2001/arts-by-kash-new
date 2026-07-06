@@ -14,6 +14,7 @@ import Commissions from "./pages/Commissions/Commissions";
 import GalleryPage from "./pages/Gallery/Gallery";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import Product from "./pages/Shop/Product/Product";
+import Wishlist from "./pages/Wishlist/Wishlist";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Shop from "./pages/Shop/Shop";
@@ -53,6 +54,7 @@ export default function App() {
         <Route path="/my-account" element={<MyAccount />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/shop/:id" element={<Product />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
 
       <Footer />

@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import IconButton from "@mui/material/IconButton";
+import { useStore } from "../../../../context/StoreContext";
 
 import styles from "./ProductGallery.module.css";
 
 export default function ProductGallery({ product }) {
   const [currentImage, setCurrentImage] = useState(0);
+  const { toggleWishlist, isWishlisted } = useStore();
+
+  const wishlisted = isWishlisted(product.id);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) =>
-        prev === product.image.length - 1 ? 0 : prev + 1
+        prev === product.image.length - 1 ? 0 : prev + 1,
       );
     }, 5000);
 
@@ -20,13 +25,16 @@ export default function ProductGallery({ product }) {
   return (
     <div className={styles.gallery}>
       <div className={styles.imageWrapper}>
-        <img
-          src={product.image[currentImage]}
-          alt={product.title}
-        />
+        <img src={product.image[currentImage]} alt={product.title} />
 
-        <IconButton className={styles.wishlist}>
-          <FavoriteBorderRoundedIcon />
+        <IconButton
+          className={styles.wishlist}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWishlist(product.id);
+          }}
+        >
+          {wishlisted ? <FavoriteRoundedIcon /> : <FavoriteBorderRoundedIcon />}
         </IconButton>
       </div>
 

@@ -1,0 +1,57 @@
+.section {
+
+    width: min(1200px, 92%);
+
+    margin: 4rem auto;
+
+}
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 2rem;
+
+}
+
+.empty {
+
+    padding: 5rem 2rem;
+
+    text-align: center;
+
+}
+
+.empty h2 {
+
+    margin-bottom: 1rem;
+
+}
+
+.empty p {
+
+    color: #777;
+
+}
+
+@media(max-width:900px) {
+
+    .grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .grid {
+
+        gap: 1rem;
+
+    }
+
+}

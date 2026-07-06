@@ -15,6 +15,7 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import { showSuccess, showError } from "../../../utils/toast";
+import { useStore } from "../../../context/StoreContext";
 
 export default function Navbar() {
   const scrolled = useScroll();
@@ -28,6 +29,7 @@ export default function Navbar() {
   const mobileMenuRef = useRef(null);
 
   const isLoggedIn = !!user;
+  const { wishlist } = useStore();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -123,8 +125,21 @@ export default function Navbar() {
                       <span>My Profile</span>
                     </button>
 
-                    <button>
-                      <FiHeart />
+                    <button
+                      onClick={() => {
+                        setProfileOpen(false);
+                        navigate("/wishlist");
+                      }}
+                    >
+                      <div className={styles.menuIcon}>
+                        <FiHeart />
+
+                        {wishlist.length > 0 && (
+                          <span className={styles.badge}>
+                            {wishlist.length}
+                          </span>
+                        )}
+                      </div>
                       <span>Wishlist</span>
                     </button>
 

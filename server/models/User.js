@@ -85,6 +85,12 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
 
+    wishlist: [
+      {
+        type: Number,
+      },
+    ],
+
     role: {
       type: String,
       enum: ["user", "admin"],

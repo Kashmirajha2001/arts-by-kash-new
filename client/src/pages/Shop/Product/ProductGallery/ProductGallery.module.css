@@ -33,6 +33,10 @@
     backdrop-filter: blur(10px);
 }
 
+.wishlist svg:first-child {
+    color: var(--color-primary);
+}
+
 .dots {
     display: flex;
     justify-content: center;

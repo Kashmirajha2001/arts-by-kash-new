@@ -1,12 +1,20 @@
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import IconButton from "@mui/material/IconButton";
 
 import PrimaryButton from "../../../../components/ui/PrimaryButton/PrimaryButton";
 import SecondaryButton from "../../../../components/ui/SecondaryButton/SecondaryButton";
+import { useStore } from "../../../../context/StoreContext";
 
 import styles from "./ProductInfo.module.css";
 
 export default function ProductInfo({ product }) {
+  const { toggleWishlist, isWishlisted } = useStore();
+
+  const wishlisted = isWishlisted(product.id);
+
   return (
     <div className={styles.info}>
       <span className={styles.category}>Original Artwork</span>
@@ -30,7 +38,19 @@ export default function ProductInfo({ product }) {
       <div className={styles.buttons}>
         <PrimaryButton>Add to Cart</PrimaryButton>
 
-        <SecondaryButton>Wishlist</SecondaryButton>
+        {/* <SecondaryButton onClick={(e) => {
+            e.stopPropagation();
+            toggleWishlist(product.id);
+          }}>Wishlist</SecondaryButton> */}
+        <IconButton
+          className={`${styles.wishlist} ${wishlisted ? styles.wishlisted : ""}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWishlist(product.id);
+          }}
+        >
+          {wishlisted ? <FavoriteRoundedIcon /> : <FavoriteBorderRoundedIcon />}
+        </IconButton>
       </div>
 
       <PrimaryButton>Buy Now</PrimaryButton>
