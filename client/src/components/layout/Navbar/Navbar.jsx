@@ -17,6 +17,8 @@ import {
 import { showSuccess, showError } from "../../../utils/toast";
 import { useStore } from "../../../context/StoreContext";
 
+import { FiShoppingCart } from "react-icons/fi";
+
 export default function Navbar() {
   const scrolled = useScroll();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,6 +32,8 @@ export default function Navbar() {
 
   const isLoggedIn = !!user;
   const { wishlist } = useStore();
+
+  const { cartCount, openCart } = useStore();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -70,6 +74,13 @@ export default function Navbar() {
         </nav>
 
         <div className={styles.actions}>
+          <button className={styles.cartButton} onClick={openCart}>
+            <FiShoppingCart />
+
+            {cartCount > 0 && (
+              <span className={styles.cartBadge}>{cartCount}</span>
+            )}
+          </button>
           <div className={styles.userMenu} ref={profileRef}>
             {isLoggedIn ? (
               <>

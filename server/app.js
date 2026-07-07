@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 import commissionRoutes from "./routes/commissionRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/commission", commissionRoutes);
 
 app.use("/api/wishlist", wishlistRoutes);
+
+app.use("/api/cart", cartRoutes);
 
 app.get("/", (req, res) => {
   res.json({

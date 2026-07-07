@@ -15,6 +15,7 @@ import GalleryPage from "./pages/Gallery/Gallery";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import Product from "./pages/Shop/Product/Product";
 import Wishlist from "./pages/Wishlist/Wishlist";
+import CartDrawer from "./pages/Cart/CartDrawer/CartDrawer";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Shop from "./pages/Shop/Shop";
@@ -24,7 +25,8 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Navbar />
-
+      <CartDrawer />
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />

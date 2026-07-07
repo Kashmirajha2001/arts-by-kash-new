@@ -14,6 +14,7 @@ export default function ProductInfo({ product }) {
   const { toggleWishlist, isWishlisted } = useStore();
 
   const wishlisted = isWishlisted(product.id);
+  const { addToCart } = useStore();
 
   return (
     <div className={styles.info}>
@@ -36,7 +37,14 @@ export default function ProductInfo({ product }) {
       </div>
 
       <div className={styles.buttons}>
-        <PrimaryButton>Add to Cart</PrimaryButton>
+        <PrimaryButton
+          onClick={(e) => {
+            e.stopPropagation();
+            addToCart(product.id);
+          }}
+        >
+          Add to Cart
+        </PrimaryButton>
 
         {/* <SecondaryButton onClick={(e) => {
             e.stopPropagation();

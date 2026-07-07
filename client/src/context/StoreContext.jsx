@@ -8,6 +8,14 @@ import {
   toggleWishlist as toggleWishlistApi,
 } from "../services/wishlistService";
 
+import {
+  getCart,
+  addToCart as addToCartApi,
+  updateCartQuantity as updateCartQuantityApi,
+  removeFromCart as removeFromCartApi,
+  clearCart as clearCartApi,
+} from "../services/cartService";
+
 const StoreContext = createContext();
 
 export default function StoreProvider({ children }) {
@@ -16,6 +24,11 @@ export default function StoreProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
 
   const [cart, setCart] = useState([]);
+
+  const [cartOpen, setCartOpen] = useState(false);
+  const openCart = () => setCartOpen(true);
+
+  const closeCart = () => setCartOpen(false);
 
   const toggleWishlist = async (id) => {
     if (!user) {
@@ -38,31 +51,6 @@ export default function StoreProvider({ children }) {
     return wishlist.includes(id);
   };
 
-  const addToCart = (product) => {
-    setCart((prev) => {
-      const exists = prev.find((item) => item.id === product.id);
-
-      if (exists) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
-            : item,
-        );
-      }
-
-      return [
-        ...prev,
-        {
-          ...product,
-          quantity: 1,
-        },
-      ];
-    });
-  };
-
   useEffect(() => {
     const loadWishlist = async () => {
       try {
@@ -80,17 +68,104 @@ export default function StoreProvider({ children }) {
     }
   }, [user]);
 
+  useEffect(() => {
+    const loadCart = async () => {
+      try {
+        const response = await getCart();
+
+        setCart(response.cart);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (user) {
+      loadCart();
+    } else {
+      setCart([]);
+    }
+  }, [user]);
+
+  const addToCart = async (productId) => {
+    if (!user) {
+      showError("Please login to continue.");
+      return;
+    }
+
+    try {
+      const response = await addToCartApi(productId);
+
+      setCart(response.cart);
+
+      showSuccess(response.message);
+
+      setCartOpen(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateCartQuantity = async (productId, quantity) => {
+    try {
+      const response = await updateCartQuantityApi(productId, quantity);
+
+      setCart(response.cart);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFromCart = async (productId) => {
+    try {
+      const response = await removeFromCartApi(productId);
+
+      setCart(response.cart);
+
+      showSuccess("Removed from cart.");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      await clearCartApi();
+
+      setCart([]);
+
+      showSuccess("Cart cleared.");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <StoreContext.Provider
       value={{
         wishlist,
         cart,
 
+        cartOpen,
+
+        cartCount,
+
         toggleWishlist,
 
         isWishlisted,
 
         addToCart,
+
+        updateCartQuantity,
+
+        removeFromCart,
+
+        clearCart,
+
+        openCart,
+
+        closeCart,
       }}
     >
       {children}

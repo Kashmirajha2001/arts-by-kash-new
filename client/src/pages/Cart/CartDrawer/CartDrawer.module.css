@@ -1,0 +1,143 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9998;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(400px, 92vw);
+    height: 100vh;
+    background: #fff;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -18px 0 50px rgba(0, 0, 0, .15);
+}
+
+.header {
+    padding: 1.2rem 1.25rem;
+    border-bottom: 1px solid #ebe5df;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--heading-color);
+    font-family: var(--heading-font);
+}
+
+.header button {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: #f8f6f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .25s;
+    flex-shrink: 0;
+}
+
+.header button:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.empty {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.empty h3 {
+    margin-bottom: .5rem;
+    font-size: 1rem;
+}
+
+.empty p {
+    color: var(--text-light);
+    font-size: .88rem;
+}
+
+.footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid #ebe5df;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    /* gap replaces the manual margin-bottom hack */
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total span {
+    color: var(--text-light);
+    font-size: .9rem;
+}
+
+.total strong {
+    font-size: 1.2rem;
+    color: var(--heading-color);
+}
+
+.footer button {
+    width: 100%;
+}
+
+/* ========================= */
+
+@media (max-width: 480px) {
+    .drawer {
+        width: 80vw;
+    }
+
+    .header {
+        padding: 1rem;
+    }
+
+    .header h2 {
+        font-size: 1.1rem;
+    }
+
+    .items {
+        padding: .8rem;
+        gap: .65rem;
+    }
+
+    .footer {
+        padding: .85rem 1rem;
+        gap: .6rem;
+    }
+
+    .total strong {
+        font-size: 1.05rem;
+    }
+}

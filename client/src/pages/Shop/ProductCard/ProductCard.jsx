@@ -13,6 +13,7 @@ export default function ProductCard({ product }) {
   const buttonText = product.type === "course" ? "Enroll Now" : "Add to Cart";
   const navigate = useNavigate();
   const { toggleWishlist, isWishlisted } = useStore();
+  const { addToCart } = useStore();
 
   const wishlisted = isWishlisted(product.id);
 
@@ -62,10 +63,10 @@ export default function ProductCard({ product }) {
             ₹{product.price.toLocaleString()}
           </span>
 
-          {/* <PrimaryButton>{buttonText}</PrimaryButton> */}
           <PrimaryButton
             onClick={(e) => {
               e.stopPropagation();
+              addToCart(product.id);
             }}
           >
             {buttonText}

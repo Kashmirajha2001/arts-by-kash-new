@@ -1,0 +1,53 @@
+.selector {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+
+    width: fit-content;
+
+    border: 1px solid #ebe5df;
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.selector button {
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    background: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.selector button:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.selector span {
+    min-width: 34px;
+
+    text-align: center;
+
+    font-weight: 600;
+}
+
+@media (max-width: 480px) {
+
+    .selector button{
+        width: 26px;
+        height: 26px;
+    }
+
+    .selector span {
+        font-size: .82rem;
+    }
+}
