@@ -12,7 +12,8 @@
     top: 0;
     right: 0;
     width: min(400px, 92vw);
-    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
     background: #fff;
     z-index: 9999;
     display: flex;

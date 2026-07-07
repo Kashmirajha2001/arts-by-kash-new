@@ -3,14 +3,22 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import QuantitySelector from "../../../components/ui/QuantitySelector/QuantitySelector";
 
 import { useStore } from "../../../context/StoreContext";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./CartItem.module.css";
 
 export default function CartItem({ product }) {
-  const { updateCartQuantity, removeFromCart } = useStore();
+  const { updateCartQuantity, removeFromCart, closeCart } = useStore();
+
+  const navigate = useNavigate();
+
+  const handleProductClick = () => {
+    closeCart(); // Optional: close drawer before navigating
+    navigate(`/shop/${product.id}`);
+  };
 
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={handleProductClick}>
       <img src={product.image[0]} alt={product.title} />
 
       <div className={styles.info}>
@@ -18,7 +26,10 @@ export default function CartItem({ product }) {
         <span>₹{product.price.toLocaleString()}</span>
 
         {/* desktop: quantity inside info */}
-        <div className={styles.desktopControls}>
+        <div
+          className={styles.desktopControls}
+          onClick={(e) => e.stopPropagation()}
+        >
           <QuantitySelector
             quantity={product.quantity}
             onIncrease={() =>
@@ -36,13 +47,19 @@ export default function CartItem({ product }) {
       {/* desktop: delete floats top-right */}
       <button
         className={styles.deleteBtn}
-        onClick={() => removeFromCart(product.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          removeFromCart(product.id);
+        }}
       >
         <DeleteOutlineRoundedIcon />
       </button>
 
       {/* mobile only: quantity + delete in one bottom row */}
-      <div className={styles.mobileControls}>
+      <div
+        className={styles.mobileControls}
+        onClick={(e) => e.stopPropagation()}
+      >
         <QuantitySelector
           quantity={product.quantity}
           onIncrease={() =>
@@ -56,7 +73,10 @@ export default function CartItem({ product }) {
         />
         <button
           className={styles.deleteBtn}
-          onClick={() => removeFromCart(product.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            removeFromCart(product.id);
+          }}
         >
           <DeleteOutlineRoundedIcon />
         </button>
