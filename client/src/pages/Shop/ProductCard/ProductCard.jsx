@@ -63,14 +63,20 @@ export default function ProductCard({ product }) {
             ₹{product.price.toLocaleString()}
           </span>
 
-          <PrimaryButton
-            onClick={(e) => {
-              e.stopPropagation();
-              addToCart(product.id);
-            }}
-          >
-            {buttonText}
-          </PrimaryButton>
+          {product.stock > 0 ? (
+            <>
+              <PrimaryButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(product.id);
+                }}
+              >
+                {buttonText}
+              </PrimaryButton>
+            </>
+          ) : (
+            <PrimaryButton variant="outline" disabled="true">Sold Out</PrimaryButton>
+          )}
         </div>
       </div>
     </article>

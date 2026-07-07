@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import PrimaryButton from "../../../../components/ui/PrimaryButton/PrimaryButton";
 import SecondaryButton from "../../../../components/ui/SecondaryButton/SecondaryButton";
 import { useStore } from "../../../../context/StoreContext";
+import { useState } from "react";
 
 import styles from "./ProductInfo.module.css";
 
@@ -15,6 +16,7 @@ export default function ProductInfo({ product }) {
 
   const wishlisted = isWishlisted(product.id);
   const { addToCart } = useStore();
+  const [quantity, setQuantity] = useState(1);
 
   return (
     <div className={styles.info}>
@@ -24,44 +26,58 @@ export default function ProductInfo({ product }) {
 
       <h2>₹{product.price.toLocaleString()}</h2>
 
-      <div className={styles.quantity}>
-        <button>
-          <RemoveRoundedIcon fontSize="small" />
-        </button>
+      {product.stock > 0 ? (
+        <>
+          <div className={styles.quantity}>
+            <button
+              onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+            >
+              <RemoveRoundedIcon fontSize="small" />
+            </button>
 
-        <span>1</span>
+            <span>{quantity}</span>
 
-        <button>
-          <AddRoundedIcon fontSize="small" />
-        </button>
-      </div>
+            <button
+              onClick={() => {
+                if (quantity < product.stock) {
+                  setQuantity((prev) => prev + 1);
+                }
+              }}
+            >
+              <AddRoundedIcon fontSize="small" />
+            </button>
+          </div>
 
-      <div className={styles.buttons}>
-        <PrimaryButton
-          onClick={(e) => {
-            e.stopPropagation();
-            addToCart(product.id);
-          }}
-        >
-          Add to Cart
-        </PrimaryButton>
+          <div className={styles.buttons}>
+            <PrimaryButton
+              onClick={(e) => {
+                e.stopPropagation();
+                addToCart(product.id, quantity);
+              }}
+            >
+              Add to Cart
+            </PrimaryButton>
 
-        {/* <SecondaryButton onClick={(e) => {
-            e.stopPropagation();
-            toggleWishlist(product.id);
-          }}>Wishlist</SecondaryButton> */}
-        <IconButton
-          className={`${styles.wishlist} ${wishlisted ? styles.wishlisted : ""}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleWishlist(product.id);
-          }}
-        >
-          {wishlisted ? <FavoriteRoundedIcon /> : <FavoriteBorderRoundedIcon />}
-        </IconButton>
-      </div>
+            <IconButton
+              className={`${styles.wishlist} ${wishlisted ? styles.wishlisted : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleWishlist(product.id);
+              }}
+            >
+              {wishlisted ? (
+                <FavoriteRoundedIcon />
+              ) : (
+                <FavoriteBorderRoundedIcon />
+              )}
+            </IconButton>
+          </div>
 
-      <PrimaryButton>Buy Now</PrimaryButton>
+          <PrimaryButton>Buy Now</PrimaryButton>
+        </>
+      ) : (
+        <PrimaryButton disabled>Sold Out</PrimaryButton>
+      )}
 
       <div className={styles.trust}>
         <div>
@@ -97,7 +113,12 @@ export default function ProductInfo({ product }) {
           </li>
 
           <li>
-            <strong>Availability:</strong> {product.availability}
+            <strong>Availability:</strong>{" "}
+            {product.stock === 0
+              ? "Sold Out"
+              : product.stock === 1
+                ? "Only 1 left"
+                : `${product.stock} available`}
           </li>
         </ul>
       </div>

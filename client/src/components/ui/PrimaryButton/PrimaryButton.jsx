@@ -7,6 +7,7 @@ export default function PrimaryButton({
   to,
   onClick,
   type = "button",
+  disabled="false",
 }) {
   const className = `${styles.button} ${styles[variant]}`;
 
@@ -19,7 +20,7 @@ export default function PrimaryButton({
   }
 
   return (
-    <button type={type} onClick={onClick} className={className}>
+    <button type={type} onClick={onClick} className={className} disabled={disabled}>
       {children}
     </button>
   );

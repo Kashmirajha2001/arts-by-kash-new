@@ -40,9 +40,29 @@
     font-weight: 600;
 }
 
+.selector button:disabled {
+
+    opacity: .35;
+
+    cursor: not-allowed;
+
+    background: #fff;
+
+    color: #999;
+}
+
+.selector button:disabled:hover {
+
+    background: #fff;
+
+    color: #999;
+
+    transform: none;
+}
+
 @media (max-width: 480px) {
 
-    .selector button{
+    .selector button {
         width: 26px;
         height: 26px;
     }

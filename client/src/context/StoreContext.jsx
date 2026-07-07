@@ -86,14 +86,14 @@ export default function StoreProvider({ children }) {
     }
   }, [user]);
 
-  const addToCart = async (productId) => {
+  const addToCart = async (productId, quantity = 1) => {
     if (!user) {
       showError("Please login to continue.");
       return;
     }
 
     try {
-      const response = await addToCartApi(productId);
+      const response = await addToCartApi(productId, quantity);
 
       setCart(response.cart);
 

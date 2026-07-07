@@ -32,14 +32,18 @@ export default function CartItem({ product }) {
         >
           <QuantitySelector
             quantity={product.quantity}
-            onIncrease={() =>
-              updateCartQuantity(product.id, product.quantity + 1)
-            }
+            onIncrease={() => {
+              if (product.quantity < product.stock) {
+                updateCartQuantity(product.id, product.quantity + 1);
+              }
+            }}
             onDecrease={() =>
               product.quantity > 1
                 ? updateCartQuantity(product.id, product.quantity - 1)
                 : removeFromCart(product.id)
             }
+            disableIncrease={product.quantity >= product.stock}
+            disableDecrease={product.quantity <= 1}
           />
         </div>
       </div>
@@ -62,14 +66,18 @@ export default function CartItem({ product }) {
       >
         <QuantitySelector
           quantity={product.quantity}
-          onIncrease={() =>
-            updateCartQuantity(product.id, product.quantity + 1)
-          }
+          onIncrease={() => {
+            if (product.quantity < product.stock) {
+              updateCartQuantity(product.id, product.quantity + 1);
+            }
+          }}
           onDecrease={() =>
             product.quantity > 1
               ? updateCartQuantity(product.id, product.quantity - 1)
               : removeFromCart(product.id)
           }
+          disableIncrease={product.quantity >= product.stock}
+          disableDecrease={product.quantity <= 1}
         />
         <button
           className={styles.deleteBtn}

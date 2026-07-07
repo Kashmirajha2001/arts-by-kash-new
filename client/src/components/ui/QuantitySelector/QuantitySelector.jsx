@@ -3,16 +3,22 @@ import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 
 import styles from "./QuantitySelector.module.css";
 
-export default function QuantitySelector({ quantity, onIncrease, onDecrease }) {
+export default function QuantitySelector({
+  quantity,
+  onIncrease,
+  onDecrease,
+  disableIncrease,
+  disableDecrease,
+}) {
   return (
     <div className={styles.selector}>
-      <button onClick={onDecrease}>
+      <button onClick={onDecrease} disabled={disableDecrease}>
         <RemoveRoundedIcon />
       </button>
 
       <span>{quantity}</span>
 
-      <button onClick={onIncrease}>
+      <button onClick={onIncrease} disabled={disableIncrease}>
         <AddRoundedIcon />
       </button>
     </div>

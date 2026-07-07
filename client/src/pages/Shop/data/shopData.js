@@ -22,6 +22,8 @@ const shopData = [
       "Signed by the artist.",
       "Professionally packed for safe delivery.",
     ],
+    featured: false,
+    stock: 1,
   },
 
   {
@@ -32,7 +34,7 @@ const shopData = [
     price: 3000,
     badge: "Popular",
     featured: false,
-    inStock: true,
+    stock: 0,
   },
 
   {
@@ -44,6 +46,7 @@ const shopData = [
     badge: "New",
     featured: false,
     inStock: true,
+    stock: 5,
   },
 
   {
@@ -55,6 +58,7 @@ const shopData = [
     badge: "Best Seller",
     featured: true,
     inStock: true,
+    stock: 9999,
   },
 ];
 
