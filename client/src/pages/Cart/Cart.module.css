@@ -1,6 +1,6 @@
 .section {
     width: min(1200px, 92%);
-    margin: 4rem auto 6rem;
+    margin: 2rem auto;
 }
 
 .header {
@@ -13,6 +13,7 @@
 .header h2 {
     font-size: clamp(2rem, 4vw, 2.8rem);
     color: var(--heading-color);
+    font-family: var(--heading-font);
 }
 
 .header span {

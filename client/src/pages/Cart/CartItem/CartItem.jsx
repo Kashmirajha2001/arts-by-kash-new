@@ -27,6 +27,9 @@ export default function CartItem({ product, compact = true }) {
       <div className={styles.info}>
         <h4>{product.title}</h4>
         <span>₹{product.price.toLocaleString()}</span>
+        <p className={styles.subtotal}>
+          <span>Subtotal:</span> ₹{(product.price * product.quantity).toLocaleString()}
+        </p>
 
         {/* desktop: quantity inside info */}
         <div

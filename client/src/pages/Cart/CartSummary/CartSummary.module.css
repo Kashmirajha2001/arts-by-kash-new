@@ -15,13 +15,11 @@
 }
 
 .summary h3 {
-
     margin-bottom: 2rem;
-
     font-size: 1.5rem;
-
     color: var(--heading-color);
-
+    font-family: var(--heading-font);
+    font-weight: 900;
 }
 
 .row {
@@ -34,6 +32,18 @@
 
     color: var(--text-light);
 
+}
+
+.row .shipping{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.freeShipping{
+    font-size: 0.6rem;
+    color: var(--color-primary);
+    font-weight: 500;
 }
 
 .summary hr {
@@ -82,4 +92,8 @@
 
     margin-bottom: 1rem;
 
+}
+
+.btn{
+    margin-bottom: 1rem;
 }

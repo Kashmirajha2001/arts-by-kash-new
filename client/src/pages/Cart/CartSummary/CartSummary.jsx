@@ -21,7 +21,10 @@ export default function CartSummary({ subtotal }) {
       <div className={styles.row}>
         <span>Shipping</span>
 
-        <span>Calculated at checkout</span>
+        <div className={styles.shipping}>
+          <span>Calculated at checkout</span>
+          <span className={styles.freeShipping}>Free delivery on orders above 3000</span>
+        </div>
       </div>
 
       <hr />
@@ -32,7 +35,9 @@ export default function CartSummary({ subtotal }) {
         <strong>₹{subtotal.toLocaleString()}</strong>
       </div>
 
-      <PrimaryButton to="/checkout">Proceed to Checkout</PrimaryButton>
+      <div className={styles.btn}>
+        <PrimaryButton to="/checkout">Proceed to Checkout</PrimaryButton>
+      </div>
 
       <SecondaryButton onClick={() => navigate("/shop")}>
         Continue Shopping
