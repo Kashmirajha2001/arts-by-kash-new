@@ -1,0 +1,40 @@
+.empty {
+
+    min-height: 55vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+}
+
+.empty svg {
+
+    font-size: 5rem;
+
+    color: var(--color-primary);
+
+    margin-bottom: 1.5rem;
+
+}
+
+.empty h2 {
+
+    margin-bottom: 1rem;
+
+}
+
+.empty p {
+
+    max-width: 420px;
+
+    color: var(--text-light);
+
+    margin-bottom: 2rem;
+
+}

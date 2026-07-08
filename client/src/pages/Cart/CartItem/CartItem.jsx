@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./CartItem.module.css";
 
-export default function CartItem({ product }) {
+export default function CartItem({ product, compact = true }) {
   const { updateCartQuantity, removeFromCart, closeCart } = useStore();
 
   const navigate = useNavigate();
@@ -18,7 +18,10 @@ export default function CartItem({ product }) {
   };
 
   return (
-    <div className={styles.item} onClick={handleProductClick}>
+    <div
+      className={`${styles.item} ${!compact ? styles.full : ""}`}
+      onClick={handleProductClick}
+    >
       <img src={product.image[0]} alt={product.title} />
 
       <div className={styles.info}>

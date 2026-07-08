@@ -93,10 +93,10 @@ export default function ProductInfo({ product }) {
             </IconButton>
           </div>
 
-          <PrimaryButton>Buy Now</PrimaryButton>
+          <PrimaryButton variant="outlined">Buy Now</PrimaryButton>
         </>
       ) : (
-        <PrimaryButton disabled>Sold Out</PrimaryButton>
+        <PrimaryButton>Sold Out</PrimaryButton>
       )}
 
       <div className={styles.trust}>

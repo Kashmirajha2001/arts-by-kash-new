@@ -1,0 +1,42 @@
+.section {
+    width: min(1200px, 92%);
+    margin: 4rem auto 6rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.header h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: var(--heading-color);
+}
+
+.header span {
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1.8fr 420px;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (max-width:1000px) {
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+}
