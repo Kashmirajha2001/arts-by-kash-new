@@ -13,21 +13,7 @@ import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import styles from "./CartDrawer.module.css";
 
 export default function CartDrawer() {
-  const { cart, cartOpen, closeCart } = useStore();
-
-  const cartProducts = cart.map((item) => {
-    const product = shopData.find((p) => p.id === item.productId);
-
-    return {
-      ...product,
-      quantity: item.quantity,
-    };
-  });
-
-  const subtotal = cartProducts.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
+  const { cartProducts, subtotal, cartOpen, closeCart } = useStore();
 
   return (
     <AnimatePresence>

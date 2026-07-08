@@ -34,13 +34,17 @@
 
 }
 
-.row .shipping{
+.row .shipping {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
-.freeShipping{
+.shipping>span:first-child {
+    text-align: right;
+}
+
+.freeShipping {
     font-size: 0.6rem;
     color: var(--color-primary);
     font-weight: 500;
@@ -94,6 +98,34 @@
 
 }
 
-.btn{
+.btn {
     margin-bottom: 1rem;
+}
+
+.dispatch {
+
+    margin: 1.8rem 0;
+
+    padding: 1rem;
+
+    border: 1px solid #ebe5df;
+
+    border-radius: 14px;
+
+}
+
+.dispatch span {
+
+    display: block;
+
+    color: var(--text-light);
+
+    margin-bottom: .4rem;
+
+}
+
+.dispatch strong {
+
+    color: var(--heading-color);
+
 }

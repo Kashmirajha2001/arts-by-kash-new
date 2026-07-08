@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 import useAuth from "../hooks/useAuth";
 import { showSuccess, showError } from "../utils/toast";
+import { useMemo } from "react";
 
 import {
   getWishlist,
@@ -17,6 +18,8 @@ import {
 } from "../services/cartService";
 
 const StoreContext = createContext();
+
+import shopData from "../pages/Shop/data/shopData";
 
 export default function StoreProvider({ children }) {
   const { user } = useAuth();
@@ -141,9 +144,35 @@ export default function StoreProvider({ children }) {
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const cartProducts = useMemo(() => {
+    return cart
+      .map((item) => {
+        const product = shopData.find((p) => p.id === item.productId);
+
+        if (!product) return null;
+
+        return {
+          ...product,
+          quantity: item.quantity,
+        };
+      })
+      .filter(Boolean);
+  }, [cart]);
+
+  const subtotal = useMemo(() => {
+    return cartProducts.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    );
+  }, [cartProducts]);
+
   const isInCart = (id) => {
     return cart.some((item) => item.productId === id);
   };
+
+  const shipping = subtotal >= 3000 ? 0 : 199;
+
+  const total = subtotal + shipping;
 
   return (
     <StoreContext.Provider
@@ -171,6 +200,10 @@ export default function StoreProvider({ children }) {
 
         closeCart,
         isInCart,
+        subtotal,
+        cartProducts,
+        shipping,
+        total,
       }}
     >
       {children}

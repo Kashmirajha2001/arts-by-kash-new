@@ -11,27 +11,12 @@ import CartSummary from "./CartSummary/CartSummary";
 import EmptyCart from "./EmptyCart/EmptyCart";
 
 import styles from "./Cart.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
-  const { cart } = useStore();
+  const { cartProducts, subtotal, clearCart } = useStore();
 
-  const cartProducts = cart
-    .map((item) => {
-      const product = shopData.find((p) => p.id === item.productId);
-
-      if (!product) return null;
-
-      return {
-        ...product,
-        quantity: item.quantity,
-      };
-    })
-    .filter(Boolean);
-
-  const subtotal = cartProducts.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
+  const navigate = useNavigate();
 
   return (
     <>
@@ -52,6 +37,16 @@ export default function Cart() {
                 {cartProducts.length} item
                 {cartProducts.length > 1 && "s"}
               </span>
+            </div>
+
+            <div className={styles.topActions}>
+              <button onClick={() => navigate("/shop")}>
+                ← Continue Shopping
+              </button>
+
+              <button className={styles.clear} onClick={clearCart}>
+                Clear Cart
+              </button>
             </div>
 
             <div className={styles.layout}>

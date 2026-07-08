@@ -22,8 +22,10 @@ export default function CartSummary({ subtotal }) {
         <span>Shipping</span>
 
         <div className={styles.shipping}>
-          <span>Calculated at checkout</span>
-          <span className={styles.freeShipping}>Free delivery on orders above 3000</span>
+          <span>🚚 Shipping calculated at checkout</span>
+          <span className={styles.freeShipping}>
+            Free delivery on orders above 3000
+          </span>
         </div>
       </div>
 
@@ -34,6 +36,12 @@ export default function CartSummary({ subtotal }) {
 
         <strong>₹{subtotal.toLocaleString()}</strong>
       </div>
+
+      {/* <div className={styles.dispatch}>
+        <span>Estimated Dispatch</span>
+
+        <strong>2–4 Business Days</strong>
+      </div> */}
 
       <div className={styles.btn}>
         <PrimaryButton to="/checkout">Proceed to Checkout</PrimaryButton>
