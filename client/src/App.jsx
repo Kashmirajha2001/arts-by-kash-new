@@ -20,6 +20,7 @@ import CartDrawer from "./pages/Cart/CartDrawer/CartDrawer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Shop from "./pages/Shop/Shop";
 import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout";
 
 export default function App() {
   return (
@@ -59,6 +60,7 @@ export default function App() {
         <Route path="/shop/:id" element={<Product />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/cart" element={<Cart/>} />
+        <Route path="/checkout" element={<Checkout/>} />
       </Routes>
 
       <Footer />

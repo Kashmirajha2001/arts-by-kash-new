@@ -1,0 +1,29 @@
+.section {
+
+    width: min(1200px, 92%);
+
+    margin: 4rem auto 6rem;
+
+}
+
+.layout {
+
+    display: grid;
+
+    grid-template-columns: 1.8fr 420px;
+
+    gap: 2.5rem;
+
+    align-items: start;
+
+}
+
+@media(max-width:1000px) {
+
+    .layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}

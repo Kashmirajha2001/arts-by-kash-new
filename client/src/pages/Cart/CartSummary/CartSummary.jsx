@@ -22,7 +22,7 @@ export default function CartSummary({ subtotal }) {
         <span>Shipping</span>
 
         <div className={styles.shipping}>
-          <span>🚚 Shipping calculated at checkout</span>
+          <span>🚚 Calculated at checkout</span>
           <span className={styles.freeShipping}>
             Free delivery on orders above 3000
           </span>
