@@ -141,6 +141,10 @@ export default function StoreProvider({ children }) {
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const isInCart = (id) => {
+    return cart.some((item) => item.productId === id);
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -166,6 +170,7 @@ export default function StoreProvider({ children }) {
         openCart,
 
         closeCart,
+        isInCart,
       }}
     >
       {children}

@@ -8,12 +8,20 @@ import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 
 import { useStore } from "../../../context/StoreContext";
+import { showError } from "../../../utils/toast";
 
 export default function ProductCard({ product }) {
-  const buttonText = product.type === "course" ? "Enroll Now" : "Add to Cart";
   const navigate = useNavigate();
   const { toggleWishlist, isWishlisted } = useStore();
-  const { addToCart } = useStore();
+  const { addToCart, isInCart } = useStore();
+
+  const inCart = isInCart(product.id);
+  const buttonText =
+    product.type === "course"
+      ? "Enroll Now"
+      : inCart
+        ? "🛒 Go to Cart"
+        : "🛒 Add to Cart";
 
   const wishlisted = isWishlisted(product.id);
 
@@ -68,6 +76,15 @@ export default function ProductCard({ product }) {
               <PrimaryButton
                 onClick={(e) => {
                   e.stopPropagation();
+                  if (product.type === "course") {
+                    navigate("/courses");
+                    return;
+                  }
+                  if (inCart) {
+                    navigate("/cart");
+                    // Later we'll change this to openCart()
+                    return;
+                  }
                   addToCart(product.id);
                 }}
               >
@@ -75,7 +92,15 @@ export default function ProductCard({ product }) {
               </PrimaryButton>
             </>
           ) : (
-            <PrimaryButton variant="outline" disabled="true">Sold Out</PrimaryButton>
+            <PrimaryButton
+              variant="outline"
+              onClick={(e) => {
+                e.stopPropagation();
+                showError("Item is Sold out");
+              }}
+            >
+              Sold Out
+            </PrimaryButton>
           )}
         </div>
       </div>

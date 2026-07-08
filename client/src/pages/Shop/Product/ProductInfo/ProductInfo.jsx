@@ -9,14 +9,25 @@ import SecondaryButton from "../../../../components/ui/SecondaryButton/Secondary
 import { useStore } from "../../../../context/StoreContext";
 import { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
 import styles from "./ProductInfo.module.css";
 
 export default function ProductInfo({ product }) {
   const { toggleWishlist, isWishlisted } = useStore();
+  const navigate = useNavigate();
 
   const wishlisted = isWishlisted(product.id);
-  const { addToCart } = useStore();
+  const { addToCart, isInCart } = useStore();
   const [quantity, setQuantity] = useState(1);
+
+  const inCart = isInCart(product.id);
+
+  const buttonText =
+    product.type === "course"
+      ? "Enroll Now"
+      : inCart
+        ? "🛒 Go to Cart"
+        : "🛒 Add to Cart";
 
   return (
     <div className={styles.info}>
@@ -52,10 +63,19 @@ export default function ProductInfo({ product }) {
             <PrimaryButton
               onClick={(e) => {
                 e.stopPropagation();
+                if (product.type === "course") {
+                  navigate("/courses");
+                  return;
+                }
+                if (inCart) {
+                  navigate("/cart");
+                  // Later we'll change this to openCart()
+                  return;
+                }
                 addToCart(product.id, quantity);
               }}
             >
-              Add to Cart
+              {buttonText}
             </PrimaryButton>
 
             <IconButton

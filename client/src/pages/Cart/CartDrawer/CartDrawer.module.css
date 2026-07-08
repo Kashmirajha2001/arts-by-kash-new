@@ -12,8 +12,7 @@
     top: 0;
     right: 0;
     width: min(400px, 92vw);
-    min-height: 100vh;
-    max-height: 100vh;
+    height: 100vh;
     background: #fff;
     z-index: 9999;
     display: flex;
@@ -118,6 +117,7 @@
 @media (max-width: 480px) {
     .drawer {
         width: 80vw;
+        height: 100dvh;
     }
 
     .header {
@@ -131,11 +131,15 @@
     .items {
         padding: .8rem;
         gap: .65rem;
+        flex: 1;
+        min-height: 0;         /* critical — lets flex child shrink below content size */
+        overflow-y: auto;
     }
 
     .footer {
         padding: .85rem 1rem;
         gap: .6rem;
+        flex-shrink: 0;        /* footer never shrinks, always fully visible */
     }
 
     .total strong {
