@@ -1,0 +1,71 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, .45);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.dialog {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    width: min(380px, 100%);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .14);
+    text-align: center;
+}
+
+.dialog h3 {
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+    color: var(--heading-color);
+    margin-bottom: .5rem;
+}
+
+.dialog p {
+    color: #999;
+    font-size: .9rem;
+    margin-bottom: 1.6rem;
+}
+
+.actions {
+    display: flex;
+    gap: .8rem;
+    justify-content: center;
+}
+
+.cancelBtn {
+    flex: 1;
+    padding: .75rem;
+    border-radius: 999px;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+    color: #555;
+}
+
+.cancelBtn:hover {
+    background: #f5f2ee;
+}
+
+.deleteBtn {
+    flex: 1;
+    padding: .75rem;
+    border-radius: 999px;
+    border: none;
+    background: #d64045;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.deleteBtn:hover {
+    background: #b83237;
+}

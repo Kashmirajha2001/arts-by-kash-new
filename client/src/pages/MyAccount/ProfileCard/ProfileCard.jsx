@@ -15,6 +15,7 @@ import { getCurrentUser, updateProfile } from "../../../services/authService";
 import useAuth from "../../../hooks/useAuth";
 import { showSuccess, showError } from "../../../utils/toast";
 import { isValidPhone } from "../../../utils/validation";
+import AddressesTab from "../AddressesTab/AddressesTab";
 
 import { useNavigate } from "react-router-dom";
 
@@ -33,14 +34,19 @@ export default function ProfileCard() {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
+  // const [editData, setEditData] = useState({
+  //   name: "",
+  //   phone: "",
+  //   street: "",
+  //   city: "",
+  //   state: "",
+  //   pincode: "",
+  //   country: "",
+  // });
+
   const [editData, setEditData] = useState({
     name: "",
     phone: "",
-    street: "",
-    city: "",
-    state: "",
-    pincode: "",
-    country: "",
   });
 
   useEffect(() => {
@@ -174,122 +180,71 @@ export default function ProfileCard() {
 
   return (
     <div className={styles.card}>
-      {/* ================= HEADER ================= */}
+      {/* Logout — top right corner */}
+      <IconButton className={styles.logoutBtn} onClick={handleLogout}>
+        <LogoutRoundedIcon fontSize="small" />
+      </IconButton>
 
+      {/* ================= HEADER ================= */}
       <div className={styles.header}>
         <img src={user.avatar} alt={user.name} className={styles.avatar} />
-
         <div className={styles.headerContent}>
           <span className={styles.welcome}>Welcome back 👋</span>
-
-          {isEditing ? (
-            <FormInput
-              label="Full Name"
-              name="name"
-              value={editData.name}
-              onChange={handleChange}
-              error={errors.name}
-            />
-          ) : (
-            <h2>{user.name}</h2>
-          )}
+          <h2>{user.name}</h2>
         </div>
       </div>
 
-      {/* ================= CONTENT ================= */}
-
-      {isEditing ? (
-        <div className={styles.editForm}>
-          <FormInput
-            label="Phone Number"
-            name="phone"
-            value={editData.phone}
-            onChange={handleChange}
-            error={errors.phone}
-            placeholder="+91 XXXXX XXXXX"
-          />
-
-          <div className={styles.fullWidth}>
-            <FormInput
-              label="Street Address"
-              name="street"
-              value={editData.street}
-              onChange={handleChange}
-            />
-          </div>
-
-          <FormInput
-            label="City"
-            name="city"
-            value={editData.city}
-            onChange={handleChange}
-          />
-
-          <FormInput
-            label="State"
-            name="state"
-            value={editData.state}
-            onChange={handleChange}
-          />
-
-          <FormInput
-            label="PIN Code"
-            name="pincode"
-            value={editData.pincode}
-            onChange={handleChange}
-          />
-        </div>
-      ) : (
+      {/* ================= INFO ================= */}
+      <div className={styles.content}>
         <div className={styles.infoGrid}>
+          {/* Email — not editable */}
           <div>
             <EmailOutlinedIcon />
             <span>{user.email}</span>
           </div>
 
-          <div>
+          {/* Phone — inline editable */}
+          <div className={styles.phoneRow}>
             <PhoneOutlinedIcon />
-            <span>{user.phone || "Add phone number"}</span>
-          </div>
 
-          <div>
-            <LocationOnOutlinedIcon />
-            <span>
-              {defaultAddress.city
-                ? `${defaultAddress.city}, ${defaultAddress.state}`
-                : "Add your address"}
-            </span>
-          </div>
+            {isEditing ? (
+              <FormInput
+                name="phone"
+                value={editData.phone}
+                onChange={handleChange}
+                error={errors.phone}
+                placeholder="+91 XXXXX XXXXX"
+              />
+            ) : (
+              <span>{user.phone || "Add phone number"}</span>
+            )}
 
-          <div>
-            <CalendarMonthOutlinedIcon />
-            <span>Member since {joinedDate}</span>
+            {isEditing ? (
+              <div className={styles.phoneActions}>
+                <button className={styles.cancelInline} onClick={handleCancel}>
+                  Cancel
+                </button>
+                <PrimaryButton onClick={handleSave} disabled={loading}>
+                  {loading ? "Saving..." : "Save"}
+                </PrimaryButton>
+              </div>
+            ) : (
+              <IconButton
+                className={styles.editBtn}
+                onClick={() => setIsEditing(true)}
+                size="small"
+              >
+                <EditOutlinedIcon fontSize="small" />
+              </IconButton>
+            )}
           </div>
         </div>
-      )}
 
-      {/* ================= ACTIONS ================= */}
-
-      {isEditing ? (
-        <div className={styles.editActions}>
-          <button className={styles.cancelBtn} onClick={handleCancel}>
-            Cancel
-          </button>
-
-          <PrimaryButton onClick={handleSave} disabled={loading}>
-            {loading ? "Saving..." : "Save Changes"}
-          </PrimaryButton>
+        {/* Addresses full width below */}
+        <div className={styles.addressSection}>
+          <AddressesTab />
         </div>
-      ) : (
-        <div className={styles.actions}>
-          <IconButton onClick={() => setIsEditing(true)}>
-            <EditOutlinedIcon />
-          </IconButton>
-
-          <IconButton onClick={handleLogout}>
-            <LogoutRoundedIcon />
-          </IconButton>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

@@ -9,6 +9,11 @@ import {
   forgotPassword,
   resetPassword,
   updateProfile,
+  getAddresses,
+  addAddress,
+  updateAddress,
+  deleteAddress,
+  setDefaultAddress,
 } from "../controllers/authController.js";
 import {
   validateRegister,
@@ -26,5 +31,11 @@ router.post("/google", googleLogin);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);
 router.patch("/profile", protect, updateProfile);
+router.get("/addresses", protect, getAddresses);
+
+router.post("/addresses", protect, addAddress);
+router.put("/addresses/:id", protect, updateAddress);
+router.delete("/addresses/:id", protect, deleteAddress);
+router.patch("/addresses/:id/default", protect, setDefaultAddress);
 
 export default router;

@@ -24,7 +24,7 @@
 
     color: var(--heading-color);
     font-family: var(--heading-font);
-    font-weight:bolder;
+    font-weight: bolder;
 
     font-size: 1.45rem;
 
@@ -115,18 +115,122 @@
 
 }
 
-@media(max-width:768px) {
+.addressList {
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+    margin-bottom: 1.25rem;
+}
 
+.addressCard {
+    position: relative;
+    border: 1.5px solid #e5ddd4;
+    border-radius: 18px;
+    padding: 1.2rem 1.4rem;
+    cursor: pointer;
+    transition: border-color .22s, background .22s, box-shadow .22s, transform .22s;
+    background: #fff;
+    min-height: 48px;
+}
+
+.addressCard:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .07);
+    transform: translateY(-2px);
+}
+
+.active {
+    border: 2px solid var(--color-primary);
+    background: #faf7f2;
+    box-shadow: 0 6px 24px rgba(197, 164, 109, .12);
+}
+
+/* checkmark slot — always reserves space top-right */
+.check {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+}
+
+.checkIcon {
+    color: var(--color-primary);
+    font-size: 22px !important;
+}
+
+.addressBody {
+    padding-right: 2rem;
+    /* prevent text going under check */
+}
+
+.defaultBadge {
+    display: inline-block;
+    margin-bottom: .65rem;
+    padding: .25rem .75rem;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .3px;
+}
+
+.street {
+    font-weight: 600;
+    color: var(--heading-color);
+    margin-bottom: .3rem;
+}
+
+.addressBody p {
+    margin-bottom: .25rem;
+    color: #666;
+    font-size: .9rem;
+    line-height: 1.55;
+}
+
+/* + Add New Address */
+.addAddress {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    background: none;
+    border: 1.5px dashed #d5c9be;
+    border-radius: 14px;
+    width: 100%;
+    padding: .8rem 1.2rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: .22s;
+    justify-content: center;
+}
+
+.addAddress:hover {
+    background: #faf7f2;
+    border-color: var(--color-primary);
+}
+
+.noAddress {
+    color: #999;
+    font-size: .9rem;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* ========================= */
+
+@media (max-width: 768px) {
     .card {
-
         padding: 1.5rem;
-
     }
 
     .grid {
-
         grid-template-columns: 1fr;
-
     }
 
+    .addressCard {
+        padding: 1rem 1.2rem;
+    }
 }

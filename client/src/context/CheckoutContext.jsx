@@ -8,18 +8,8 @@ export default function CheckoutProvider({ children }) {
   const { user } = useAuth();
 
   const [checkoutData, setCheckoutData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-
-    address: "",
-    city: "",
-    state: "",
-    pincode: "",
-    country: "India",
-
+    addressId: "",
     giftMessage: "",
-
     paymentMethod: "razorpay",
   });
 
@@ -31,18 +21,8 @@ export default function CheckoutProvider({ children }) {
       user.addresses?.[0];
 
     setCheckoutData({
-      name: user.name || "",
-      email: user.email || "",
-      phone: user.phone || "",
-
-      address: defaultAddress?.street || "",
-      city: defaultAddress?.city || "",
-      state: defaultAddress?.state || "",
-      pincode: defaultAddress?.pincode || "",
-      country: defaultAddress?.country || "India",
-
+      addressId: defaultAddress?._id || "",
       giftMessage: "",
-
       paymentMethod: "razorpay",
     });
   }, [user]);

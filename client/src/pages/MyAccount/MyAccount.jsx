@@ -8,6 +8,7 @@ import AccountTabs from "./AccountTabs/AccountTabs";
 import WishlistTab from "./WishlistTab/WishlistTab";
 import OrdersTab from "./OrdersTab/OrdersTab";
 import CoursesTab from "./CoursesTab/CoursesTab";
+// import AddressesTab from "./AddressesTab/AddressesTab";
 
 import styles from "./MyAccount.module.css";
 
@@ -26,6 +27,7 @@ export default function MyAccount() {
         <div className={styles.container}>
           <ProfileCard />
 
+          {/* <AddressesTab/> */}
           {/* AccountTabs Coming Next */}
           <AccountTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 

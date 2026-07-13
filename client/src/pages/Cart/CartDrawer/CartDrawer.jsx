@@ -75,7 +75,11 @@ export default function CartDrawer() {
                   closeCart();
                   navigate("/cart");
                 }}>View Cart</PrimaryButton>
-                <PrimaryButton>Checkout</PrimaryButton>
+                <PrimaryButton onClick=
+                {() => {
+                  closeCart();
+                  navigate("/checkout");
+                }}>Checkout</PrimaryButton>
               </div>
             )}
           </motion.aside>

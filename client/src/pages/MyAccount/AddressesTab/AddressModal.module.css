@@ -1,0 +1,250 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, .5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 24px;
+    width: min(560px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .14);
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 1.6rem 0;
+    margin-bottom: 1.2rem;
+}
+
+.modalHeader h3 {
+    font-family: var(--heading-font);
+    font-size: 1.3rem;
+    color: var(--heading-color);
+}
+
+.closeBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #ebe5df;
+    background: #faf8f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.closeBtn:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+/* ========================= */
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.2rem;
+    padding: 0 1.6rem 1.6rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.field label {
+    font-size: .84rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.field label span {
+    font-weight: 400;
+    color: #999;
+}
+
+.field input {
+    padding: .8rem 1rem;
+    border: 1.5px solid #e5ddd4;
+    border-radius: 12px;
+    font-size: .92rem;
+    font-family: inherit;
+    background: #fdfaf7;
+    transition: .22s;
+    outline: none;
+}
+
+.field input:focus {
+    border-color: var(--color-primary);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(197, 164, 109, .14);
+}
+
+.error {
+    color: #d64045;
+    font-size: .78rem;
+    font-weight: 500;
+}
+
+/* ========================= */
+
+.checkRow {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+.checkRow input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkRow label {
+    font-size: .9rem;
+    color: #555;
+    cursor: pointer;
+}
+
+/* ========================= */
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .8rem;
+    margin-top: .5rem;
+}
+
+.cancelBtn {
+    padding: .75rem 1.4rem;
+    border-radius: 999px;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: .2s;
+    color: #555;
+}
+
+.cancelBtn:hover {
+    background: #f5f2ee;
+}
+
+.saveBtn {
+    padding: .75rem 1.6rem;
+    border-radius: 999px;
+    border: none;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.saveBtn:hover {
+    opacity: .88;
+}
+
+.saveBtn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.chip {
+    padding: .45rem 1rem;
+    border-radius: 999px;
+    border: 1.5px solid #e5ddd4;
+    background: #fdfaf7;
+    font-size: .85rem;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.chip:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.chipActive {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.chipActive:hover {
+    color: #fff;
+}
+
+.customLabel {
+    margin-top: .5rem;
+    padding: .8rem 1rem;
+    border: 1.5px solid #e5ddd4;
+    border-radius: 12px;
+    font-size: .92rem;
+    font-family: inherit;
+    background: #fdfaf7;
+    outline: none;
+    transition: .22s;
+    width: 100%;
+}
+
+.customLabel:focus {
+    border-color: var(--color-primary);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(197, 164, 109, .14);
+}
+
+/* ========================= */
+
+@media (max-width: 480px) {
+    .form {
+        grid-template-columns: 1fr;
+        padding: 0 1.2rem 1.2rem;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .modalActions {
+        flex-direction: column-reverse;
+    }
+
+    .cancelBtn,
+    .saveBtn {
+        width: 100%;
+        text-align: center;
+    }
+}
