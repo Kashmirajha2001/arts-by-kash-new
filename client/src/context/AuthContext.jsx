@@ -15,19 +15,19 @@ export default function AuthProvider({ children }) {
 
   const [loading, setLoading] = useState(true);
 
+  const loadUser = async () => {
+    try {
+      const data = await getCurrentUser();
+
+      setUser(data.user);
+    } catch (error) {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const data = await getCurrentUser();
-
-        setUser(data.user);
-      } catch (error) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadUser();
   }, []);
 
@@ -78,6 +78,7 @@ export default function AuthProvider({ children }) {
         register,
         logout,
         googleLogin,
+        loadUser,
       }}
     >
       {children}

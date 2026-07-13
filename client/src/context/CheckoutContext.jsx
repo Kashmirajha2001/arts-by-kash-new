@@ -1,31 +1,25 @@
-import { createContext, useContext, useState, useEffect } from "react";
-
-import useAuth from "../hooks/useAuth";
+import { createContext, useContext, useState } from "react";
 
 const CheckoutContext = createContext();
 
 export default function CheckoutProvider({ children }) {
-  const { user } = useAuth();
-
   const [checkoutData, setCheckoutData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+    country: "India",
+
     addressId: "",
+
     giftMessage: "",
+
     paymentMethod: "razorpay",
   });
-
-  useEffect(() => {
-    if (!user) return;
-
-    const defaultAddress =
-      user.addresses?.find((address) => address.isDefault) ||
-      user.addresses?.[0];
-
-    setCheckoutData({
-      addressId: defaultAddress?._id || "",
-      giftMessage: "",
-      paymentMethod: "razorpay",
-    });
-  }, [user]);
 
   return (
     <CheckoutContext.Provider

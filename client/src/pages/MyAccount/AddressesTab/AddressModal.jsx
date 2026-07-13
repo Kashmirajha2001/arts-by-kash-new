@@ -5,6 +5,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 import { addAddress, updateAddress } from "../../../services/addressService";
 import { showSuccess, showError } from "../../../utils/toast";
+import useAuth from "../../../hooks/useAuth";
 
 import styles from "./AddressModal.module.css";
 
@@ -19,6 +20,8 @@ const empty = {
 };
 
 export default function AddressModal({ address, onClose, onSaved }) {
+  const { loadUser } = useAuth();
+
   const isEdit = Boolean(address);
 
   const [form, setForm] = useState(
@@ -84,6 +87,7 @@ export default function AddressModal({ address, onClose, onSaved }) {
       const res = isEdit
         ? await updateAddress(address._id, form)
         : await addAddress(form);
+      await loadUser();
       showSuccess(isEdit ? "Address updated!" : "Address added!");
       onSaved(res.data.addresses);
     } catch {

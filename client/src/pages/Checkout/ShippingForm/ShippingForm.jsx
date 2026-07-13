@@ -22,19 +22,32 @@ export default function ShippingForm() {
 
   useEffect(() => {
     if (!user) return;
-    setCheckoutData({
+    // console.log(user);
+
+    setCheckoutData((prev) => ({
+      ...prev,
+
       name: user.name || "",
+
       email: user.email || "",
+
       phone: user.phone || "",
+
       address: defaultAddress?.street || "",
+
       city: defaultAddress?.city || "",
+
       state: defaultAddress?.state || "",
+
       pincode: defaultAddress?.pincode || "",
+
       country: defaultAddress?.country || "India",
-      addressId: defaultAddress?._id || "",
-      giftMessage: "",
-    });
-  }, [user]);
+
+      addressId: defaultAddress?._id || prev.addressId,
+    }));
+
+    // console.log(checkoutData);
+  }, [user, defaultAddress]);
 
   const handleChange = (e) => {
     setCheckoutData((prev) => ({ ...prev, [e.target.name]: e.target.value }));

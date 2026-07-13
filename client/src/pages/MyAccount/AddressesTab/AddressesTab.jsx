@@ -14,6 +14,7 @@ import {
 } from "../../../services/addressService";
 
 import { showSuccess, showError } from "../../../utils/toast";
+import useAuth from "../../../hooks/useAuth";
 
 import AddressModal from "./AddressModal";
 import DeleteConfirm from "./DeleteConfirm";
@@ -27,9 +28,12 @@ export default function AddressesTab() {
   const [editingAddress, setEditingAddress] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
 
+  const { loadUser } = useAuth();
+
   const fetchAddresses = async () => {
     try {
       const res = await getAddresses();
+      await loadUser();
       setAddresses(res.data.addresses);
     } catch {
       showError("Failed to load addresses.");
@@ -65,6 +69,7 @@ export default function AddressesTab() {
   const handleDeleteConfirm = async () => {
     try {
       const res = await deleteAddress(deletingId);
+      await loadUser();
       setAddresses(res.data.addresses);
       showSuccess("Address deleted.");
     } catch {
@@ -77,6 +82,7 @@ export default function AddressesTab() {
   const handleSetDefault = async (id) => {
     try {
       const res = await setDefaultAddress(id);
+      await loadUser();
       setAddresses(res.data.addresses);
       showSuccess("Default address updated.");
     } catch {
