@@ -1,5 +1,64 @@
 import mongoose from "mongoose";
 
+// ================= Order Item =================
+const orderItemSchema = new mongoose.Schema(
+  {
+    productId: {
+      type: Number,
+      required: true,
+    },
+
+    title: {
+      type: String,
+      required: true,
+    },
+
+    image: {
+      type: String,
+      default: "",
+    },
+
+    type: {
+      type: String,
+      required: true,
+    },
+
+    quantity: {
+      type: Number,
+      required: true,
+    },
+
+    price: {
+      type: Number,
+      required: true,
+    },
+  },
+  { _id: false },
+);
+
+// ================= Shipping Address =================
+const shippingAddressSchema = new mongoose.Schema(
+  {
+    label: String,
+    street: String,
+    city: String,
+    state: String,
+    pincode: String,
+    country: String,
+  },
+  { _id: false },
+);
+
+// ================= Customer =================
+const customerSchema = new mongoose.Schema(
+  {
+    name: String,
+    email: String,
+    phone: String,
+  },
+  { _id: false },
+);
+
 const orderSchema = new mongoose.Schema(
   {
     user: {
@@ -8,51 +67,14 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
-    items: [
-      {
-        productId: {
-          type: String,
-          required: true,
-        },
-
-        title: {
-          type: String,
-          required: true,
-        },
-
-        image: {
-          type: String,
-          required: true,
-        },
-
-        type: {
-          type: String,
-          required: true,
-        },
-
-        quantity: {
-          type: Number,
-          required: true,
-        },
-
-        price: {
-          type: Number,
-          required: true,
-        },
-      },
-    ],
-
-    shippingAddress: {
-      name: String,
-      email: String,
-      phone: String,
-
-      street: String,
-      city: String,
-      state: String,
-      pincode: String,
-      country: String,
+    items: {
+      type: [orderItemSchema],
+      required: true,
     },
+
+    shippingAddress: shippingAddressSchema,
+
+    customer: customerSchema,
 
     giftMessage: {
       type: String,
@@ -61,7 +83,7 @@ const orderSchema = new mongoose.Schema(
 
     subtotal: Number,
 
-    shipping: Number,
+    shippingCharge: Number,
 
     total: Number,
 
@@ -72,21 +94,21 @@ const orderSchema = new mongoose.Schema(
 
     paymentStatus: {
       type: String,
-      enum: ["Pending", "Paid", "Failed", "Refunded"],
-      default: "Pending",
+      enum: ["pending", "paid", "failed", "refunded"],
+      default: "pending",
     },
 
     orderStatus: {
       type: String,
       enum: [
-        "Pending",
-        "Confirmed",
-        "Packed",
-        "Shipped",
-        "Delivered",
-        "Cancelled",
+        "pending",
+        "confirmed",
+        "packed",
+        "shipped",
+        "delivered",
+        "cancelled",
       ],
-      default: "Pending",
+      default: "pending",
     },
 
     razorpayOrderId: String,

@@ -6,6 +6,7 @@ import commissionRoutes from "./routes/commissionRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from './routes/orderRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 const app = express();
 
@@ -40,6 +41,8 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/cart", cartRoutes);
 
 app.use("/api/orders", orderRoutes);
+
+app.use("/api/products", productRoutes);
 
 app.get("/", (req, res) => {
   res.json({

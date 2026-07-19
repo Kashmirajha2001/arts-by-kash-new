@@ -1,9 +1,9 @@
 import { body } from "express-validator";
 
 export const validateCreateOrder = [
-  body("addressId").notEmpty().withMessage("Please select an address."),
+  body("addressId").notEmpty().withMessage("Shipping address is required."),
 
   body("paymentMethod")
-    .isIn(["razorpay"])
+    .equals("razorpay")
     .withMessage("Invalid payment method."),
 ];
