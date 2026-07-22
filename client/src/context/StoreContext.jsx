@@ -71,19 +71,18 @@ export default function StoreProvider({ children }) {
     }
   }, [user]);
 
+  const resetCart = async () => {
+    try {
+      const response = await getCart();
+      setCart(response.cart);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const loadCart = async () => {
-      try {
-        const response = await getCart();
-
-        setCart(response.cart);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     if (user) {
-      loadCart();
+      resetCart();
     } else {
       setCart([]);
     }
@@ -204,6 +203,8 @@ export default function StoreProvider({ children }) {
         cartProducts,
         shipping,
         total,
+
+        resetCart,
       }}
     >
       {children}

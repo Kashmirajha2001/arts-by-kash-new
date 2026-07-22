@@ -3,29 +3,28 @@ import { createContext, useContext, useState } from "react";
 const CheckoutContext = createContext();
 
 export default function CheckoutProvider({ children }) {
-  const [checkoutData, setCheckoutData] = useState({
+  
+  const initialCheckoutData = {
     name: "",
     email: "",
     phone: "",
-
-    address: "",
-    city: "",
-    state: "",
-    pincode: "",
-    country: "India",
-
     addressId: "",
-
     giftMessage: "",
-
     paymentMethod: "razorpay",
-  });
+  };
+
+  const [checkoutData, setCheckoutData] = useState(initialCheckoutData);
+
+  const resetCheckout = () => {
+    setCheckoutData(initialCheckoutData);
+  };
 
   return (
     <CheckoutContext.Provider
       value={{
         checkoutData,
         setCheckoutData,
+        resetCheckout,
       }}
     >
       {children}
