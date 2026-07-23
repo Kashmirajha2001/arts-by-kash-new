@@ -1,0 +1,133 @@
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 60px 20px;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 30px;
+    color: #8b6b52;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .06);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.orderId {
+    margin: 10px 0;
+    color: #666;
+}
+
+.date {
+    color: #888;
+}
+
+.badges {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 8px 18px;
+    border-radius: 30px;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.paid {
+    background: #e8f8ef;
+    color: #1e8e3e;
+}
+
+.confirmed {
+    background: #eef3ff;
+    color: #2d5bff;
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.item img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.itemInfo {
+    flex: 1;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.actions {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.loading {
+    text-align: center;
+    margin: 100px 0;
+}
+
+@media (max-width: 768px) {
+
+    .card {
+        padding: 24px;
+    }
+
+    .item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .itemInfo {
+        text-align: center;
+    }
+
+    .row {
+        gap: 15px;
+    }
+
+    .actions a {
+        display: block;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+}

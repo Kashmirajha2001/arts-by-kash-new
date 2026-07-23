@@ -23,6 +23,7 @@ import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import OrderSuccess from "./pages/Checkout/OrderSuccess/OrderSuccess";
 import MyOrders from "./pages/MyOrders/MyOrders";
+import OrderDetails from "./pages/MyOrders/OrderDetails/OrderDetails";
 
 export default function App() {
   return (
@@ -65,6 +66,7 @@ export default function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success/:id" element={<OrderSuccess />} />
         <Route path="/orders" element={<MyOrders />} />
+        <Route path="/orders/:id" element={<OrderDetails />} />
       </Routes>
 
       <Footer />
