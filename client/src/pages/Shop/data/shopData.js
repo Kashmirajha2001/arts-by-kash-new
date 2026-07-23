@@ -47,6 +47,18 @@ const shopData = [
     featured: false,
     inStock: true,
     stock: 5,
+    medium: "Coloured Pencil",
+    size: "8 x 10 Inches",
+    frame: "None",
+    availability: "Ready to Ship",
+    badge: "",
+    description: [
+      "Hand-drawn using premium coloured pencils.",
+      "Finished with archival protective fixative.",
+      "Certificate of authenticity included.",
+      "Signed by the artist.",
+      "Professionally packed for safe delivery.",
+    ],
   },
 
   {

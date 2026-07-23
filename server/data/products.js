@@ -9,11 +9,11 @@ export default [
   },
 
   {
-    id: 2,
-    title: "Krishna",
-    price: 9500,
-    stock: 1,
-    type: "artwork",
+    id: 3,
+    title: "Actress Sketch Prints",
+    price: 350,
+    stock: 5,
+    type: "print",
   },
 
   {

@@ -70,7 +70,10 @@ export const createOrder = async (req, res) => {
 
         title: product.title,
 
-        image: product.image[0],
+        image:
+          Array.isArray(product.image) && product.image.length
+            ? product.image[0]
+            : "",
 
         type: product.type,
 
