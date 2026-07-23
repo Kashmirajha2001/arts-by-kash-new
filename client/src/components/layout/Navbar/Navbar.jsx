@@ -159,7 +159,12 @@ export default function Navbar() {
                       <span>My Courses</span>
                     </button>
 
-                    <button>
+                    <button
+                      onClick={() => {
+                        setProfileOpen(false);
+                        navigate("/orders");
+                      }}
+                    >
                       <FiShoppingBag />
                       <span>My Orders</span>
                     </button>

@@ -70,7 +70,7 @@ export const createOrder = async (req, res) => {
 
         title: product.title,
 
-        image: "",
+        image: product.image[0],
 
         type: product.type,
 

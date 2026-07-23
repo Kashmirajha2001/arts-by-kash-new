@@ -3,6 +3,7 @@ export default [
     id: 1,
     title: "Maa Saraswati",
     price: 3500,
+    // image: [maa_saraswati, print1, course1, flora],
     stock: 1,
     type: "artwork",
   },

@@ -22,6 +22,7 @@ import Shop from "./pages/Shop/Shop";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import OrderSuccess from "./pages/Checkout/OrderSuccess/OrderSuccess";
+import MyOrders from "./pages/MyOrders/MyOrders";
 
 export default function App() {
   return (
@@ -63,6 +64,7 @@ export default function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success/:id" element={<OrderSuccess />} />
+        <Route path="/orders" element={<MyOrders />} />
       </Routes>
 
       <Footer />
