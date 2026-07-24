@@ -111,6 +111,11 @@ const orderSchema = new mongoose.Schema(
       default: "pending",
     },
 
+    orderNumber: {
+        type: String,
+        unique: true,
+    },
+
     razorpayOrderId: String,
 
     razorpayPaymentId: String,

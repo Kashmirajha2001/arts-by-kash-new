@@ -16,5 +16,7 @@ export default function ProtectedRoute({ children }) {
     );
   }
 
+  if (user.role !== "admin") return <Navigate to="/" />;
+
   return children;
 }

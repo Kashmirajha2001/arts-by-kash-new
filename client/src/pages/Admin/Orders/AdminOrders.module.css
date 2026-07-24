@@ -1,0 +1,108 @@
+.container {
+    padding: 40px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: #3d3128;
+}
+
+.header span {
+    color: #777;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .05);
+}
+
+.table thead {
+    background: #f6f1eb;
+}
+
+.table th,
+.table td {
+    padding: 18px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.table th {
+    font-weight: 600;
+    color: #444;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 50px;
+    text-transform: capitalize;
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.paid {
+    background: #e8f7ef;
+    color: #1d7a45;
+}
+
+.pending {
+    background: #fff3db;
+    color: #9a6700;
+}
+
+.status {
+    text-transform: capitalize;
+}
+
+.viewBtn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #8b6b52;
+    color: white;
+    text-decoration: none;
+    transition: .2s;
+}
+
+.viewBtn:hover {
+    background: #71533d;
+}
+
+.empty {
+    text-align: center;
+    padding: 80px;
+    background: white;
+    border-radius: 16px;
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 20px;
+    }
+
+    .table th,
+    .table td {
+        padding: 14px;
+        white-space: nowrap;
+    }
+}

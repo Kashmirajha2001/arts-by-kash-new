@@ -25,6 +25,12 @@ import OrderSuccess from "./pages/Checkout/OrderSuccess/OrderSuccess";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import OrderDetails from "./pages/MyOrders/OrderDetails/OrderDetails";
 
+import AdminLayout from "./pages/Admin/AdminLayout/AdminLayout";
+import AdminOrders from "./pages/Admin/Orders/AdminOrders";
+import AdminDashboard from "./pages/Admin/Dashboard/Dashboard";
+import AdminProducts from "./pages/Admin/Products/AdminProducts";
+import AdminOrderDetails from "./pages/Admin/AdminOrderDetails/AdminOrderDetails";
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -67,6 +73,20 @@ export default function App() {
         <Route path="/order-success/:id" element={<OrderSuccess />} />
         <Route path="/orders" element={<MyOrders />} />
         <Route path="/orders/:id" element={<OrderDetails />} />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders/:id" element={<AdminOrderDetails />} />
+        </Route>
       </Routes>
 
       <Footer />

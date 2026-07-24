@@ -91,6 +91,17 @@ export const createOrder = async (req, res) => {
     // console.log("orderItems =", orderItems);
     // console.log("Array?", Array.isArray(orderItems));
     // console.log("First item =", orderItems[0]);
+
+    const lastOrder = await Order.findOne().sort({ createdAt: -1 });
+
+    let nextNumber = 1;
+
+    if (lastOrder?.orderNumber) {
+      nextNumber = parseInt(lastOrder.orderNumber.split("-")[2], 10) + 1;
+    }
+
+    const orderNumber = `ABK-${new Date().getFullYear()}-${String(nextNumber).padStart(6, "0")}`;
+
     const order = await Order.create({
       user: user._id,
 
@@ -113,6 +124,8 @@ export const createOrder = async (req, res) => {
       total,
 
       paymentMethod,
+
+      orderNumber,
     });
 
     const razorpayOrder = await razorpay.orders.create({

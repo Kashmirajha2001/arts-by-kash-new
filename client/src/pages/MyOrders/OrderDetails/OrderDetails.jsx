@@ -44,7 +44,8 @@ export default function OrderDetails() {
             <h1>Order Details</h1>
 
             <p className={styles.orderId}>
-              Order #{order._id.slice(-8).toUpperCase()}
+              {/* Order #{order._id.slice(-8).toUpperCase()} */}
+              Order #{order.orderNumber}
             </p>
 
             <span className={styles.date}>
