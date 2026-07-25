@@ -28,7 +28,7 @@ import OrderDetails from "./pages/MyOrders/OrderDetails/OrderDetails";
 import AdminLayout from "./pages/Admin/AdminLayout/AdminLayout";
 import AdminOrders from "./pages/Admin/Orders/AdminOrders";
 import AdminDashboard from "./pages/Admin/Dashboard/Dashboard";
-import AdminProducts from "./pages/Admin/Products/AdminProducts";
+import AdminProducts from "./pages/Admin/Products/AdminProducts/AdminProducts";
 import AdminOrderDetails from "./pages/Admin/AdminOrderDetails/AdminOrderDetails";
 
 export default function App() {

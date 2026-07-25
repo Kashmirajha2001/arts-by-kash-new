@@ -38,6 +38,20 @@ const productSchema = new mongoose.Schema(
       default: [],
     },
 
+    // images: [
+    //   {
+    //     url: {
+    //       type: String,
+    //       required: true,
+    //     },
+
+    //     public_id: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //   },
+    // ],
+
     price: {
       type: Number,
       required: true,

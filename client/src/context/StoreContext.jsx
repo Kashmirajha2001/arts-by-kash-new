@@ -19,7 +19,8 @@ import {
 
 const StoreContext = createContext();
 
-import shopData from "../pages/Shop/data/shopData";
+// import shopData from "../pages/Shop/data/shopData";
+import { getProducts } from "../services/productService";
 
 export default function StoreProvider({ children }) {
   const { user } = useAuth();
@@ -29,9 +30,12 @@ export default function StoreProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   const [cartOpen, setCartOpen] = useState(false);
+
   const openCart = () => setCartOpen(true);
 
   const closeCart = () => setCartOpen(false);
+
+  const [products, setProducts] = useState([]);
 
   const toggleWishlist = async (id) => {
     if (!user) {
@@ -70,6 +74,20 @@ export default function StoreProvider({ children }) {
       setWishlist([]);
     }
   }, [user]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await getProducts();
+
+        setProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   const resetCart = async () => {
     try {
@@ -146,7 +164,7 @@ export default function StoreProvider({ children }) {
   const cartProducts = useMemo(() => {
     return cart
       .map((item) => {
-        const product = shopData.find((p) => p.id === item.productId);
+        const product = products.find((p) => p.id === item.productId);
 
         if (!product) return null;
 
@@ -156,7 +174,7 @@ export default function StoreProvider({ children }) {
         };
       })
       .filter(Boolean);
-  }, [cart]);
+  }, [cart, products]);
 
   const subtotal = useMemo(() => {
     return cartProducts.reduce(
@@ -205,6 +223,8 @@ export default function StoreProvider({ children }) {
         total,
 
         resetCart,
+
+        products,
       }}
     >
       {children}

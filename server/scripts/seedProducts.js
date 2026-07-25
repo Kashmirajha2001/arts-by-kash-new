@@ -5,7 +5,8 @@ import Product from "../models/Product.js";
 import connectDB from "../config/db.js";
 
 // Adjust this path if needed
-import shopData from "../../client/src/pages/Shop/data/shopData.js";
+// import shopData from "../../client/src/pages/Shop/data/shopData.js";
+import products from "../data/products.js";
 
 dotenv.config();
 
@@ -14,7 +15,33 @@ await connectDB();
 try {
   await Product.deleteMany();
 
-  await Product.insertMany(shopData);
+  // const products = shopData.map((product) => ({
+  //   ...product,
+
+  //   slug: product.title.toLowerCase().replace(/\s+/g, "-"),
+
+  //   images: [],
+
+  //   category: "",
+
+  //   featured: false,
+
+  //   badge: "",
+
+  //   medium: "",
+
+  //   size: "",
+
+  //   frame: "",
+
+  //   availability: "",
+
+  //   description: [],
+
+  //   status: "published",
+  // }));
+
+  await Product.insertMany(products);
 
   console.log("✅ Products seeded successfully!");
 
