@@ -15,7 +15,9 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://artsbykash.com",
   "https://www.artsbykash.com",
-];
+  process.env.CLIENT_URL,
+  ...(process.env.CLIENT_URLS?.split(",") || []),
+].filter(Boolean);
 
 app.use(
   cors({

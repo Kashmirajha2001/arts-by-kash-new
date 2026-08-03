@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   getCurrentUser,
@@ -7,8 +7,7 @@ import {
   registerUser,
   googleLoginUser,
 } from "../services/authService";
-
-export const AuthContext = createContext();
+import { AuthContext } from "./AuthContextValue";
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -20,7 +19,7 @@ export default function AuthProvider({ children }) {
       const data = await getCurrentUser();
 
       setUser(data.user);
-    } catch (error) {
+    } catch {
       setUser(null);
     } finally {
       setLoading(false);
@@ -28,27 +27,47 @@ export default function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    loadUser();
+    let isMounted = true;
+
+    const fetchUser = async () => {
+      try {
+        const data = await getCurrentUser();
+
+        if (isMounted) {
+          setUser(data.user);
+        }
+      } catch {
+        if (isMounted) {
+          setUser(null);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchUser();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const login = async (formData) => {
-    await loginUser(formData);
+    const data = await loginUser(formData);
 
-    const currentUser = await getCurrentUser();
+    setUser(data.user);
 
-    setUser(currentUser.user);
-
-    return currentUser.user;
+    return data.user;
   };
 
   const register = async (formData) => {
-    await registerUser(formData);
+    const data = await registerUser(formData);
 
-    const currentUser = await getCurrentUser();
+    setUser(data.user);
 
-    setUser(currentUser.user);
-
-    return currentUser.user;
+    return data.user;
   };
 
   const logout = async () => {
@@ -60,13 +79,11 @@ export default function AuthProvider({ children }) {
   };
 
   const googleLogin = async (credential) => {
-    await googleLoginUser(credential);
+    const data = await googleLoginUser(credential);
 
-    const currentUser = await getCurrentUser();
+    setUser(data.user);
 
-    setUser(currentUser.user);
-
-    return currentUser.user;
+    return data.user;
   };
 
   return (
