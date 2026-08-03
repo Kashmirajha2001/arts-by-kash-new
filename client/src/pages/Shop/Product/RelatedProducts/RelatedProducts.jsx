@@ -7,13 +7,14 @@ import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRigh
 import "swiper/css";
 import "swiper/css/navigation";
 
-import shopData from "../../data/shopData";
 import ProductCard from "../../ProductCard/ProductCard";
+import useProducts from "../../../../hooks/useProducts";
 
 import styles from "./RelatedProducts.module.css";
 
 export default function RelatedProducts({ currentId }) {
-  const related = shopData.filter((item) => item.id !== currentId).slice(0, 5);
+  const { products } = useProducts();
+  const related = products.filter((item) => item.id !== currentId).slice(0, 5);
 
   return (
     <section className={styles.section}>

@@ -5,14 +5,18 @@ import HeroImage from "../../assets/images/hero/courses-hero.jpg";
 import { useStore } from "../../context/StoreContext";
 
 import ProductCard from "../Shop/ProductCard/ProductCard";
+import Loader from "../../components/ui/Loader/Loader";
+import useProducts from "../../hooks/useProducts";
 
 import styles from "./Wishlist.module.css";
-import shopData from "../Shop/data/shopData";
 
 export default function Wishlist() {
   const { wishlist } = useStore();
+  const { products, loading } = useProducts();
 
-  const wishlistProducts = shopData.filter((product) =>
+  if (loading) return <Loader />;
+
+  const wishlistProducts = products.filter((product) =>
     wishlist.includes(product.id),
   );
 

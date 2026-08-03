@@ -27,6 +27,15 @@ const initialState = {
   status: "published",
 };
 
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const MAX_IMAGE_SIZE_MB = MAX_IMAGE_SIZE / (1024 * 1024);
+
+const getErrorMessage = (error) =>
+  error.response?.data?.message ||
+  error.response?.data?.error ||
+  error.message ||
+  "Something went wrong.";
+
 export default function ProductForm({ product, onClose, reloadProducts }) {
   const [formData, setFormData] = useState(initialState);
 
@@ -49,8 +58,33 @@ export default function ProductForm({ product, onClose, reloadProducts }) {
     setExistingImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleImageSelect = (e) => {
+    const selected = Array.from(e.target.files || []);
+
+    const oversizedImages = selected.filter(
+      (image) => image.size > MAX_IMAGE_SIZE,
+    );
+
+    if (oversizedImages.length) {
+      showError(
+        `Each image must be ${MAX_IMAGE_SIZE_MB}MB or smaller. Please compress: ${oversizedImages
+          .map((image) => image.name)
+          .join(", ")}`,
+      );
+    }
+
+    const validImages = selected.filter((image) => image.size <= MAX_IMAGE_SIZE);
+
+    if (validImages.length) {
+      setImages((prev) => [...prev, ...validImages]);
+    }
+
+    e.target.value = "";
+  };
+
   useEffect(() => {
     if (product) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         ...product,
 
@@ -100,6 +134,11 @@ export default function ProductForm({ product, onClose, reloadProducts }) {
     try {
       setSaving(true);
 
+      if (!product && images.length === 0) {
+        showError("Please add at least one product image.");
+        return;
+      }
+
       const payload = new FormData();
 
       payload.append("id", Number(formData.id));
@@ -147,7 +186,7 @@ export default function ProductForm({ product, onClose, reloadProducts }) {
     } catch (error) {
       console.log(error);
 
-      showError(error.response?.data?.message || "Something went wrong.");
+      showError(getErrorMessage(error));
     } finally {
       setSaving(false);
     }
@@ -336,11 +375,7 @@ export default function ProductForm({ product, onClose, reloadProducts }) {
             type="file"
             multiple
             accept="image/*"
-            onChange={(e) => {
-              const selected = Array.from(e.target.files);
-              setImages((prev) => [...prev, ...selected]);
-              e.target.value = "";
-            }}
+            onChange={handleImageSelect}
           />
 
           <div className={styles.previewGrid}>

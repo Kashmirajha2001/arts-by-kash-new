@@ -55,4 +55,18 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use((error, req, res, next) => {
+  if (error.code === "LIMIT_FILE_SIZE") {
+    return res.status(400).json({
+      success: false,
+      message: "Each product image must be 5MB or smaller.",
+    });
+  }
+
+  return res.status(error.status || 500).json({
+    success: false,
+    message: error.message || "Something went wrong.",
+  });
+});
+
 export default app;

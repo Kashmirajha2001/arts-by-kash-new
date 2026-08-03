@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from "react";
 
 import useAuth from "../hooks/useAuth";
@@ -16,14 +17,13 @@ import {
   removeFromCart as removeFromCartApi,
   clearCart as clearCartApi,
 } from "../services/cartService";
+import useProducts from "../hooks/useProducts";
 
 const StoreContext = createContext();
 
-// import shopData from "../pages/Shop/data/shopData";
-import { getProducts } from "../services/productService";
-
 export default function StoreProvider({ children }) {
   const { user } = useAuth();
+  const { products, loading: productsLoading } = useProducts();
 
   const [wishlist, setWishlist] = useState([]);
 
@@ -34,8 +34,6 @@ export default function StoreProvider({ children }) {
   const openCart = () => setCartOpen(true);
 
   const closeCart = () => setCartOpen(false);
-
-  const [products, setProducts] = useState([]);
 
   const toggleWishlist = async (id) => {
     if (!user) {
@@ -71,23 +69,10 @@ export default function StoreProvider({ children }) {
     if (user) {
       loadWishlist();
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setWishlist([]);
     }
   }, [user]);
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const data = await getProducts();
-
-        setProducts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    loadProducts();
-  }, []);
 
   const resetCart = async () => {
     try {
@@ -100,6 +85,7 @@ export default function StoreProvider({ children }) {
 
   useEffect(() => {
     if (user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       resetCart();
     } else {
       setCart([]);
@@ -225,6 +211,7 @@ export default function StoreProvider({ children }) {
         resetCart,
 
         products,
+        productsLoading,
       }}
     >
       {children}

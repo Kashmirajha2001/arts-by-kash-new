@@ -14,8 +14,6 @@ import razorpay from "../config/razorpay.js";
 import crypto from "crypto";
 import Product from "../models/Product.js";
 
-import products from "../data/products.js";
-
 export const createOrder = async (req, res) => {
   try {
     const { addressId, giftMessage, paymentMethod } = req.body;
@@ -49,7 +47,10 @@ export const createOrder = async (req, res) => {
     let subtotal = 0;
 
     for (const item of user.cart) {
-      const product = products.find((p) => p.id === item.productId);
+      const product = await Product.findOne({
+        id: item.productId,
+        status: "published",
+      });
 
       if (!product) {
         return res.status(404).json({
@@ -70,10 +71,7 @@ export const createOrder = async (req, res) => {
 
         title: product.title,
 
-        image:
-          Array.isArray(product.image) && product.image.length
-            ? product.image[0]
-            : "",
+        image: product.images?.[0]?.url || "",
 
         type: product.type,
 

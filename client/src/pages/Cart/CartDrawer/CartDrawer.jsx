@@ -2,7 +2,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useStore } from "../../../context/StoreContext";
 import CartItem from "../CartItem/CartItem";
-import shopData from "../../../pages/Shop/data/shopData";
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import styles from "./CartDrawer.module.css";
 import { useNavigate } from "react-router-dom";

@@ -3,8 +3,7 @@ import PageHero from "../../components/shared/PageHero/PageHero";
 import HeroImage from "../../assets/images/hero/courses-hero.jpg";
 
 import { useStore } from "../../context/StoreContext";
-
-import shopData from "../Shop/data/shopData";
+import Loader from "../../components/ui/Loader/Loader";
 
 import CartItem from "./CartItem/CartItem";
 import CartSummary from "./CartSummary/CartSummary";
@@ -14,9 +13,12 @@ import styles from "./Cart.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
-  const { cartProducts, subtotal, clearCart } = useStore();
+  const { cart, cartProducts, subtotal, clearCart, productsLoading } =
+    useStore();
 
   const navigate = useNavigate();
+
+  if (productsLoading && cart.length > 0) return <Loader />;
 
   return (
     <>

@@ -24,6 +24,7 @@ export default function ProductCard({ product }) {
         : "🛒 Add to Cart";
 
   const wishlisted = isWishlisted(product.id);
+  const coverImage = product.images?.[0]?.url || "";
 
   const handleCardClick = () => {
     if (product.type === "course") {
@@ -49,7 +50,7 @@ export default function ProductCard({ product }) {
         </button>
 
         <img
-          src={product.image[0]}
+          src={coverImage}
           alt={product.title}
           className={styles.image}
         />

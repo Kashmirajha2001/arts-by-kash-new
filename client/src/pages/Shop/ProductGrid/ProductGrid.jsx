@@ -1,13 +1,18 @@
-import shopData from "../data/shopData";
 import ProductCard from "../ProductCard/ProductCard";
+import Loader from "../../../components/ui/Loader/Loader";
+import useProducts from "../../../hooks/useProducts";
 
 import styles from "./ProductGrid.module.css";
 
 export default function ProductGrid({ activeCategory, search, sort }) {
+  const { products, loading } = useProducts();
+
+  if (loading) return <Loader />;
+
   let filteredProducts =
     activeCategory === "all"
-      ? shopData
-      : shopData.filter((product) => product.type === activeCategory);
+      ? [...products]
+      : products.filter((product) => product.type === activeCategory);
 
   if (search.trim()) {
     filteredProducts = filteredProducts.filter((product) =>
@@ -31,7 +36,7 @@ export default function ProductGrid({ activeCategory, search, sort }) {
     }
   };
 
-  filteredProducts.sort((a, b) => {
+  filteredProducts = [...filteredProducts].sort((a, b) => {
     // 1. Featured products always first
     if (a.featured !== b.featured) {
       return a.featured ? -1 : 1;

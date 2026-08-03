@@ -7,11 +7,14 @@ import OrderSummary from "./OrderSummary/OrderSummary";
 import CheckoutProvider from "../../context/CheckoutContext";
 import { Navigate } from "react-router-dom";
 import { useStore } from "../../context/StoreContext";
+import Loader from "../../components/ui/Loader/Loader";
 
 import styles from "./Checkout.module.css";
 
 export default function Checkout() {
-  const { cartProducts } = useStore();
+  const { cart, cartProducts, productsLoading } = useStore();
+
+  if (productsLoading && cart.length > 0) return <Loader />;
 
   if (cartProducts.length === 0) {
     return <Navigate to="/shop" replace />;
