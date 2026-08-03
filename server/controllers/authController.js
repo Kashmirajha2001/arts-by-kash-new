@@ -52,6 +52,7 @@ export const registerUser = async (req, res) => {
           name: user.name,
           email: user.email,
         },
+        token,
       });
   } catch (error) {
     console.error(error);
@@ -117,6 +118,7 @@ export const loginUser = async (req, res) => {
           email: user.email,
           role: user.role,
         },
+        token,
       });
   } catch (error) {
     console.error(error);
@@ -206,6 +208,7 @@ export const googleLogin = async (req, res) => {
           avatar: user.avatar,
           role: user.role,
         },
+        token,
       });
   } catch (error) {
     console.error(error);

@@ -1,13 +1,28 @@
 import api from "../api/axios";
+import { removeAuthToken, setAuthToken } from "../utils/authToken";
+
+const saveAuthToken = (data) => {
+  if (data?.token) {
+    setAuthToken(data.token);
+  }
+};
+
+const clearAuthToken = () => {
+  removeAuthToken();
+};
 
 export const registerUser = async (userData) => {
   const response = await api.post("/auth/register", userData);
+
+  saveAuthToken(response.data);
 
   return response.data;
 };
 
 export const loginUser = async (userData) => {
   const response = await api.post("/auth/login", userData);
+
+  saveAuthToken(response.data);
 
   return response.data;
 };
@@ -19,15 +34,21 @@ export const getCurrentUser = async () => {
 };
 
 export const logoutUser = async () => {
-  const response = await api.post("/auth/logout");
+  try {
+    const response = await api.post("/auth/logout");
 
-  return response.data;
+    return response.data;
+  } finally {
+    clearAuthToken();
+  }
 };
 
 export const googleLoginUser = async (credential) => {
   const response = await api.post("/auth/google", {
     credential,
   });
+
+  saveAuthToken(response.data);
 
   return response.data;
 };
