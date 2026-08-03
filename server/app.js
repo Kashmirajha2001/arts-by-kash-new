@@ -8,6 +8,7 @@ import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from './routes/orderRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import assignmentRoutes from "./routes/assignmentRoutes.js";
 
 const app = express();
 
@@ -48,6 +49,8 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/products", productRoutes);
 
 app.use("/api/admin", adminRoutes);
+
+app.use("/api/assignments", assignmentRoutes);
 
 app.get("/", (req, res) => {
   res.json({

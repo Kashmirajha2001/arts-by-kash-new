@@ -1,20 +1,29 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
-  // LuUploadCloud,
   LuCloudUpload,
   LuImage,
   LuFileText,
   LuTrash2,
   LuEye,
-  // LuCheckCircle,
   LuCircleCheckBig,
 } from "react-icons/lu";
 
 import PrimaryButton from "../../../../components/ui/PrimaryButton/PrimaryButton";
 
+import {
+  submitAssignment,
+  getAssignment,
+} from "../../../../services/assignmentService";
+
+import { showSuccess, showError } from "../../../../utils/toast";
+
 import styles from "./AssignmentUpload.module.css";
 
-export default function AssignmentUpload({ lesson }) {
+export default function AssignmentUpload({ lesson, course }) {
+  const [submission, setSubmission] = useState(null);
+
+  const [submitting, setSubmitting] = useState(false);
+
   const assignment = lesson.assignment;
 
   const inputRef = useRef(null);
@@ -31,6 +40,80 @@ export default function AssignmentUpload({ lesson }) {
 
   const removeFile = (index) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  useEffect(() => {
+    loadAssignment();
+  }, []);
+
+  const loadAssignment = async () => {
+    try {
+      const assignment = await getAssignment(
+        course.productId,
+
+        lesson.videoId || lesson.id,
+      );
+
+      setSubmission(assignment);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setSubmitting(true);
+
+      const formData = new FormData();
+
+      formData.append(
+        "courseProductId",
+
+        course.productId,
+      );
+
+      formData.append(
+        "lessonId",
+
+        lesson.videoId || lesson.id,
+      );
+
+      formData.append(
+        "assignmentTitle",
+
+        lesson.assignment.title,
+      );
+
+      formData.append(
+        "notes",
+
+        notes,
+      );
+
+      files.forEach((file) => {
+        formData.append(
+          "files",
+
+          file,
+        );
+      });
+
+      const assignment = await submitAssignment(formData);
+
+      setSubmission(assignment);
+
+      showSuccess("Assignment submitted successfully.");
+
+      setFiles([]);
+    } catch (error) {
+      console.error(error);
+
+      showError(
+        error.response?.data?.message || "Unable to submit assignment.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -117,6 +200,48 @@ export default function AssignmentUpload({ lesson }) {
         </div>
       )}
 
+      {submission?.files?.length > 0 && (
+        <div className={styles.files}>
+          <h4>Submitted Files</h4>
+
+          {submission.files.map((file, index) => (
+            <div className={styles.file} key={index}>
+              <div className={styles.fileInfo}>
+                {file.mimeType?.startsWith("image") ? (
+                  <LuImage />
+                ) : (
+                  <LuFileText />
+                )}
+
+                <div>
+                  <strong>{file.fileName}</strong>
+
+                  <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                </div>
+              </div>
+
+              <div className={styles.fileActions}>
+                <button
+                  type="button"
+                  onClick={() => window.open(file.url, "_blank")}
+                >
+                  <LuEye />
+                </button>
+
+                <a
+                  href={file.url}
+                  download={file.fileName}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Download
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Notes */}
 
       <div className={styles.notes}>
@@ -132,7 +257,9 @@ export default function AssignmentUpload({ lesson }) {
 
       {/* Submit */}
 
-      <PrimaryButton>Submit Assignment</PrimaryButton>
+      <PrimaryButton onClick={handleSubmit} disabled={submitting}>
+        {submitting ? "Submitting..." : "Submit Assignment"}
+      </PrimaryButton>
 
       {/* Status */}
 
@@ -142,7 +269,17 @@ export default function AssignmentUpload({ lesson }) {
         <div className={styles.status}>
           <LuCircleCheckBig />
 
-          <span>Not Submitted</span>
+          {submission ? (
+            <>
+              <div className={styles.statusSubmitted}>Submitted</div>
+
+              <small>
+                {new Date(submission.createdAt).toLocaleDateString()}
+              </small>
+            </>
+          ) : (
+            <div className={styles.statusPending}>Not Submitted</div>
+          )}
         </div>
 
         <div className={styles.feedback}>
