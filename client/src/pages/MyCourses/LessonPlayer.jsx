@@ -83,7 +83,7 @@ export default function LessonPlayer() {
           </button>
 
           <LessonResources lesson={lesson} />
-          <AssignmentUpload />
+          <AssignmentUpload lesson={lesson}/>
           {/* <Notes />--------need to check feasibility first */}
 
           {/* <div className={styles.lessonMeta}>

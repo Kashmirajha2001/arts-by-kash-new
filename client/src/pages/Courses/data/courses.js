@@ -106,6 +106,15 @@ const courses = [
                 // file: "/course-resources/portrait-course/module1/lesson-guide.pdf",
               },
             ],
+
+            assignment: {
+              title: "Eye Study",
+              description: "Draw the eye using the supplied reference image.",
+              acceptedFormats: ["JPG", "PNG", "PDF"],
+              maxFiles: 3,
+              maxSize: "10 MB",
+              required: true,
+            },
           },
           {
             id: 2,

@@ -1,26 +1,174 @@
 .card {
+    /* margin-top: 3rem; */
     background: #fff;
-    border: 1px dashed rgba(139, 107, 82, .45);
-    border-radius: 24px;
-    padding: 24px;
+    border-radius: 18px;
+    padding: 2rem;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, .06);
 }
 
-.card h3 {
-    font-family: var(--heading-font);
-    font-size: 1.6rem;
-    font-weight: 500;
-    margin-bottom: 10px;
+.heading h2 {
+    margin-bottom: .5rem;
+    color: var(--color-primary);
 }
 
-.card p {
-    color: #76685d;
+.heading h3 {
+    margin-bottom: .75rem;
+    color: #3b3028;
+}
+
+.heading p {
+    color: #666;
     line-height: 1.7;
-    margin-bottom: 16px;
 }
 
-.input {
+.guidelines {
+    /* margin-top: 2rem; */
+    padding: 1.25rem;
+    background: #faf8f5;
+    border-radius: 12px;
+}
+
+.guidelines h4 {
+    margin-bottom: .75rem;
+}
+
+.guidelines ul {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.guidelines li {
+    margin-bottom: .4rem;
+}
+
+.dropzone {
+    /* margin-top: 2rem; */
+    border: 2px dashed #cdbca6;
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.dropzone:hover {
+    background: #faf8f5;
+}
+
+.dropzone svg {
+    color: #8b6b52;
+    margin-bottom: .75rem;
+}
+
+.dropzone h4 {
+    margin-bottom: .4rem;
+}
+
+.dropzone span {
+    color: #777;
+}
+
+.files {
+    margin-top: 2rem;
+}
+
+.files h4 {
+    margin-bottom: 1rem;
+}
+
+.file {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ece7df;
+    border-radius: 12px;
+    margin-bottom: .75rem;
+}
+
+.fileInfo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.fileInfo svg {
+    font-size: 1.5rem;
+    color: #8b6b52;
+}
+
+.fileInfo span {
+    display: block;
+    font-size: .85rem;
+    color: #777;
+}
+
+.fileActions {
+    display: flex;
+    gap: .5rem;
+}
+
+.fileActions button {
+    border: none;
+    background: #f5f5f5;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.fileActions button:hover {
+    background: #8b6b52;
+    color: white;
+}
+
+.notes {
+    margin-top: 2rem;
+}
+
+.notes label {
+    display: block;
+    margin-bottom: .75rem;
+    font-weight: 600;
+}
+
+.notes textarea {
     width: 100%;
-    padding: 14px;
-    background: #f8f1ea;
-    border-radius: 14px;
+    padding: 1rem;
+    resize: vertical;
+    min-height: 140px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font: inherit;
+}
+
+.statusCard {
+    /* margin-top: 2rem; */
+    padding: 1.5rem;
+    background: #faf8f5;
+    border-radius: 12px;
+}
+
+.status {
+    margin-top: .75rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    color: #b8860b;
+    font-weight: 600;
+}
+
+.feedback {
+    margin-top: 1.5rem;
+    border-top: 1px solid #e5ddd2;
+    padding-top: 1rem;
+}
+
+.feedback h5 {
+    margin-bottom: .35rem;
+}
+
+.feedback p {
+    color: #777;
 }
