@@ -8,6 +8,7 @@ import ScrollToTop from "./constants/ScrollToTop";
 import Auth from "./pages/Auth/Auth";
 import GuestRoute from "./components/auth/GuestRoute";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import UserProtectedRoute from "./components/auth/UserProtectedRoute";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ResetPassword from "./pages/Auth/ResetPassword/ResetPassword";
 import Commissions from "./pages/Commissions/Commissions";
@@ -24,6 +25,9 @@ import Checkout from "./pages/Checkout/Checkout";
 import OrderSuccess from "./pages/Checkout/OrderSuccess/OrderSuccess";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import OrderDetails from "./pages/MyOrders/OrderDetails/OrderDetails";
+import MyCourses from "./pages/MyCourses/MyCourses";
+import MyCourseDetails from "./pages/MyCourses/MyCourseDetails";
+import LessonPlayer from "./pages/MyCourses/LessonPlayer";
 
 import AdminLayout from "./pages/Admin/AdminLayout/AdminLayout";
 import AdminOrders from "./pages/Admin/Orders/AdminOrders";
@@ -73,6 +77,30 @@ export default function App() {
         <Route path="/order-success/:id" element={<OrderSuccess />} />
         <Route path="/orders" element={<MyOrders />} />
         <Route path="/orders/:id" element={<OrderDetails />} />
+        <Route
+          path="/my-courses"
+          element={
+            <UserProtectedRoute>
+              <MyCourses />
+            </UserProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-courses/:slug"
+          element={
+            <UserProtectedRoute>
+              <MyCourseDetails />
+            </UserProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-courses/:slug/:lessonId"
+          element={
+            <UserProtectedRoute>
+              <LessonPlayer />
+            </UserProtectedRoute>
+          }
+        />
 
         <Route
           path="/admin"

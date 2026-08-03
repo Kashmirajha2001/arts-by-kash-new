@@ -1,0 +1,59 @@
+.card {
+    background: #fff;
+    border: 1px solid rgba(190, 160, 132, .24);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 16px 45px rgba(80, 52, 31, .06);
+}
+
+.card h3 {
+    font-family: var(--heading-font);
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 20px;
+
+    border-bottom: 1px solid #eee;
+    /* color: #65584f; */
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.download {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 16px;
+
+    border-radius: 8px;
+
+    background: #8b6b52;
+
+    color: white;
+
+    text-decoration: none;
+
+    transition: .2s;
+}
+
+.download:hover {
+    opacity: .9;
+}

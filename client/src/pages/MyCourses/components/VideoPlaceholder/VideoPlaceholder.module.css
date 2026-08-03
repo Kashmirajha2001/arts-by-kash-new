@@ -1,0 +1,40 @@
+.video {
+    aspect-ratio: 16 / 9;
+    border-radius: 30px;
+    background:
+        linear-gradient(rgba(36, 26, 19, .56), rgba(36, 26, 19, .56)),
+        linear-gradient(135deg, #8b6b52, #e6d3bf);
+    display: grid;
+    place-items: center;
+    color: #fff;
+    box-shadow: 0 24px 70px rgba(45, 31, 22, .18);
+    overflow: hidden;
+}
+
+.content {
+    text-align: center;
+    padding: 24px;
+}
+
+.play {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, .18);
+    border: 1px solid rgba(255, 255, 255, .32);
+    margin: 0 auto 18px;
+    font-size: 2rem;
+}
+
+.content h2 {
+    font-family: var(--heading-font);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+.content p {
+    margin-top: 8px;
+    opacity: .84;
+}

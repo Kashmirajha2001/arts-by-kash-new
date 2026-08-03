@@ -10,16 +10,19 @@ import { Toaster } from "react-hot-toast";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import StoreProvider from "./context/StoreContext";
 import ProductProvider from "./context/ProductContext";
+import CourseProvider from "./pages/MyCourses/context/CourseContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <AuthProvider>
-        <ProductProvider>
-          <StoreProvider>
-            <App />
-          </StoreProvider>
-        </ProductProvider>
+        <CourseProvider>
+          <ProductProvider>
+            <StoreProvider>
+              <App />
+            </StoreProvider>
+          </ProductProvider>
+        </CourseProvider>
         <Toaster
           position="top-center"
           gutter={12}

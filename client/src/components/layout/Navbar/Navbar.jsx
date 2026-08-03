@@ -12,9 +12,8 @@ import {
   FiShoppingBag,
   FiGrid,
   FiLogOut,
-  FiChevronDown,
 } from "react-icons/fi";
-import { showSuccess, showError } from "../../../utils/toast";
+import { showSuccess } from "../../../utils/toast";
 import { useStore } from "../../../context/StoreContext";
 
 import { FiShoppingCart } from "react-icons/fi";
@@ -154,7 +153,12 @@ export default function Navbar() {
                       <span>Wishlist</span>
                     </button>
 
-                    <button>
+                    <button
+                      onClick={() => {
+                        setProfileOpen(false);
+                        navigate("/my-courses");
+                      }}
+                    >
                       <FiBookOpen />
                       <span>My Courses</span>
                     </button>

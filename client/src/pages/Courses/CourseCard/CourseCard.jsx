@@ -1,11 +1,44 @@
 import { useState } from "react";
-import styles from "./CourseCard.module.css";
+import { useNavigate } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
-import { FaHeart, FaShoppingCart, FaStar } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
+import { useStore } from "../../../context/StoreContext";
+import useCourse from "../../MyCourses/hooks/useCourse";
+
+import styles from "./CourseCard.module.css";
 
 export default function CourseCard({ course }) {
   const [selectedImage, setSelectedImage] = useState(course.images[0]);
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { addToCart, isInCart } = useStore();
+  const { isCourseOwned } = useCourse();
+
+  const owned = isCourseOwned(course.productId);
+  const inCart = isInCart(course.productId);
+
+  const handleCourseAction = () => {
+    if (owned) {
+      navigate(`/my-courses/${course.slug}`);
+      return;
+    }
+
+    if (!user) {
+      navigate("/auth?mode=login", {
+        state: { from: { pathname: "/courses" } },
+      });
+      return;
+    }
+
+    if (inCart) {
+      navigate("/cart");
+      return;
+    }
+
+    addToCart(course.productId);
+  };
 
   return (
     <div className={styles.card}>
@@ -38,34 +71,37 @@ export default function CourseCard({ course }) {
 
         {/* Price */}
 
-        <div className={styles.priceBox}>
-          <span className={styles.price}>₹{course.price}</span>
+        {!owned && (
+          <div className={styles.priceBox}>
+            <span className={styles.price}>₹{course.price}</span>
 
-          {course.originalPrice && (
-            <span className={styles.originalPrice}>
-              ₹{course.originalPrice}
-            </span>
-          )}
+            {course.originalPrice && (
+              <span className={styles.originalPrice}>
+                ₹{course.originalPrice}
+              </span>
+            )}
 
-          {course.discountLabel && (
-            <span className={styles.discount}>{course.discountLabel}</span>
-          )}
-        </div>
+            {course.discountLabel && (
+              <span className={styles.discount}>{course.discountLabel}</span>
+            )}
+          </div>
+        )}
 
         {/* Buttons */}
 
         {/* <div className={styles.actionButtons}>
           <PrimaryButton>
-            <FaShoppingCart />
             Add to Cart
           </PrimaryButton>
 
           <button className={styles.wishlist}>
-            <FaHeart />
+            Save
           </button>
         </div> */}
 
-        <PrimaryButton className={styles.buyButton}>Enroll Now</PrimaryButton>
+        <PrimaryButton className={styles.buyButton} onClick={handleCourseAction}>
+          {owned ? "Go To My Course" : inCart ? "Go To Cart" : "Enroll Now"}
+        </PrimaryButton>
 
         {/* Divider */}
 

@@ -7,24 +7,16 @@ import portrait1 from "../../../assets/images/course/portrait1.jpg";
 import portrait2 from "../../../assets/images/course/portrait2.jpeg";
 import portrait3 from "../../../assets/images/course/course1.jpg";
 
-
 // import IntroVideo from "../../assets/videos/introduction.mp4";
 import PreviewVideo from "../../../assets/videos/prevVideo.mp4";
 
-import {
-  LuRuler,
-  LuPalette,
-  LuEye,
-  LuBrush,
-  LuShirt,
-  LuSun,
-  LuImage,
-  LuLayers,
-} from "react-icons/lu";
+import { LuRuler, LuPalette, LuEye, LuBrush, LuImage } from "react-icons/lu";
 
 const courses = [
   {
     id: 1,
+    productId: 101,
+    type: "course",
     slug: "realistic-colour-pencil-portraits",
     title: "Realistic Colour Pencil Portrait Masterclass",
     shortDescription:
@@ -90,11 +82,34 @@ const courses = [
           {
             id: 1,
             title: "Choosing the Right Paper",
+            subtitle: "Choosing the Right Paper",
             duration: "08:25",
             videoId: "lesson-1",
+
+            resources: [
+              {
+                id: 1,
+                title: "Reference Image",
+                type: "image",
+                file: "/course-resources/portrait-course/lesson1/l1ref.jpg",
+              },
+              {
+                id: 2,
+                title: "PDF Lessons",
+                type: "pdf",
+                file: "/course-resources/portrait-course/module1/l1pdf.pdf",
+              },
+              {
+                id: 3,
+                title: "Practice Images",
+                type: "image",
+                // file: "/course-resources/portrait-course/module1/lesson-guide.pdf",
+              },
+            ],
           },
           {
             id: 2,
+            title: "Understanding Colour Pencils",
             title: "Understanding Colour Pencils",
             duration: "12:40",
             videoId: "lesson-2",
@@ -102,11 +117,13 @@ const courses = [
           {
             id: 3,
             title: "Layering & Pressure Control",
+            title: "Layering & Pressure Control",
             duration: "15:30",
             videoId: "lesson-3",
           },
           {
             id: 4,
+            title: "Essential Materials Overview",
             title: "Essential Materials Overview",
             duration: "06:15",
             videoId: "lesson-4",

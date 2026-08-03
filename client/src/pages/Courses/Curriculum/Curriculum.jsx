@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LuChevronDown,
@@ -21,6 +22,7 @@ export default function Curriculum({
   completedLessons = [],
 }) {
   const [openModule, setOpenModule] = useState(0);
+  const navigate = useNavigate();
   //   const completed = completedLessons.includes(lesson.id);
 
   const handleLessonClick = (lesson) => {
@@ -31,7 +33,7 @@ export default function Curriculum({
       return;
     }
 
-    console.log("Open lesson:", lesson.videoId);
+    navigate(`/my-courses/${course.slug}/${lesson.videoId || lesson.id}`);
   };
 
   const getModuleDuration = (lessons) => {
@@ -115,7 +117,9 @@ export default function Curriculum({
                   exit={{ height: 0, opacity: 0 }}
                 >
                   {module.lessons.map((lesson, i) => {
-                    const completed = completedLessons.includes(lesson.id);
+                    const completed =
+                      completedLessons.includes(lesson.id) ||
+                      completedLessons.includes(lesson.videoId);
 
                     return (
                       <div

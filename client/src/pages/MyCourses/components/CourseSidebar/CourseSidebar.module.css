@@ -1,0 +1,51 @@
+.sidebar {
+    background: #fff;
+    border: 1px solid rgba(190, 160, 132, .24);
+    border-radius: 26px;
+    padding: 22px;
+    box-shadow: 0 18px 50px rgba(80, 52, 31, .06);
+    position: sticky;
+    top: 110px;
+}
+
+.sidebar h3 {
+    font-family: var(--heading-font);
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 68vh;
+    overflow: auto;
+}
+
+.lesson {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    color: #5f554e;
+    text-decoration: none;
+    transition: .25s;
+}
+
+.lesson:hover,
+.active {
+    background: #f7efe7;
+    color: var(--color-primary);
+}
+
+.completed {
+    color: #5f9b6c;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        position: static;
+    }
+}

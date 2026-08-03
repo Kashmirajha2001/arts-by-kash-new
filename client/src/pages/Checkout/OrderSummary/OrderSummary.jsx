@@ -1,8 +1,9 @@
 import { useStore } from "../../../context/StoreContext";
 import { createOrder, verifyPayment } from "../../../services/orderService";
 import { useCheckout } from "../../../context/CheckoutContext";
-import { showSuccess, showError } from "../../../utils/toast";
+import { showError } from "../../../utils/toast";
 import { useNavigate } from "react-router-dom";
+import useCourse from "../../MyCourses/hooks/useCourse";
 
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 
@@ -10,7 +11,8 @@ import styles from "./OrderSummary.module.css";
 
 export default function OrderSummary() {
   const { cartProducts, subtotal, shipping, total, resetCart } = useStore();
-  const { checkoutData, setCheckoutData, resetCheckout } = useCheckout();
+  const { checkoutData, resetCheckout } = useCheckout();
+  const { reloadCourses } = useCourse();
   const navigate = useNavigate();
 
   const handlePayment = async () => {
@@ -49,6 +51,8 @@ export default function OrderSummary() {
             resetCart();
 
             resetCheckout();
+
+            await reloadCourses();
 
             // showSuccess("Payment Successful!");
             navigate(`/order-success/${data.orderId}`, {

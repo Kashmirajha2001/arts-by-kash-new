@@ -1,0 +1,35 @@
+.header {
+    background: linear-gradient(90deg, #efe2d2 0%, #fbfaf7 55%, #fffaf5 100%);
+    border-bottom: 1px solid rgba(190, 160, 132, .22);
+}
+
+.inner {
+    width: min(1100px, 92vw);
+    margin: 0 auto;
+    padding: clamp(36px, 5vw, 64px) 0;
+}
+
+.eyebrow {
+    color: var(--color-primary);
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: .74rem;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-family: var(--heading-font);
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    line-height: 1.1;
+    font-weight: 500;
+    max-width: 780px;
+}
+
+.description {
+    max-width: 640px;
+    margin-top: 14px;
+    color: #6f6258;
+    line-height: 1.75;
+    font-size: .96rem;
+}
