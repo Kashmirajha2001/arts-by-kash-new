@@ -22,7 +22,7 @@ export default function CartItem({ product, compact = true }) {
       className={`${styles.item} ${!compact ? styles.full : ""}`}
       onClick={handleProductClick}
     >
-      <img src={product.images?.[0]} alt={product.title} />
+      <img src={product.images?.[0]?.url} alt={product.title} />
 
       <div className={styles.info}>
         <h4>{product.title}</h4>

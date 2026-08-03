@@ -148,7 +148,7 @@ export default function AdminProducts() {
                 <td>
                   <img
                     src={
-                      product.images?.[0] ||
+                      product.images?.[0]?.url ||
                       "https://placehold.co/80x80?text=No+Image"
                     }
                     alt={product.title}

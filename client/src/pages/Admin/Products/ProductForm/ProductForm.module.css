@@ -96,6 +96,57 @@
     cursor: not-allowed;
 }
 
+.previewGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.previewCard {
+    position: relative;
+    width: 140px;
+    height: 140px;
+}
+
+.preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.remove {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+
+    width: 26px;
+    height: 26px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #d32f2f;
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: .2s;
+}
+
+.remove:hover {
+    transform: scale(1.1);
+    background: #b71c1c;
+}
+
 @media(max-width:768px) {
 
     .form {

@@ -24,13 +24,24 @@ export const getProducts = async () => {
   return data.products;
 };
 
-export const createProduct = async (product) => {
-  const { data } = await api.post("/admin/products", product);
+// export const createProduct = async (product) => {
+//   const { data } = await api.post("/admin/products", product);
+//   return data.product;
+// };
+
+export const createProduct = async (formData) => {
+  const { data } = await api.post("/admin/products", formData);
+
   return data.product;
 };
 
-export const updateProduct = async (id, product) => {
-  const { data } = await api.put(`/admin/products/${id}`, product);
+// export const updateProduct = async (id, product) => {
+//   const { data } = await api.put(`/admin/products/${id}`, product);
+//   return data.product;
+// };
+export const updateProduct = async (id, formData) => {
+  const { data } = await api.put(`/admin/products/${id}`, formData);
+
   return data.product;
 };
 

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { createProduct, updateProduct } from "../../../../services/adminService";
+import {
+  createProduct,
+  updateProduct,
+} from "../../../../services/adminService";
 
 import { showSuccess, showError } from "../../../../utils/toast";
 
@@ -8,42 +11,43 @@ import styles from "./ProductForm.module.css";
 
 const initialState = {
   id: "",
-
   title: "",
-
   slug: "",
-
   type: "artwork",
-
   category: "",
-
   price: "",
-
   stock: "",
-
   featured: false,
-
   badge: "",
-
   medium: "",
-
   size: "",
-
   frame: "",
-
   availability: "",
-
   description: "",
-
-  images: "",
-
   status: "published",
 };
 
 export default function ProductForm({ product, onClose, reloadProducts }) {
   const [formData, setFormData] = useState(initialState);
 
+  const [images, setImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
+
   const [saving, setSaving] = useState(false);
+
+  const [deletedImages, setDeletedImages] = useState([]);
+
+  const removeNewImage = (index) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeExistingImage = (index) => {
+    const image = existingImages[index];
+
+    setDeletedImages((prev) => [...prev, image.public_id]);
+
+    setExistingImages((prev) => prev.filter((_, i) => i !== index));
+  };
 
   useEffect(() => {
     if (product) {
@@ -51,11 +55,17 @@ export default function ProductForm({ product, onClose, reloadProducts }) {
         ...product,
 
         description: product.description?.join("\n") || "",
-
-        images: product.images?.[0] || "",
       });
+
+      setExistingImages(product.images || []);
+
+      setImages([]);
     } else {
       setFormData(initialState);
+
+      setExistingImages([]);
+
+      setImages([]);
     }
   }, [product]);
 
@@ -90,20 +100,35 @@ export default function ProductForm({ product, onClose, reloadProducts }) {
     try {
       setSaving(true);
 
-      const payload = {
-        ...formData,
+      const payload = new FormData();
 
-        id: Number(formData.id),
+      payload.append("id", Number(formData.id));
+      payload.append("title", formData.title);
+      payload.append("slug", formData.slug);
+      payload.append("type", formData.type);
+      payload.append("category", formData.category);
+      payload.append("price", Number(formData.price));
+      payload.append("stock", Number(formData.stock));
+      payload.append("featured", formData.featured);
+      payload.append("badge", formData.badge);
+      payload.append("medium", formData.medium);
+      payload.append("size", formData.size);
+      payload.append("frame", formData.frame);
+      payload.append("availability", formData.availability);
+      payload.append("status", formData.status);
+      payload.append(
+        "description",
+        JSON.stringify(formData.description.split("\n").filter(Boolean)),
+      );
 
-        price: Number(formData.price),
+      if (images) {
+        // payload.append("image", image);
+        images.forEach((image) => {
+          payload.append("images", image);
+        });
+      }
 
-        stock: Number(formData.stock),
-
-        description: formData.description.split("\n").filter(Boolean),
-
-        images: formData.images ? [formData.images] : [],
-      };
-
+      payload.append("deletedImages", JSON.stringify(deletedImages));
       if (product) {
         await updateProduct(product._id, payload);
 
@@ -116,6 +141,8 @@ export default function ProductForm({ product, onClose, reloadProducts }) {
 
       reloadProducts();
 
+      setExistingImages([]);
+      setImages([]);
       onClose();
     } catch (error) {
       console.log(error);
@@ -305,15 +332,50 @@ export default function ProductForm({ product, onClose, reloadProducts }) {
         {/* Image */}
 
         <div className={styles.field}>
-          <label>Image URL</label>
-
           <input
-            type="text"
-            name="images"
-            value={formData.images}
-            onChange={handleChange}
-            placeholder="https://..."
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={(e) => {
+              const selected = Array.from(e.target.files);
+              setImages((prev) => [...prev, ...selected]);
+              e.target.value = "";
+            }}
           />
+
+          <div className={styles.previewGrid}>
+            {existingImages.map((img, index) => (
+              <div key={`existing-${index}`} className={styles.previewCard}>
+                <button
+                  type="button"
+                  className={styles.remove}
+                  onClick={() => removeExistingImage(index)}
+                >
+                  ✕
+                </button>
+
+                <img src={img.url} alt="" className={styles.preview} />
+              </div>
+            ))}
+
+            {images.map((img, index) => (
+              <div key={`new-${index}`} className={styles.previewCard}>
+                <button
+                  type="button"
+                  className={styles.remove}
+                  onClick={() => removeNewImage(index)}
+                >
+                  ✕
+                </button>
+
+                <img
+                  src={URL.createObjectURL(img)}
+                  alt=""
+                  className={styles.preview}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
