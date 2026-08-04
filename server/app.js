@@ -5,10 +5,11 @@ import authRoutes from "./routes/authRoutes.js";
 import commissionRoutes from "./routes/commissionRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
-import orderRoutes from './routes/orderRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
+import orderRoutes from "./routes/orderRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import assignmentRoutes from "./routes/assignmentRoutes.js";
+import courseProgressRoutes from "./routes/courseProgressRoutes.js";
 
 const app = express();
 
@@ -30,7 +31,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
@@ -51,6 +52,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/admin", adminRoutes);
 
 app.use("/api/assignments", assignmentRoutes);
+
+app.use("/api/course-progress", courseProgressRoutes);
 
 app.get("/", (req, res) => {
   res.json({

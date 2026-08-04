@@ -3,7 +3,7 @@ import { createOrder, verifyPayment } from "../../../services/orderService";
 import { useCheckout } from "../../../context/CheckoutContext";
 import { showError } from "../../../utils/toast";
 import { useNavigate } from "react-router-dom";
-import useCourse from "../../MyCourses/hooks/useCourse";
+import useCourse from "../../../hooks/useCourse";
 
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 

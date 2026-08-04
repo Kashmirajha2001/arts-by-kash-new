@@ -1,5 +1,3 @@
-const STORAGE_KEY = "artsByKashCourseProgress";
-
 export const getAllLessons = (course) =>
   course?.curriculum?.flatMap((module) => module.lessons) || [];
 
@@ -25,22 +23,8 @@ export const getCourseProgress = (course, progress = {}) => {
     completedCount,
     totalLessons,
     remainingLessons: Math.max(totalLessons - completedCount, 0),
-    percentage: totalLessons ? Math.round((completedCount / totalLessons) * 100) : 0,
+    percentage: totalLessons
+      ? Math.round((completedCount / totalLessons) * 100)
+      : 0,
   };
-};
-
-export const readProgress = () => {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-  } catch {
-    return {};
-  }
-};
-
-export const writeProgress = (progress) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-  } catch {
-    // Progress persistence will later move to MongoDB.
-  }
 };

@@ -6,13 +6,13 @@ import PrimaryButton from "../../components/ui/PrimaryButton/PrimaryButton";
 // import Preview from "../Courses/Preview/Preview";
 import ArtworksYoullCreate from "../Courses/ArtworksYou'llCreate/ArtworksYou'llCreate";
 
-import useCourse from "./hooks/useCourse";
+import useCourse from "../../hooks/useCourse";
 import CourseHeader from "./components/CourseHeader/CourseHeader";
 import ProgressCard from "./components/ProgressCard/ProgressCard";
 import Curriculum from "./components/Curriculum/Curriculum";
 
 import styles from "./styles/MyCourses.module.css";
-import { getAllLessons } from "./utils/courseProgress";
+import { getAllLessons } from "../../utils/courseProgress";
 
 export default function MyCourseDetails() {
   const { slug } = useParams();

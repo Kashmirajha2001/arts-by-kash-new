@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa";
 import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import useAuth from "../../../hooks/useAuth";
 import { useStore } from "../../../context/StoreContext";
-import useCourse from "../../MyCourses/hooks/useCourse";
+import useCourse from "../../../hooks/useCourse";
 
 import styles from "./CourseCard.module.css";
 

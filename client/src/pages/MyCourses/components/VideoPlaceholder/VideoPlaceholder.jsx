@@ -10,7 +10,7 @@ export default function VideoPlaceholder({ lesson }) {
           <LuPlay />
         </div>
         <h2>{lesson.title}</h2>
-        <p>Video hosting placeholder — ready for Bunny -VideoPlaceholder.jsx</p>
+        <p>Video hosting placeholder — ready for Bunny -LessonPlayer.jsx & VideoPlaceholder.jsx</p>
       </div>
     </div>
   );

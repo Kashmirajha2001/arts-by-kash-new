@@ -3,7 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 
 import Loader from "../../components/ui/Loader/Loader";
 
-import useCourse from "./hooks/useCourse";
+import useCourse from "../../hooks/useCourse";
 import CourseHeader from "./components/CourseHeader/CourseHeader";
 import CourseSidebar from "./components/CourseSidebar/CourseSidebar";
 import LessonPlayerView from "./components/LessonPlayer/LessonPlayer";
@@ -15,7 +15,7 @@ import {
   getAllLessons,
   getLessonById,
   getLessonIndex,
-} from "./utils/courseProgress";
+} from "../../utils/courseProgress";
 
 import styles from "./styles/MyCourses.module.css";
 
@@ -41,7 +41,8 @@ export default function LessonPlayer() {
 
   if (loading) return <Loader />;
   if (!course) return <Navigate to="/my-courses" replace />;
-  if (!isCourseOwned(course.productId)) return <Navigate to="/courses" replace />;
+  if (!isCourseOwned(course.productId))
+    return <Navigate to="/courses" replace />;
   if (!lesson) return <Navigate to={`/my-courses/${course.slug}`} replace />;
 
   const lessons = getAllLessons(course);
@@ -61,9 +62,7 @@ export default function LessonPlayer() {
           <div className={styles.lessonMeta}>
             <span>Lesson {lessonIndex + 1}</span>
             <h1>{lesson.title}</h1>
-            <p>
-              {lesson.subtitle}
-            </p>
+            <p>{lesson.subtitle}</p>
           </div>
 
           <LessonNavigation
@@ -83,7 +82,10 @@ export default function LessonPlayer() {
           </button>
 
           <LessonResources lesson={lesson} />
-          <AssignmentUpload lesson={lesson} course={course}/>
+          {/* <AssignmentUpload lesson={lesson} course={course} /> */}
+          {lesson.assignment && (
+            <AssignmentUpload lesson={lesson} course={course} />
+          )}
           {/* <Notes />--------need to check feasibility first */}
 
           {/* <div className={styles.lessonMeta}>

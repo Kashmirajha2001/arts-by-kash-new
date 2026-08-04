@@ -3,7 +3,7 @@ import HeroImage from "../../assets/images/hero/courses-hero.jpg";
 import Loader from "../../components/ui/Loader/Loader";
 import PrimaryButton from "../../components/ui/PrimaryButton/PrimaryButton";
 
-import useCourse from "./hooks/useCourse";
+import useCourse from "../../hooks/useCourse";
 import MyCourseCard from "./components/MyCourseCard/MyCourseCard";
 
 import styles from "./styles/MyCourses.module.css";

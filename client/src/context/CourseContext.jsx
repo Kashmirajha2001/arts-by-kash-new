@@ -1,22 +1,38 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import useAuth from "../../../hooks/useAuth";
-import { getMyOrders } from "../../../services/orderService";
-import coursesData from "../../Courses/data/courses";
+import useAuth from "../hooks/useAuth";
+import { getMyOrders } from "../services/orderService";
+import coursesData from "../pages/Courses/data/courses";
 import { CourseContext } from "./CourseContextValue";
+
+import { getCourseProgress as calculateCourseProgress } from "../utils/courseProgress";
+
 import {
-  getCourseProgress,
-  readProgress,
-  writeProgress,
-} from "../utils/courseProgress";
+  getProgress,
+  markLessonComplete as saveCompletedLesson,
+  updateLastLesson,
+} from "../services/courseProgressService";
 
 export default function CourseProvider({ children }) {
   const { user, loading: authLoading } = useAuth();
   const [purchasedProductIds, setPurchasedProductIds] = useState([]);
-  const [progress, setProgress] = useState(() => readProgress());
+  const [progress, setProgress] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentCourse, setCurrentCourse] = useState(null);
 
+  const loadCourseProgress = useCallback(async (productId) => {
+    try {
+      const courseProgress = await getProgress(productId);
+
+      setProgress((prev) => ({
+        ...prev,
+        [productId]: courseProgress,
+      }));
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+  
   const reloadCourses = useCallback(async () => {
     if (authLoading) {
       setLoading(true);
@@ -39,18 +55,21 @@ export default function CourseProvider({ children }) {
         .filter((order) => order.paymentStatus === "paid")
         .forEach((order) => {
           order.items?.forEach((item) => {
-            ownedIds.add(Number(item.productId));
+            if (item.type === "course") {
+              ownedIds.add(Number(item.productId));
+            }
           });
         });
 
       setPurchasedProductIds([...ownedIds]);
+      await Promise.all([...ownedIds].map((id) => loadCourseProgress(id)));
     } catch (error) {
       console.error(error);
       setPurchasedProductIds([]);
     } finally {
       setLoading(false);
     }
-  }, [authLoading, user]);
+  }, [authLoading, user, loadCourseProgress]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -72,55 +91,36 @@ export default function CourseProvider({ children }) {
     [isCourseOwned],
   );
 
-  const markLessonComplete = useCallback((productId, lessonId) => {
-    setProgress((prev) => {
-      const courseKey = String(productId);
-      const courseProgress = prev[courseKey] || {
-        completedLessons: [],
-        lastAccessedLesson: null,
-      };
+  const markLessonComplete = useCallback(async (productId, lessonId) => {
+    try {
+      const updated = await saveCompletedLesson(productId, lessonId);
 
-      const completedLessons = courseProgress.completedLessons.includes(
-        lessonId,
-      )
-        ? courseProgress.completedLessons
-        : [...courseProgress.completedLessons, lessonId];
-
-      const next = {
+      setProgress((prev) => ({
         ...prev,
-        [courseKey]: {
-          ...courseProgress,
-          completedLessons,
-          lastAccessedLesson: lessonId,
-          lastAccessedAt: new Date().toISOString(),
-        },
-      };
-
-      writeProgress(next);
-      return next;
-    });
+        [productId]: updated,
+      }));
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
-  const setLastAccessedLesson = useCallback((productId, lessonId) => {
-    setProgress((prev) => {
-      const courseKey = String(productId);
-      const next = {
-        ...prev,
-        [courseKey]: {
-          ...(prev[courseKey] || { completedLessons: [] }),
-          lastAccessedLesson: lessonId,
-          lastAccessedAt: new Date().toISOString(),
-        },
-      };
+  const setLastAccessedLesson = useCallback(async (productId, lessonId) => {
+    try {
+      const updated = await updateLastLesson(productId, lessonId);
 
-      writeProgress(next);
-      return next;
-    });
+      setProgress((prev) => ({
+        ...prev,
+        [productId]: updated,
+      }));
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
-  const getLastAccessedLesson = (productId) => {
-    return progress[productId]?.lastAccessedLesson || null;
-  };
+  const getLastAccessedLesson = useCallback(
+    (productId) => progress[productId]?.lastAccessedLesson || null,
+    [progress],
+  );
 
   const value = useMemo(
     () => ({
@@ -133,7 +133,14 @@ export default function CourseProvider({ children }) {
       currentCourse,
       setCurrentCourse,
       progress,
-      getProgress: (course) => getCourseProgress(course, progress),
+      getProgress: (course) => {
+        const serverProgress = progress[course.productId] || {};
+
+        return {
+          ...calculateCourseProgress(course),
+          ...serverProgress,
+        };
+      },
       markLessonComplete,
       setLastAccessedLesson,
       getLastAccessedLesson,

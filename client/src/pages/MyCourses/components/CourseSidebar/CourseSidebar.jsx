@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { FaCheckCircle, FaPlayCircle } from "react-icons/fa";
 
-import { getAllLessons } from "../../utils/courseProgress";
+import { getAllLessons } from "../../../../utils/courseProgress";
 import styles from "./CourseSidebar.module.css";
 
 export default function CourseSidebar({ course, completedLessons = [] }) {

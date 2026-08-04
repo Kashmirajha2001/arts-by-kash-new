@@ -10,7 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import StoreProvider from "./context/StoreContext";
 import ProductProvider from "./context/ProductContext";
-import CourseProvider from "./pages/MyCourses/context/CourseContext";
+import CourseProvider from "./context/CourseContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
