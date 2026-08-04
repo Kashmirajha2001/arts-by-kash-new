@@ -17,7 +17,7 @@ import {
   getLessonIndex,
 } from "../../utils/courseProgress";
 
-import styles from "./styles/MyCourses.module.css";
+import styles from "./MyCourses.module.css";
 
 export default function LessonPlayer() {
   const { slug, lessonId } = useParams();

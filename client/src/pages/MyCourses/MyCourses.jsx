@@ -6,7 +6,7 @@ import PrimaryButton from "../../components/ui/PrimaryButton/PrimaryButton";
 import useCourse from "../../hooks/useCourse";
 import MyCourseCard from "./components/MyCourseCard/MyCourseCard";
 
-import styles from "./styles/MyCourses.module.css";
+import styles from "./MyCourses.module.css";
 
 export default function MyCourses() {
   const { ownedCourses, loading, getProgress } = useCourse();

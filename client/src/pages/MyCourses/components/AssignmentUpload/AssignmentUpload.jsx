@@ -173,6 +173,25 @@ export default function AssignmentUpload({ lesson, course }) {
     return `${base.slice(0, keep)}...${ext}`;
   };
 
+  const statusConfig = {
+    submitted: {
+      label: "Submitted",
+      className: "submitted",
+    },
+    "under-review": {
+      label: "Under Review",
+      className: "underReview",
+    },
+    approved: {
+      label: "Approved",
+      className: "approved",
+    },
+    "needs-revision": {
+      label: "Needs Revision",
+      className: "needsRevision",
+    },
+  };
+
   return (
     <section className={styles.card}>
       <div className={styles.heading}>
@@ -327,27 +346,58 @@ export default function AssignmentUpload({ lesson, course }) {
       <div className={styles.statusCard}>
         <h4>Submission Status</h4>
 
-        <div className={styles.status}>
-          <LuCircleCheckBig />
+        {submission ? (
+          <>
+            <div className={styles.statusRow}>
+              <LuCircleCheckBig />
 
-          {submission ? (
-            <>
-              <div className={styles.statusSubmitted}>Submitted</div>
+              <span
+                className={
+                  styles[
+                    statusConfig[submission.status]?.className || "submitted"
+                  ]
+                }
+              >
+                {statusConfig[submission.status]?.label}
+              </span>
+            </div>
 
-              <small>
-                {new Date(submission.createdAt).toLocaleDateString()}
+            <small className={styles.date}>
+              Submitted on {new Date(submission.createdAt).toLocaleDateString()}
+            </small>
+
+            {submission.reviewedAt && (
+              <small className={styles.date}>
+                Reviewed on{" "}
+                {new Date(submission.reviewedAt).toLocaleDateString()}
               </small>
-            </>
-          ) : (
+            )}
+
+            <div className={styles.feedback}>
+              <h5>Instructor Feedback</h5>
+
+              {submission.feedback ? (
+                <p>{submission.feedback}</p>
+              ) : (
+                <p className={styles.pending}>
+                  Your assignment hasn't been reviewed yet.
+                </p>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
             <div className={styles.statusPending}>Not Submitted</div>
-          )}
-        </div>
 
-        <div className={styles.feedback}>
-          <h5>Instructor Feedback</h5>
+            <div className={styles.feedback}>
+              <h5>Instructor Feedback</h5>
 
-          <p>Updating Soon</p>
-        </div>
+              <p className={styles.pending}>
+                Submit your assignment to receive feedback.
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

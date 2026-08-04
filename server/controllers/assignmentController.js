@@ -148,3 +148,79 @@ export const deleteAssignmentFile = async (req, res) => {
     });
   }
 };
+
+export const getAllAssignments = async (req, res) => {
+  try {
+    const assignments = await Assignment.find()
+      .sort({ createdAt: -1 })
+      .select(
+        "userName courseProductId lessonId assignmentTitle status createdAt files",
+      );
+
+    res.status(200).json({
+      success: true,
+      assignments,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getAssignmentById = async (req, res) => {
+  try {
+    const assignment = await Assignment.findById(req.params.id)
+      .populate("user", "name email avatar");
+
+    if (!assignment) {
+      return res.status(404).json({
+        success: false,
+        message: "Assignment not found.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      assignment,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const reviewAssignment = async (req, res) => {
+  try {
+    const { feedback, status } = req.body;
+
+    const assignment = await Assignment.findById(req.params.id);
+
+    if (!assignment) {
+      return res.status(404).json({
+        success: false,
+        message: "Assignment not found.",
+      });
+    }
+
+    assignment.feedback = feedback;
+    assignment.status = status;
+    assignment.reviewedAt = new Date();
+
+    await assignment.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Assignment reviewed successfully.",
+      assignment,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

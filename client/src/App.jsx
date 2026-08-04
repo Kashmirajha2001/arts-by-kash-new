@@ -34,6 +34,7 @@ import AdminOrders from "./pages/Admin/Orders/AdminOrders";
 import AdminDashboard from "./pages/Admin/Dashboard/Dashboard";
 import AdminProducts from "./pages/Admin/Products/AdminProducts/AdminProducts";
 import AdminOrderDetails from "./pages/Admin/AdminOrderDetails/AdminOrderDetails";
+import Assignments from "./pages/Admin/Assignments/Assignments";
 
 export default function App() {
   return (
@@ -114,6 +115,7 @@ export default function App() {
           <Route path="orders" element={<AdminOrders />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders/:id" element={<AdminOrderDetails />} />
+          <Route path="assignments" element={<Assignments />} />
         </Route>
       </Routes>
 

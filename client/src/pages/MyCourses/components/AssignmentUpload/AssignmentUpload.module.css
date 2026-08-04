@@ -91,12 +91,14 @@
     display: flex;
     gap: 1rem;
     align-items: center;
-    min-width: 0;      /* allows children to shrink below content size */
+    min-width: 0;
+    /* allows children to shrink below content size */
     flex: 1;
 }
 
-.fileInfo > div {
-    min-width: 0;       /* lets <strong> truncate instead of overflowing */
+.fileInfo>div {
+    min-width: 0;
+    /* lets <strong> truncate instead of overflowing */
 }
 
 .fileInfo strong {
@@ -109,7 +111,8 @@
 .fileActions {
     display: flex;
     gap: .5rem;
-    flex-shrink: 0;     /* buttons never get squeezed */
+    flex-shrink: 0;
+    /* buttons never get squeezed */
 }
 
 .fileInfo svg {
@@ -186,4 +189,52 @@
 
 .feedback p {
     color: #777;
+}
+
+.statusRow {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin: .75rem 0;
+}
+
+.submitted,
+.underReview,
+.approved,
+.needsRevision {
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.submitted {
+    background: #fff3d6;
+    color: #b8860b;
+}
+
+.underReview {
+    background: #e7f1ff;
+    color: #2166d1;
+}
+
+.approved {
+    background: #e6f8eb;
+    color: #22863a;
+}
+
+.needsRevision {
+    background: #ffe8e8;
+    color: #c63d3d;
+}
+
+.date {
+    display: block;
+    color: #777;
+    margin-bottom: .4rem;
+}
+
+.pending {
+    color: #888;
+    font-style: italic;
 }
