@@ -97,7 +97,7 @@ const courses = [
                 id: 2,
                 title: "PDF Lessons",
                 type: "pdf",
-                file: "/course-resources/portrait-course/module1/l1pdf.pdf",
+                file: "/course-resources/portrait-course/lesson1/l1pdf.pdf",
               },
               {
                 id: 3,
@@ -112,7 +112,7 @@ const courses = [
               description: "Draw the eye using the supplied reference image.",
               acceptedFormats: ["JPG", "PNG", "PDF"],
               maxFiles: 3,
-              maxSize: "10 MB",
+              maxSize: "5 MB",
               required: true,
             },
           },
