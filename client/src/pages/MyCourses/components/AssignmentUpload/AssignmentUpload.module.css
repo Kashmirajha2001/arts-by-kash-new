@@ -84,12 +84,32 @@
     border: 1px solid #ece7df;
     border-radius: 12px;
     margin-bottom: .75rem;
+    gap: 1rem;
 }
 
 .fileInfo {
     display: flex;
     gap: 1rem;
     align-items: center;
+    min-width: 0;      /* allows children to shrink below content size */
+    flex: 1;
+}
+
+.fileInfo > div {
+    min-width: 0;       /* lets <strong> truncate instead of overflowing */
+}
+
+.fileInfo strong {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fileActions {
+    display: flex;
+    gap: .5rem;
+    flex-shrink: 0;     /* buttons never get squeezed */
 }
 
 .fileInfo svg {
@@ -101,11 +121,6 @@
     display: block;
     font-size: .85rem;
     color: #777;
-}
-
-.fileActions {
-    display: flex;
-    gap: .5rem;
 }
 
 .fileActions button {

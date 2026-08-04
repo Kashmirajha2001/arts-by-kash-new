@@ -36,12 +36,10 @@ export const submitAssignment = async (req, res) => {
     }
 
     if (assignment) {
-      assignment.files = uploadedFiles;
+      assignment.files.push(...uploadedFiles);
       assignment.notes = notes;
       assignment.assignmentTitle = assignmentTitle;
       assignment.status = "submitted";
-      assignment.feedback = "";
-
       await assignment.save();
     } else {
       assignment = await Assignment.create({
@@ -92,10 +90,10 @@ export const getAssignment = async (req, res) => {
   }
 };
 
-export const deleteAssignment = async (req, res) => {
+export const deleteAssignmentFile = async (req, res) => {
   try {
     const assignment = await Assignment.findOne({
-      _id: req.params.id,
+      _id: req.params.assignmentId,
       user: req.user._id,
     });
 
@@ -106,19 +104,44 @@ export const deleteAssignment = async (req, res) => {
       });
     }
 
-    for (const file of assignment.files) {
-      await cloudinary.uploader.destroy(file.public_id, {
-        resource_type: "auto",
+    const fileIndex = assignment.files.findIndex(
+      (f) => f._id.toString() === req.params.fileId,
+    );
+
+    if (fileIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: "File not found.",
       });
     }
 
-    await assignment.deleteOne();
+    const file = assignment.files[fileIndex];
 
-    res.status(200).json({
+    let resourceType = "image";
+
+    if (
+      file.mimeType === "application/pdf" ||
+      file.mimeType === "application/zip"
+    ) {
+      resourceType = "raw";
+    }
+
+    await cloudinary.uploader.destroy(file.public_id, {
+      resource_type: resourceType,
+    });
+
+    assignment.files.splice(fileIndex, 1);
+
+    await assignment.save();
+
+    res.json({
       success: true,
-      message: "Assignment deleted successfully.",
+      assignment,
     });
   } catch (error) {
+    console.error("DELETE ASSIGNMENT FILE ERROR");
+    console.error(error);
+
     res.status(500).json({
       success: false,
       message: error.message,

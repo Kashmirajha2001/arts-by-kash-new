@@ -18,8 +18,10 @@ export const getAssignment = async (courseProductId, lessonId) => {
   return data.assignment;
 };
 
-export const deleteAssignment = async (id) => {
-  const { data } = await api.delete(`/assignments/${id}`);
+export const deleteAssignmentFile = async (assignmentId, fileId) => {
+  const { data } = await api.delete(
+    `/assignments/${assignmentId}/files/${fileId}`,
+  );
 
-  return data;
+  return data.assignment;
 };

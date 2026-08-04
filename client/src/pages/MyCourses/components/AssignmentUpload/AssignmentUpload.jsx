@@ -13,6 +13,7 @@ import PrimaryButton from "../../../../components/ui/PrimaryButton/PrimaryButton
 import {
   submitAssignment,
   getAssignment,
+  deleteAssignmentFile,
 } from "../../../../services/assignmentService";
 
 import { showSuccess, showError } from "../../../../utils/toast";
@@ -32,10 +33,33 @@ export default function AssignmentUpload({ lesson, course }) {
 
   const [notes, setNotes] = useState("");
 
-  const handleFiles = (selectedFiles) => {
-    const newFiles = Array.from(selectedFiles);
+  const remaining =
+    assignment.maxFiles - ((submission?.files?.length || 0) + files.length);
 
-    setFiles((prev) => [...prev, ...newFiles]);
+  const handleFiles = (selectedFiles) => {
+    const incoming = Array.from(selectedFiles);
+
+    const merged = [...files];
+
+    incoming.forEach((file) => {
+      const alreadyExists = merged.some(
+        (f) => f.name === file.name && f.size === file.size,
+      );
+
+      if (!alreadyExists) {
+        merged.push(file);
+      }
+    });
+
+    const existingCount = submission?.files?.length || 0;
+
+    if (existingCount + merged.length > assignment.maxFiles) {
+      showError(`Maximum ${assignment.maxFiles} files allowed.`);
+
+      return;
+    }
+
+    setFiles(merged);
   };
 
   const removeFile = (index) => {
@@ -100,7 +124,10 @@ export default function AssignmentUpload({ lesson, course }) {
 
       const assignment = await submitAssignment(formData);
 
-      setSubmission(assignment);
+      // setSubmission(assignment);
+      await loadAssignment();
+
+      setFiles([]);
 
       showSuccess("Assignment submitted successfully.");
 
@@ -114,6 +141,36 @@ export default function AssignmentUpload({ lesson, course }) {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleDeleteFile = async (fileId) => {
+    try {
+      const updated = await deleteAssignmentFile(
+        submission._id,
+
+        fileId,
+      );
+
+      setSubmission(updated);
+
+      showSuccess("File removed.");
+    } catch (error) {
+      showError("Unable to remove file.");
+    }
+  };
+
+  // add near the top of the file, above the component
+  const truncateFileName = (name, maxLength = 22) => {
+    if (!name || name.length <= maxLength) return name;
+
+    const dotIndex = name.lastIndexOf(".");
+    const ext = dotIndex !== -1 ? name.slice(dotIndex) : "";
+    const base = dotIndex !== -1 ? name.slice(0, dotIndex) : name;
+
+    const keep = maxLength - ext.length - 3; // 3 chars for "..."
+    if (keep <= 0) return name.slice(0, maxLength) + "...";
+
+    return `${base.slice(0, keep)}...${ext}`;
   };
 
   return (
@@ -173,7 +230,10 @@ export default function AssignmentUpload({ lesson, course }) {
                 {file.type.includes("image") ? <LuImage /> : <LuFileText />}
 
                 <div>
-                  <strong>{file.name}</strong>
+                  {/* <strong>{file.name}</strong> */}
+                  <strong title={file.name}>
+                    {truncateFileName(file.name)}
+                  </strong>
 
                   <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
                 </div>
@@ -214,7 +274,10 @@ export default function AssignmentUpload({ lesson, course }) {
                 )}
 
                 <div>
-                  <strong>{file.fileName}</strong>
+                  {/* <strong>{file.fileName}</strong> */}
+                  <strong title={file.fileName}>
+                    {truncateFileName(file.fileName)}
+                  </strong>
 
                   <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
                 </div>
@@ -228,14 +291,12 @@ export default function AssignmentUpload({ lesson, course }) {
                   <LuEye />
                 </button>
 
-                <a
-                  href={file.url}
-                  download={file.fileName}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  type="button"
+                  onClick={() => handleDeleteFile(file._id)}
                 >
-                  Download
-                </a>
+                  <LuTrash2 />
+                </button>
               </div>
             </div>
           ))}
@@ -285,7 +346,7 @@ export default function AssignmentUpload({ lesson, course }) {
         <div className={styles.feedback}>
           <h5>Instructor Feedback</h5>
 
-          <p>Coming Soon</p>
+          <p>Updating Soon</p>
         </div>
       </div>
     </section>

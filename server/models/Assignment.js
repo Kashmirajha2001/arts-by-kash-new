@@ -27,9 +27,6 @@ const assignmentFileSchema = new mongoose.Schema(
       required: true,
     },
   },
-  {
-    _id: false,
-  },
 );
 
 const assignmentSchema = new mongoose.Schema(
