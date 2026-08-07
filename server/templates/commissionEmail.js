@@ -74,16 +74,16 @@ const commissionEmail = ({
             ${images
               .map(
                 (image) => `
-                <img
-                  src="${image}"
-                  width="170"
-                  style="
-                    margin:8px;
-                    border-radius:10px;
-                    border:1px solid #ddd;
-                  "
-                />
-              `
+      <img
+        src="${image.url}"
+        width="170"
+        style="
+          margin:8px;
+          border-radius:10px;
+          border:1px solid #ddd;
+        "
+      />
+    `,
               )
               .join("")}
 

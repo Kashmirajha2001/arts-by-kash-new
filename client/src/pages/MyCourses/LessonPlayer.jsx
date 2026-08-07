@@ -82,17 +82,10 @@ export default function LessonPlayer() {
           </button>
 
           <LessonResources lesson={lesson} />
-          {/* <AssignmentUpload lesson={lesson} course={course} /> */}
           {lesson.assignment && (
             <AssignmentUpload lesson={lesson} course={course} />
           )}
           {/* <Notes />--------need to check feasibility first */}
-
-          {/* <div className={styles.lessonMeta}>
-            <span>Discussion</span>
-            <h1>Comments Placeholder</h1>
-            <p>Instructor feedback and student discussion will live here later.</p>
-          </div>------need to check feasibility first */}
         </div>
 
         <aside className={styles.sideStack}>

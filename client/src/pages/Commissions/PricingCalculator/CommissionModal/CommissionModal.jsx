@@ -15,6 +15,7 @@ import pricing from "../../data/pricingData";
 import styles from "./CommissionModal.module.css";
 import { useState, useEffect } from "react";
 import { getCurrentUser } from "../../../../services/authService";
+import { showError } from "../../../../utils/toast";
 
 export default function CommissionModal({
   open,
@@ -26,6 +27,7 @@ export default function CommissionModal({
   showSelection = true,
 }) {
   // if (!open) return null;
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
   const [images, setImages] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -52,7 +54,28 @@ export default function CommissionModal({
     message: "",
   });
 
-  // if (!open) return null;
+  const handleFiles = (selectedFiles) => {
+    const incoming = Array.from(selectedFiles);
+
+    const remaining = 5 - images.length;
+
+    const validImages = [];
+
+    for (const file of incoming.slice(0, remaining)) {
+      if (file.size > MAX_FILE_SIZE) {
+        showError(`${file.name} exceeds the 5 MB limit.`);
+        continue;
+      }
+
+      validImages.push({
+        id: crypto.randomUUID(),
+        file,
+        preview: URL.createObjectURL(file),
+      });
+    }
+
+    setImages((prev) => [...prev, ...validImages]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -282,45 +305,45 @@ export default function CommissionModal({
               </div>
             </div>
 
-          {showSelection && (
-            <div className={styles.summaryCard}>
-              <h4>Selected Artwork</h4>
+            {showSelection && (
+              <div className={styles.summaryCard}>
+                <h4>Selected Artwork</h4>
 
-              <div className={styles.summaryGrid}>
-                <div>
-                  {/* <PaletteIcon className={styles.icon} /> */}
-                  🎨 <span>{pricing[medium].title}</span>
-                </div>
+                <div className={styles.summaryGrid}>
+                  <div>
+                    {/* <PaletteIcon className={styles.icon} /> */}
+                    🎨 <span>{pricing[medium].title}</span>
+                  </div>
 
-                <div>
-                  {/* <StraightenIcon className={styles.icon} /> */}
-                  🖍️ <span>{size}</span>
-                </div>
+                  <div>
+                    {/* <StraightenIcon className={styles.icon} /> */}
+                    🖍️ <span>{size}</span>
+                  </div>
 
-                <div>
-                  {/* <GroupIcon className={styles.icon} /> */}
-                  👥{" "}
-                  <span>
-                    {people === 1
-                      ? "Single"
-                      : people === 2
-                        ? "Couple"
-                        : `${people} People`}
-                  </span>
-                </div>
+                  <div>
+                    {/* <GroupIcon className={styles.icon} /> */}
+                    👥{" "}
+                    <span>
+                      {people === 1
+                        ? "Single"
+                        : people === 2
+                          ? "Couple"
+                          : `${people} People`}
+                    </span>
+                  </div>
 
-                <div>
-                  {/* <CurrencyRupeeIcon className={styles.icon} /> */}
-                  💰{" "}
-                  <span>
-                    {price === null
-                      ? "Custom Quote"
-                      : price.toLocaleString("en-IN")}
-                  </span>
+                  <div>
+                    {/* <CurrencyRupeeIcon className={styles.icon} /> */}
+                    💰{" "}
+                    <span>
+                      {price === null
+                        ? "Custom Quote"
+                        : price.toLocaleString("en-IN")}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
             <div className={styles.fullWidth}>
               <label className={styles.textareaLabel}>Additional Details</label>
@@ -359,12 +382,19 @@ export default function CommissionModal({
                   : `${images.length}/5 images selected`}
               </p>
 
-              <input
+              {/* <input
                 type="file"
                 multiple
                 accept="image/*"
                 disabled={images.length === 5}
                 onChange={handleImageChange}
+              /> */}
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                disabled={images.length === 5}
+                onChange={(e) => handleFiles(e.target.files)}
               />
             </div>
 
