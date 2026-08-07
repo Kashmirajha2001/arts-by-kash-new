@@ -6,7 +6,7 @@ import Loader from "../../components/ui/Loader/Loader";
 import useCourse from "../../hooks/useCourse";
 import CourseHeader from "./components/CourseHeader/CourseHeader";
 import CourseSidebar from "./components/CourseSidebar/CourseSidebar";
-import LessonPlayerView from "./components/LessonPlayer/LessonPlayer";
+import CourseVideoPlayer from "./components/CourseVideoPlayer/CourseVideoPlayer";
 import LessonNavigation from "./components/LessonNavigation/LessonNavigation";
 import LessonResources from "./components/LessonResources/LessonResources";
 import AssignmentUpload from "./components/AssignmentUpload/AssignmentUpload";
@@ -57,7 +57,7 @@ export default function LessonPlayer() {
 
       <section className={styles.lessonLayout}>
         <div className={styles.lessonMain}>
-          <LessonPlayerView lesson={lesson} />
+          <CourseVideoPlayer lesson={lesson} />
 
           <div className={styles.lessonMeta}>
             <span>Lesson {lessonIndex + 1}</span>

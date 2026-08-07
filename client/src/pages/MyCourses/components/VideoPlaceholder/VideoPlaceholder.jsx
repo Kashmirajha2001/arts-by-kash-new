@@ -9,8 +9,15 @@ export default function VideoPlaceholder({ lesson }) {
         <div className={styles.play}>
           <LuPlay />
         </div>
-        <h2>{lesson.title}</h2>
-        <p>Video hosting placeholder — ready for Bunny -LessonPlayer.jsx & VideoPlaceholder.jsx</p>
+        <div className={styles.overlay}>
+
+          <h2>{lesson.title}</h2>
+
+          <p>This lesson will be available soon.</p>
+
+          <small>Video is currently being prepared.ready for Bunny -LessonPlayer.jsx &
+          VideoPlaceholder.jsx</small>
+        </div>
       </div>
     </div>
   );
