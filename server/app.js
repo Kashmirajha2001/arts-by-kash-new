@@ -59,7 +59,7 @@ app.use("/api/course-progress", courseProgressRoutes);
 
 app.use("/api/course-reviews", courseReviewRoutes);
 
-app.use("/api/admin/course-reviews", adminCourseReviewRoutes);
+app.use("/api/admin/reviews", adminCourseReviewRoutes);
 
 app.get("/", (req, res) => {
   res.json({

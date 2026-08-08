@@ -2,9 +2,9 @@ import CourseReview from "../models/CourseReview.js";
 
 export const getAllReviews = async (req, res) => {
   try {
-    const reviews = await CourseReview.find().sort({
-      createdAt: -1,
-    });
+    const reviews = await CourseReview.find()
+      .populate("user", "name avatar email")
+      .sort({ createdAt: -1 });
 
     res.json({
       success: true,
@@ -18,8 +18,36 @@ export const getAllReviews = async (req, res) => {
   }
 };
 
-export const updateReviewStatus = async (req, res) => {
+export const getReview = async (req, res) => {
   try {
+    const review = await CourseReview.findById(req.params.id).populate(
+      "user",
+      "name avatar email",
+    );
+
+    if (!review) {
+      return res.status(404).json({
+        success: false,
+        message: "Review not found.",
+      });
+    }
+
+    res.json({
+      success: true,
+      review,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const updateReview = async (req, res) => {
+  try {
+    const { approved } = req.body;
+
     const review = await CourseReview.findById(req.params.id);
 
     if (!review) {
@@ -29,7 +57,7 @@ export const updateReviewStatus = async (req, res) => {
       });
     }
 
-    review.approved = req.body.approved;
+    review.approved = approved;
 
     await review.save();
 
@@ -47,7 +75,16 @@ export const updateReviewStatus = async (req, res) => {
 
 export const deleteReview = async (req, res) => {
   try {
-    await CourseReview.findByIdAndDelete(req.params.id);
+    const review = await CourseReview.findById(req.params.id);
+
+    if (!review) {
+      return res.status(404).json({
+        success: false,
+        message: "Review not found.",
+      });
+    }
+
+    await review.deleteOne();
 
     res.json({
       success: true,

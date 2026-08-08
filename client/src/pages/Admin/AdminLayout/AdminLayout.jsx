@@ -14,6 +14,8 @@ export default function AdminLayout() {
         <Link to="/admin/products">Products</Link>
 
         <Link to="/admin/assignments">Assignments</Link>
+
+        <Link to="/admin/reviews">Reviews</Link>
       </aside>
 
       <main className={styles.content}>

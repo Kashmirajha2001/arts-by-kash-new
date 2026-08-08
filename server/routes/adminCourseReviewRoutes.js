@@ -5,7 +5,8 @@ import {admin} from "../middleware/admin.js";
 
 import {
   getAllReviews,
-  updateReviewStatus,
+  getReview,
+  updateReview,
   deleteReview,
 } from "../controllers/adminCourseReviewController.js";
 
@@ -15,7 +16,9 @@ router.use(protect, admin);
 
 router.get("/", getAllReviews);
 
-router.patch("/:id", updateReviewStatus);
+router.get("/:id", getReview);
+
+router.patch("/:id", updateReview);
 
 router.delete("/:id", deleteReview);
 
