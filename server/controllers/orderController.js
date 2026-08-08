@@ -13,6 +13,7 @@ import User from "../models/User.js";
 import razorpay from "../config/razorpay.js";
 import crypto from "crypto";
 import Product from "../models/Product.js";
+import sendOrderEmails from "../utils/sendOrderEmails.js";
 
 export const createOrder = async (req, res) => {
   try {
@@ -162,6 +163,7 @@ export const verifyPayment = async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
       req.body;
+
     const order = await Order.findOne({
       razorpayOrderId: razorpay_order_id,
     });
@@ -172,38 +174,50 @@ export const verifyPayment = async (req, res) => {
         message: "Order not found.",
       });
     }
+
     const generatedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-      .update(razorpay_order_id + "|" + razorpay_payment_id)
+      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
+
     if (generatedSignature !== razorpay_signature) {
       return res.status(400).json({
         success: false,
         message: "Invalid payment signature.",
       });
     }
+
+    // Update order
     order.paymentStatus = "paid";
-
     order.orderStatus = "confirmed";
-
     order.razorpayPaymentId = razorpay_payment_id;
-
     order.razorpaySignature = razorpay_signature;
 
     await order.save();
+
+    // Clear user's cart
     const user = await User.findById(order.user);
 
-    user.cart = [];
+    if (user) {
+      user.cart = [];
+      await user.save();
+    }
 
-    await user.save();
-    res.status(200).json({
+    // Send emails (never fail the order if email fails)
+    try {
+      await sendOrderEmails(order);
+    } catch (emailError) {
+      console.error("Unable to send order emails:", emailError);
+    }
+
+    return res.status(200).json({
       success: true,
       message: "Payment verified successfully.",
     });
   } catch (error) {
     console.error(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
