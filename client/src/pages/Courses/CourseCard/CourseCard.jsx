@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 
@@ -6,6 +6,8 @@ import PrimaryButton from "../../../components/ui/PrimaryButton/PrimaryButton";
 import useAuth from "../../../hooks/useAuth";
 import { useStore } from "../../../context/StoreContext";
 import useCourse from "../../../hooks/useCourse";
+import RatingStars from "../../../components/ui/RatingStars/RatingStars";
+import { getCourseReviews } from "../../../services/courseReviewService";
 
 import styles from "./CourseCard.module.css";
 
@@ -18,6 +20,10 @@ export default function CourseCard({ course }) {
 
   const owned = isCourseOwned(course.productId);
   const inCart = isInCart(course.productId);
+
+  const { getCourseReviewSummary } = useCourse();
+
+  const review = getCourseReviewSummary(course);
 
   const handleCourseAction = () => {
     if (owned) {
@@ -99,7 +105,10 @@ export default function CourseCard({ course }) {
           </button>
         </div> */}
 
-        <PrimaryButton className={styles.buyButton} onClick={handleCourseAction}>
+        <PrimaryButton
+          className={styles.buyButton}
+          onClick={handleCourseAction}
+        >
           {owned ? "Go To My Course" : inCart ? "Go To Cart" : "Enroll Now"}
         </PrimaryButton>
 
@@ -111,12 +120,10 @@ export default function CourseCard({ course }) {
 
         <div className={styles.info}>
           <h3>Inside this Masterclass</h3>
-          <div className={styles.rating}>
-            <FaStar />
-            <span>
-              {course.rating} ({course.reviews} Reviews)
-            </span>
-          </div>
+          <RatingStars
+            rating={review.averageRating}
+            reviews={review.totalReviews}
+          />
 
           <p>
             <strong>Students:</strong> {course.students}

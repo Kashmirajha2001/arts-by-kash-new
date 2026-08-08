@@ -6,6 +6,7 @@ import WhatYouWillLearn from "./WhatYouWillLearn/WhatYouWillLearn";
 import Curriculum from "./Curriculum/Curriculum";
 import WhoIsThisFor from "./WhoIsThisFor/WhoIsThisFor";
 import ArtworksYoullCreate from "./ArtworksYou'llCreate/ArtworksYou'llCreate";
+import CourseReviews from "./CourseReviews/CourseReviews";
 import FAQ from "./FAQ/FAQ";
 import FinalCTA from "./FinalCTA/FinalCTA";
 
@@ -28,8 +29,9 @@ export default function Courses() {
       <Curriculum course={courses[0]} hasAccess={false} completedLessons={[]} />
       <WhoIsThisFor course={courses[0]} />
       <ArtworksYoullCreate course={courses[0]} />
-      <FAQ/>
-      <FinalCTA/>
+      <CourseReviews course={courses[0]} />
+      <FAQ />
+      <FinalCTA />
     </>
   );
 }

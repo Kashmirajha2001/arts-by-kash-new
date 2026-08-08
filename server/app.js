@@ -10,6 +10,8 @@ import productRoutes from "./routes/productRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import assignmentRoutes from "./routes/assignmentRoutes.js";
 import courseProgressRoutes from "./routes/courseProgressRoutes.js";
+import courseReviewRoutes from "./routes/courseReviewRoutes.js";
+import adminCourseReviewRoutes from "./routes/adminCourseReviewRoutes.js";
 
 const app = express();
 
@@ -54,6 +56,10 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/assignments", assignmentRoutes);
 
 app.use("/api/course-progress", courseProgressRoutes);
+
+app.use("/api/course-reviews", courseReviewRoutes);
+
+app.use("/api/admin/course-reviews", adminCourseReviewRoutes);
 
 app.get("/", (req, res) => {
   res.json({

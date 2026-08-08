@@ -13,12 +13,15 @@ import {
   updateLastLesson,
 } from "../services/courseProgressService";
 
+import { getReviewSummary as fetchReviewSummary } from "../services/courseReviewService";
+
 export default function CourseProvider({ children }) {
   const { user, loading: authLoading } = useAuth();
   const [purchasedProductIds, setPurchasedProductIds] = useState([]);
   const [progress, setProgress] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentCourse, setCurrentCourse] = useState(null);
+  const [reviewSummary, setReviewSummary] = useState({});
 
   const loadCourseProgress = useCallback(async (productId) => {
     try {
@@ -32,7 +35,7 @@ export default function CourseProvider({ children }) {
       console.error(error);
     }
   }, []);
-  
+
   const reloadCourses = useCallback(async () => {
     if (authLoading) {
       setLoading(true);
@@ -63,6 +66,11 @@ export default function CourseProvider({ children }) {
 
       setPurchasedProductIds([...ownedIds]);
       await Promise.all([...ownedIds].map((id) => loadCourseProgress(id)));
+
+      // Load review summary for all courses
+      const summaries = await fetchReviewSummary();
+
+      setReviewSummary(summaries);
     } catch (error) {
       console.error(error);
       setPurchasedProductIds([]);
@@ -141,6 +149,14 @@ export default function CourseProvider({ children }) {
           ...serverProgress,
         };
       },
+
+      reviewSummary,
+      getCourseReviewSummary: (course) =>
+        reviewSummary[course.productId] || {
+          averageRating: 0,
+          totalReviews: 0,
+        },
+
       markLessonComplete,
       setLastAccessedLesson,
       getLastAccessedLesson,
@@ -156,6 +172,7 @@ export default function CourseProvider({ children }) {
       markLessonComplete,
       setLastAccessedLesson,
       getLastAccessedLesson,
+      reviewSummary,
     ],
   );
 
